@@ -46,7 +46,9 @@ class ConvertToCodeCommand extends Command
         
         $measures->each(function($measure) {
             $measure->notes()->each(function($note) {
-                echo sprintf('%s%d:%d' . PHP_EOL, $note->pitchStep(), $note->pitchOctave(), $note->duration());
+                if ($note->isNote()) {
+                    echo sprintf('%s%d:%d' . PHP_EOL, $note->pitchStep() ?? '', $note->pitchOctave() ?? 0, $note->duration());
+                }
             });
         });
 

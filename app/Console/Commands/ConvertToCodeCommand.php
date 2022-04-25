@@ -45,11 +45,10 @@ class ConvertToCodeCommand extends Command
         $measures = $scorePartWith->measures();
         
         $measures->each(function($measure) {
-            $measure->notes()->each(function($note) {
-                if ($note->isNote()) {
-                    echo sprintf('%s%d:%d' . PHP_EOL, $note->pitchStep() ?? '', $note->pitchOctave() ?? 0, $note->duration());
-                }
+            $measure->trackB()->each(function($note) {
+                echo $note->toAzureaCode() . PHP_EOL;
             });
+            echo PHP_EOL;
         });
 
         return 0;

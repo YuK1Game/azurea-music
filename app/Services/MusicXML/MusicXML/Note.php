@@ -39,4 +39,10 @@ class Note implements MeasureContentInterface
         return (int) $this->crawler->filterXPath('//duration')->text();
     }
 
+    public function toAzureaCode() : string
+    {
+        $duration = 8 / $this->duration();
+        return sprintf('%s%d', strtolower($this->pitchStep()), $duration);
+    }
+
 }

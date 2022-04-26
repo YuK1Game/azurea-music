@@ -49,7 +49,7 @@ class ConvertToCodeCommand extends Command
         $musicXml = new MusicXML($filename);
         $scorePartWith = $musicXml->getScorePartWise();
 
-        $scorePartWith->trackA()->trackNotes()->map(function(Collection $notes) {
+        $scorePartWith->trackB()->trackNotes()->map(function(Collection $notes) {
             $notes->each(function(TrackNote $trackNote) {
                 echo $trackNote->toAzureaCode() . ' ';
             });

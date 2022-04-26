@@ -17,8 +17,8 @@ class Track
     {
         $prevNote = null;
 
-        return $this->notesList->map(function(Collection $notes) use($prevNote) {
-            return $notes->map(function(Note $note) use($prevNote) {
+        return $this->notesList->map(function(Collection $notes) use(&$prevNote) {
+            return $notes->map(function(Note $note) use(&$prevNote) {
                 $trackNote = new TrackNote($note, $prevNote);
                 $prevNote = $note;
                 return $trackNote;

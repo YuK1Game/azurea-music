@@ -58,9 +58,9 @@ class Note extends MeasureContent implements MeasureContentInterface
         $duration = $this->duration();
 
         if ($this->isRest()) {
-            return sprintf('%s%d', 'Rest', $duration);
+            return sprintf('%s%s', 'Rest', $duration);
         } else {
-            return sprintf('%s%d', $this->pitchStep(), $duration);
+            return sprintf('%s%s', $this->pitchStep(), $duration);
         }
     }
 

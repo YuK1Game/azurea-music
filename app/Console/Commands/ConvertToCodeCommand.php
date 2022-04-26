@@ -8,6 +8,7 @@ use App\Services\MusicXML\MusicXML;
 use App\Services\MusicXML\MusicXML\Note;
 use App\Services\MusicXML\MusicXML\Track;
 use App\Services\MusicXML\MusicXML\TrackNote;
+use Illuminate\Support\Collection;
 
 class ConvertToCodeCommand extends Command
 {
@@ -43,12 +44,16 @@ class ConvertToCodeCommand extends Command
     public function handle()
     {
         $filename = resource_path('musicxml/Happiness_-_ARASHI.mxl');
+        // $filename = resource_path('musicxml/Sakura_Sakura_Cherry_Blossoms.mxl');
+        
         $musicXml = new MusicXML($filename);
         $scorePartWith = $musicXml->getScorePartWise();
-        $trackA = $scorePartWith->trackA();
-        
-        $trackA->trackNotes()->each(function(TrackNote $trackNote) {
-            echo $trackNote->toAzureaCode() . PHP_EOL;
+
+        $scorePartWith->trackA()->trackNotes()->map(function(Collection $notes) {
+            $notes->each(function(TrackNote $trackNote) {
+                echo $trackNote->toAzureaCode() . ' ';
+            });
+            echo PHP_EOL;
         });
 
         return 0;

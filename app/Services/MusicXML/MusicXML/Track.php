@@ -6,18 +6,23 @@ use App\Services\MusicXML\MusicXML\TrackNote;
 
 class Track
 {
-    protected Collection $notes;
+    protected Collection $notesList;
 
     public function __construct(Collection $notesList)
     {
-        $this->notes = $notesList->flatten();
+        $this->notesList = $notesList;
     }
 
     public function trackNotes() : Collection
     {
-        return $this->notes->map(function(Note $note, $index) {
-            $prevNote = $this->notes->get($index - 1) ?? null;
-            return new TrackNote($note, $prevNote);
+        $prevNote = null;
+
+        return $this->notesList->map(function(Collection $notes) use($prevNote) {
+            return $notes->map(function(Note $note) use($prevNote) {
+                $trackNote = new TrackNote($note, $prevNote);
+                $prevNote = $note;
+                return $trackNote;
+            });
         });
     }
 

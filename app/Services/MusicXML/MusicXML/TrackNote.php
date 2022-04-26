@@ -28,10 +28,17 @@ class TrackNote
     }
 
     public function toAzureaCode() {
-        if ($this->isChangeOctave()) {
-            return sprintf('%s%d%s', 'o', $this->note->pitchOctave(), $this->getSimpleAzureaCode());
+        $code = '';
+
+        if ($this->note->isChord()) {
+            $code .= ':';
         }
-        return $this->getSimpleAzureaCode();
+
+        if ($this->isChangeOctave()) {
+            $code .= sprintf('%s%d', 'o', $this->note->pitchOctave());
+        }
+        
+        return $code .= $this->getSimpleAzureaCode();
     }
 
     public function getSimpleAzureaCode() : string

@@ -31,7 +31,7 @@ class MusicXML
         for ($i = 0 ; $i < $zip->numFiles ; $i++) {
             $filename = $zip->getNameIndex($i);
             
-            if (preg_match('/^[A-Za-z]{2}\-\d{1,}\.xml$/', $filename) === 1) {
+            if (preg_match('/^.*?.xml$/', $filename) === 1 && $filename !== 'META-INF/container.xml') {
                 $fp = $zip->getStream($filename);
                 $data = '';
 
@@ -44,7 +44,7 @@ class MusicXML
             }
         }
 
-        throw new \Exception('');
+        throw new \Exception('Can\'t find xml data.');
     }
 
 }

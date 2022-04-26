@@ -11,8 +11,13 @@ abstract class MeasureContent
             return $this->crawler->filterXPath($filterPath)->text();
 
         } catch (InvalidArgumentException $e) {
-            throw new InvalidArgumentException(sprintf("%s\n%s", $e->getMessage(), $this->crawler->outerHtml()));
+            throw new InvalidArgumentException(sprintf("%s filterXPath [%s]\n%s", $e->getMessage(), $filterPath, $this->crawler->outerHtml()));
         }
+    }
+
+    protected function hasDomByFilterPath(string $filterPath) : bool
+    {
+        return $this->crawler->filterXPath($filterPath)->count() > 0;
     }
 
 }

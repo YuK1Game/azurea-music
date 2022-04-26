@@ -26,12 +26,21 @@ class Note extends MeasureContent implements MeasureContentInterface
 
     public function isRest() : bool
     {
-        return $this->crawler->filterXPath('//rest')->count() > 0;
+        return $this->hasDomByFilterPath('//rest');
+    }
+
+    public function isChord() : bool
+    {
+        return $this->hasDomByFilterPath('//chord');
     }
 
     public function pitchStep() : string
     {
-        return $this->getTextByFilterPath('//pitch/step');
+        if ($this->isRest()) {
+            return 'r';
+        } else {
+            return $this->getTextByFilterPath('//pitch/step');
+        }
     }
 
     public function pitchOctave() : int

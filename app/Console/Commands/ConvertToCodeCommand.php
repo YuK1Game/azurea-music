@@ -45,8 +45,10 @@ class ConvertToCodeCommand extends Command
         $measures = $scorePartWith->measures();
         
         $measures->each(function($measure) {
-            $measure->trackB()->each(function($note) {
-                echo $note->toAzureaCode() . PHP_EOL;
+            $measure->trackA()->each(function($note) {
+                if ($note->isNote()) {
+                    echo $note->toAzureaCode() . ' ';
+                }
             });
             echo PHP_EOL;
         });

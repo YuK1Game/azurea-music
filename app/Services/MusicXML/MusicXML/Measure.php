@@ -16,7 +16,7 @@ class Measure
         $this->crawler = new DOMCrawler($domElement);
     }
 
-    public function notes() : Collection
+    public function measureContents() : Collection
     {
         $data = collect();
 
@@ -38,7 +38,7 @@ class Measure
     {
         $backupIndexes = collect();
 
-        foreach ($this->notes() as $index => $note) {
+        foreach ($this->measureContents() as $index => $note) {
             if ($note instanceof Backup) {
                 $backupIndexes->push($index);
             }
@@ -51,18 +51,18 @@ class Measure
     {
         if ($this->getBackupIndexes()->count() >= 1) {
             $from = 0;
-            $to = $this->getBackupIndexes()->get(0);
-            return $this->notes()->slice($from, $from - $to);
+            $to   = $this->getBackupIndexes()->get(0);
+            return $this->measureContents()->slice($from, $to - $from);
         }
-        return $this->notes();
+        return $this->measureContents();
     }
 
     public function trackB() : Collection
     {
         if ($this->getBackupIndexes()->count() >= 1) {
             $from = $this->getBackupIndexes()->get(0) + 1;
-            $to = $this->getBackupIndexes()->get(1) ?? $this->notes()->count() - 1;
-            return $this->notes()->slice($from, $from - $to);
+            $to   = $this->getBackupIndexes()->get(1) ?? $this->measureContents()->count();
+            return $this->measureContents()->slice($from, $to - $from);
         }
         return collect();
     }

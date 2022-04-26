@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\MusicXML\MusicXML;
+namespace App\Services\MusicXML\MusicXML\Measures;
 
 interface MeasureContentInterface
 {

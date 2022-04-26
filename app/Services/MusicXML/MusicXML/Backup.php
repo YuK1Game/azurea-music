@@ -3,11 +3,11 @@ namespace App\Services\MusicXML\MusicXML;
 
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use DOMElement;
-use App\Services\MusicXML\MusicXML\MeasureContentInterface;
+use App\Services\MusicXML\MusicXML\Measures\{ MeasureContent, MeasureContentInterface };
 
-class Backup implements MeasureContentInterface
+class Backup extends MeasureContent implements MeasureContentInterface
 {
-    protected $element;
+    protected $crawler;
 
     public function __construct(DOMElement $domElement)
     {
@@ -26,6 +26,6 @@ class Backup implements MeasureContentInterface
 
     public function duration() : int
     {
-        return (int) $this->crawler->filterXPath('//duration')->text();
+        return (int) $this->getTextByFilterPath('//duration');
     }
 }

@@ -53,19 +53,6 @@ class Note extends MeasureContent implements MeasureContentInterface
         return (int) $this->getTextByFilterPath('//duration');
     }
 
-    protected function pitchStepToText(string $pitchStep) : string
-    {
-        switch (strtolower($pitchStep)) {
-            case 'a' : return 'ラ';
-            case 'b' : return 'シ';
-            case 'c' : return 'ド';
-            case 'd' : return 'レ';
-            case 'e' : return 'ミ';
-            case 'f' : return 'ファ';
-            case 'g' : return 'ソ';
-        }
-    }
-
     public function toAzureaCode() : string
     {
         $duration = $this->duration();
@@ -73,7 +60,7 @@ class Note extends MeasureContent implements MeasureContentInterface
         if ($this->isRest()) {
             return sprintf('%s%d', 'Rest', $duration);
         } else {
-            return sprintf('%s%d', $this->pitchStepToText($this->pitchStep()), $duration);
+            return sprintf('%s%d', $this->pitchStep(), $duration);
         }
     }
 

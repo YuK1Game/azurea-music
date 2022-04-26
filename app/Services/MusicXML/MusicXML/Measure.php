@@ -47,7 +47,7 @@ class Measure
         return $backupIndexes;
     }
 
-    public function trackA() : Collection
+    public function firstPartNotes() : Collection
     {
         if ($this->getBackupIndexes()->count() >= 1) {
             $from = 0;
@@ -57,7 +57,7 @@ class Measure
         return $this->measureContents();
     }
 
-    public function trackB() : Collection
+    public function secondPartNotes() : Collection
     {
         if ($this->getBackupIndexes()->count() >= 1) {
             $from = $this->getBackupIndexes()->get(0) + 1;

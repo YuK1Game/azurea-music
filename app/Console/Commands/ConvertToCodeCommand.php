@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Services\MusicXML\MusicXML;
+use App\Services\MusicXML\MusicXML\Note;
+use App\Services\MusicXML\MusicXML\Track;
 
 class ConvertToCodeCommand extends Command
 {
@@ -42,15 +44,10 @@ class ConvertToCodeCommand extends Command
         $filename = resource_path('musicxml/Sakura_Sakura_Cherry_Blossoms.mxl');
         $musicXml = new MusicXML($filename);
         $scorePartWith = $musicXml->getScorePartWise();
-        $measures = $scorePartWith->measures();
+        $trackA = $scorePartWith->trackA();
         
-        $measures->each(function($measure) {
-            $measure->trackA()->each(function($note) {
-                if ($note->isNote()) {
-                    echo $note->toAzureaCode() . ' ';
-                }
-            });
-            echo PHP_EOL;
+        $trackA->flatten()->each(function(Note $note) {
+            echo $note->toAzureaCode();
         });
 
         return 0;

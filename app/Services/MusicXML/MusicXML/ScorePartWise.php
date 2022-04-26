@@ -2,6 +2,7 @@
 namespace App\Services\MusicXML\MusicXML;
 
 use App\Services\MusicXML\MusicXML\Measure;
+use App\Services\MusicXML\MusicXML\Track;
 use Illuminate\Support\Collection;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 
@@ -24,4 +25,21 @@ class ScorePartWise
 
         return $data;
     }
+
+    public function trackA()
+    {
+        $track = $this->measures()->map(function(Measure $measure) {
+            return $measure->firstPartNotes();
+        });
+        return new Track($track);
+    }
+
+    public function trackB()
+    {
+        $track = $this->measures()->map(function(Measure $measure) {
+            return $measure->secondPartNotes();
+        });
+        return new Track($track);
+    }
+
 }

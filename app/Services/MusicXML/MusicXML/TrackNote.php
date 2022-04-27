@@ -5,9 +5,9 @@ use App\Services\MusicXML\MusicXML\Note;
 
 class TrackNote
 {
-    protected Note $note;
+    public Note $note;
 
-    protected ?Note $prevNote;
+    public ?Note $prevNote;
 
     public function __construct(Note $note, ?Note $prevNote)
     {
@@ -34,22 +34,40 @@ class TrackNote
             $code .= ':';
         }
 
+        if ($this->note->isFlat()) {
+            $this->note->subLevel();
+        }
+
+        if ($this->note->isSharp()) {
+            $this->note->addLevel();
+        }
+
         if ($this->isChangeOctave()) {
             $code .= sprintf('%s%d', 'o', $this->note->pitchOctave());
         }
+
+        // echo $this->note->toXml() . PHP_EOL;
+        // echo $this->note->duration() . PHP_EOL;
         
         return $code .= $this->getSimpleAzureaCode();
     }
 
+    public function getAzureaDurationCode() : string
+    {
+        $noteDuration = $this->note->duration();
+        $baseDuration = (int) pow(2, floor(log($noteDuration, 2)));
+        $hasDot = $noteDuration !== $baseDuration;
+        $duration = $baseDuration > 0 ? (int) 32 / $baseDuration : 0;
+
+        return sprintf('%d%s', $duration, $hasDot ? '.' : '');
+    }
+
     public function getSimpleAzureaCode() : string
     {
-        $duration = $this->note->duration();
-
         if ($this->note->isRest()) {
-            return sprintf('%s%d', 'r', $duration);
-        } else {
-            return sprintf('%s%d', strtolower($this->note->pitchStep()), $duration);
+            return sprintf('%s%s', 'r', $this->getAzureaDurationCode());
         }
+        return sprintf('%s%s', strtolower($this->note->pitchStep()), $this->getAzureaDurationCode());
     }
 
 }

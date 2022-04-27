@@ -15,31 +15,16 @@ class ScorePartWise
         $this->crawler = $crawler;
     }
 
-    public function measures() : Collection
+    public function parts() : Collection
     {
         $data = collect();
-
-        foreach ($this->crawler->filterXPath('//part/measure') as $dom) {
-            $data->push(new Measure($dom));
+        
+        foreach ($this->crawler->filterXPath('//part') as $partDom) {
+            $data->push(new Part($partDom));
         }
 
         return $data;
-    }
-
-    public function trackA()
-    {
-        $track = $this->measures()->map(function(Measure $measure) {
-            return $measure->firstPartNotes();
-        });
-        return new Track($track);
-    }
-
-    public function trackB()
-    {
-        $track = $this->measures()->map(function(Measure $measure) {
-            return $measure->secondPartNotes();
-        });
-        return new Track($track);
+       
     }
 
 }

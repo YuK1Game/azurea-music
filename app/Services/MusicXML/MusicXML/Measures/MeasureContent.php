@@ -8,7 +8,8 @@ abstract class MeasureContent
     protected function getTextByFilterPath(string $filterPath) : ?string
     {
         try {
-            return $this->crawler->filterXPath($filterPath)->text();
+            $dom = $this->crawler->filterXPath($filterPath);
+            return $dom->count() > 0 ? $dom->text() : null;
 
         } catch (InvalidArgumentException $e) {
             throw new InvalidArgumentException(sprintf("%s filterXPath [%s]\n%s", $e->getMessage(), $filterPath, $this->crawler->outerHtml()));

@@ -18,8 +18,19 @@ class Track
         $prevNote = null;
 
         return $this->notesList->map(function(Collection $notes) use(&$prevNote) {
-            return $notes->map(function(Note $note) use(&$prevNote) {
+
+            $flats = collect();
+            $sharps = collect();
+
+            return $notes->map(function(Note $note) use(&$prevNote, &$flats, &$sharps) {
+                $note->isFlat() &&  $flats->push($note->getCode());
+                $note->isSharp() &&  $sharps->push($note->getCode());
+                
+                $flats->contains($note->getCode()) && $note->setFlat();
+                $sharps->contains($note->getCode()) && $note->setSharp();
+
                 $trackNote = new TrackNote($note, $prevNote);
+
                 $prevNote = $note;
                 return $trackNote;
             });

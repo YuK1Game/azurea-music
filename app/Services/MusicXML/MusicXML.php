@@ -18,6 +18,8 @@ class MusicXML
             throw new \Exception('Error');
         }
 
+        $zip->extractTo(sprintf('storage/musicxml/%s/app', md5($filename)));
+
         $this->xml = $this->getXmlData($zip);
     }
 

@@ -34,7 +34,7 @@ class Measure
         return $data;
     }
 
-    public function getBackupIndexes() : Collection
+    protected function getBackupIndexes() : Collection
     {
         $backupIndexes = collect();
 
@@ -66,6 +66,5 @@ class Measure
         }
         return collect();
     }
-
 
 }

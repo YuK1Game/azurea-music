@@ -47,7 +47,7 @@ class ConvertToCodeCommand extends Command
     {
         // $filename = resource_path('musicxml/Japanese_Army_March_Godzilla_1954.mxl');
         // $filename = resource_path('musicxml/Sakura_Sakura_Cherry_Blossoms.mxl');
-        $filename = resource_path('musicxml/Doraemon_no_Uta.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
         
         $musicXml = new MusicXML($filename);
         $scorePartWith = $musicXml->getScorePartWise();

@@ -20,6 +20,11 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
         return $this->crawler->filter('rest')->count() > 0;
     }
 
+    public function isChord() : bool
+    {
+        return $this->crawler->filter('chord')->count() > 0;
+    }
+
     public function pitchStep() : string
     {
         $step = $this->crawler->filter('pitch > step')->innerText() ?? null;

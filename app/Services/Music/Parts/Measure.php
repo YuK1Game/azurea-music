@@ -2,8 +2,7 @@
 namespace App\Services\Music\Parts;
 
 use App\Services\Music\{ Node, NodeInterface };
-use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
-
+use App\Services\Music\Parts\Measures\{ MeasureChildrenInterface, Note, Backup };
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use Illuminate\Support\Collection;
 
@@ -35,6 +34,13 @@ class Measure extends Node implements NodeInterface
         });
 
         return $children;
+    }
+
+    public function childrenChunk() : Collection
+    {
+        return $this->children()->chunkWhile(function(MeasureChildrenInterface $measureChild) {
+            return $measureChild instanceof Note;
+        });
     }
 
 }

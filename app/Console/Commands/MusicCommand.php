@@ -9,10 +9,12 @@ use App\Services\Music\{
     ScorePart,
     Part,
     Parts\Measure,
-    Parts\Measures\MeasureChildInterface,
+    Parts\Measures\MeasureChildrenInterface,
     Parts\Measures\Note,
     Parts\Measures\Backup,
 };
+
+use Illuminate\Support\Collection;
 
 class MusicCommand extends Command
 {
@@ -47,21 +49,37 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
+        $filename = resource_path('musicxml/Mi_Corazn_Encantado.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();
         $scoreParts = $music->scoreParts();
         $scoreParts->each(function(ScorePart $scorePart) {
+            echo '[Part]' . PHP_EOL;
+
             $part = $scorePart->part();
             $measures = $part->measures();
             $measures->each(function(Measure $measure) {
-                $children = $measure->children();
-                $children->each(function(MeasureChildInterface $measureChild) {
-                    if ($measureChild instanceof Note) {
-                        echo $measureChild->pitchStep();
-                    }
+                $measure->childrenChunk()->each(function(Collection $chunk) {
+                    // $chunk->each(function(MeasureChildrenInterface $measureChildren) {
+                    //     if ($measureChildren instanceof Note) {
+                    //         if ($measureChildren->isRest()) {
+                    //             echo sprintf('%s %d', 'r', $measureChildren->duration());
+                    //         } else {
+                    //             echo sprintf('%s%d %d', $measureChildren->pitchStep(), $measureChildren->pitchOctave(), $measureChildren->duration());
+                    //         }
+                    //     }
+                    //     echo PHP_EOL;
+                    // });
+                    echo $chunk->sum(function(MeasureChildrenInterface $measureChildren) {
+                        if ($measureChildren instanceof Note) {
+                            return $measureChildren->duration();
+                        }
+                        return 0;
+                    });
+                    echo PHP_EOL;
                 });
+                echo '----' . PHP_EOL;
             });
         });
 

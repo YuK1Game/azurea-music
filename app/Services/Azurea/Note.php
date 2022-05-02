@@ -2,16 +2,18 @@
 namespace App\Services\Azurea;
 
 use App\Services\Music\Parts\Measures\Note as MusicNote;
+use App\Services\Azurea\Notes\NotePitchTable;
 
 class Note
 {
     protected MusicNote $musicNote;
 
-    protected int $baseDuration = 48;
+    protected int $baseDuration = 0;
 
-    public function __construct(MusicNote $musicNote)
+    public function __construct(MusicNote $musicNote, int $baseDuration)
     {
         $this->musicNote = $musicNote;
+        $this->baseDuration = $baseDuration;
     }
 
     public function code()
@@ -26,13 +28,31 @@ class Note
 
     public function step() : string
     {
-        $step = sprintf('o%d%s%s', $this->musicNote->pitchOctave(), $this->musicNote->pitchStep(), $this->duration());
+        list($pitchStep, $pitchOctave) = $this->pitch();
+
+        $step = sprintf('o%d%s%s', $pitchOctave, $pitchStep, $this->duration());
 
         if ($this->musicNote->isChord()) {
             $step = ':' . $step;
         }
 
         return $step;
+    }
+
+    public function pitch() : array
+    {
+        $pitchStep = $this->musicNote->pitchStep();
+        $pitchOctave = $this->musicNote->pitchOctave();
+
+        if ($this->musicNote->isFlat()) {
+            list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave);
+        }
+
+        if ($this->musicNote->isSharp()) {
+            list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave);
+        }
+
+        return [ $pitchStep, $pitchOctave ];
     }
 
     public function duration() : string
@@ -48,21 +68,13 @@ class Note
 
     public function baseDuration() : int
     {
-        switch ($this->musicNote->duration()) {
-            case 48 : return  1;
-            case 36 :
-            case 24 : return  2;
-            case 18 :
-            case 12 : return  4;
-            case  9 : 
-            case  6 : return  8;
-            case  4 : return 12;
-            case  3 : return 16;
-            case  2 : return 32;
-
-            default:
-                throw new \Exception(sprintf('Duration error. [%d]', $this->musicNote->duration()));
+        $duration = (int) $this->baseDuration / $this->musicNote->duration();
+        
+        if ($duration !== floor($this->baseDuration / $this->musicNote->duration())) {
+            throw new \Exception(sprintf('%s,%s,%s', $duration, $this->baseDuration, $this->musicNote->duration()));
         }
+        
+        return $duration;
     }
 
     public function isDottedDuration() : bool

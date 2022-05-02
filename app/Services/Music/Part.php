@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Music;
 
+use App\Services\Music\Parts\MeasureChunk;
 use App\Services\MusicXML\MusicXML\Measure;
 use Collator;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
@@ -17,6 +18,15 @@ class Part extends Node implements NodeInterface
         });
 
         return $parts;
+    }
+
+    public function maxDuration() : int
+    {
+        return $this->measures()->max(function(Parts\Measure $measure) {
+            return $measure->childrenChunk()->max(function(MeasureChunk $measureChunk) {
+                return $measureChunk->totalNoteDuration();
+            });
+        });
     }
 
     public function trackA() : Collection
@@ -40,6 +50,15 @@ class Part extends Node implements NodeInterface
             return $measure->childrenChunk()->slice($number, 1) ?? null;
         })
         ->flatten(1);
+    }
+
+    public function tracks() : Collection
+    {
+        return collect([
+            'trackA' => $this->trackA(),
+            'trackB' => $this->trackB(),
+            'trackC' => $this->trackC(),
+        ]);
     }
 
 }

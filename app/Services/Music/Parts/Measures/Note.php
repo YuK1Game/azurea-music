@@ -4,9 +4,6 @@ namespace App\Services\Music\Parts\Measures;
 use App\Services\Music\{ Node, NodeInterface };
 use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
 
-use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
-use Illuminate\Support\Collection;
-
 class Note extends Node implements NodeInterface, MeasureChildrenInterface
 {
     protected ?int $totalNoteDuration;
@@ -23,7 +20,13 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
 
     public function duration() : int
     {
-        return (int) $this->crawler->filter('duration')->innerText();
+        $node = $this->crawler->filter('duration');
+
+        if ( ! $node->count() > 0) {
+            dd($this->__toString());
+        }
+
+        return $node->count() > 0 ? (int) $node->innerText() : 0;
     }
 
     public function isRest() : bool
@@ -34,6 +37,22 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
     public function isChord() : bool
     {
         return $this->crawler->filter('chord')->count() > 0;
+    }
+
+    public function accidental() : ?string
+    {
+        $node = $this->crawler->filter('accidental');
+        return $node->count() > 0 ? $node->text() : null;
+    }
+
+    public function isFlat() : bool
+    {
+        return $this->accidental() === 'flat';
+    }
+
+    public function isSharp() : bool
+    {
+        return $this->accidental() === 'sharp';
     }
 
     public function pitchStep() : string

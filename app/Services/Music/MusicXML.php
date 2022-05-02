@@ -17,7 +17,7 @@ class MusicXML
             throw new \Exception('Error');
         }
 
-        $zip->extractTo(sprintf('storage/musicxml/%s/app', md5($filename)));
+        $zip->extractTo(storage_path(sprintf('musicxml/%s', basename($filename))));
 
         $this->xml = $this->getXmlData($zip);
     }

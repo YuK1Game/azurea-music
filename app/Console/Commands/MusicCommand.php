@@ -60,43 +60,25 @@ class MusicCommand extends Command
         $scoreParts->each(function(ScorePart $scorePart, $partIndex) {
 
             echo sprintf('Part [%d]' . PHP_EOL, $partIndex + 1);
+            echo str_repeat('-', 80) . PHP_EOL;
 
             $part = $scorePart->part();
+            $maxDuration = $part->maxDuration();
 
-            $part->trackA()->each(function(?MeasureChunk $measureChunk) {
-                $measureChunk->notes()->each(function(Note $note) {
-                    $azureaNote = new AzureaNote($note);
-                    echo $azureaNote->code() . '';
-                });
-                echo PHP_EOL;
-            });
-            die;
+            $part->tracks()->each(function(Collection $track, string $trackName) use($maxDuration) {
+                echo sprintf('TrackName [%s]' . PHP_EOL, $trackName);
 
-            $measures = $part->measures();
-            $measures->slice(26, 2)->each(function(Measure $measure, $measureIndex) {
-                // echo sprintf('[%d] ', $measureIndex + 0);
-
-                $measure->childrenChunk()->each(function(MeasureChunk $chunk, $measureChunkIndex) {
-                    if ($measureChunkIndex === 2) {
-                        $chunk->notes()->each(function(Note $note) {
-                            // $azureaNote = new AzureaNote($note);
-                            // echo $azureaNote->code() . '';
-
-                            echo $note . PHP_EOL;
-
-                            // if ($note->isChord()) {
-                            //     echo ':';
-                            // }
-                            // echo $note->duration() . ' ';
-                        });
-
-                        echo PHP_EOL;
-                    }
+                $track->each(function(?MeasureChunk $measureChunk) use($maxDuration) {
+                    $measureChunk->notes()->each(function(Note $note) use($maxDuration) {
+                        $azureaNote = new AzureaNote($note, $maxDuration);
+                        echo $azureaNote->code() . '';
+                    });
+                    echo PHP_EOL;
                 });
             });
-            die;
 
-            echo PHP_EOL;
+            echo str_repeat('=', 80) . PHP_EOL;
+            
         });
 
         return 0;

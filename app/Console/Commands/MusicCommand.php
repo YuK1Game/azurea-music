@@ -52,7 +52,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Mi_Corazn_Encantado.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();

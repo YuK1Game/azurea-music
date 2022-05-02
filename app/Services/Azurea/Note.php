@@ -68,12 +68,8 @@ class Note
 
     public function baseDuration() : int
     {
-        $duration = (int) $this->baseDuration / $this->musicNote->duration();
-        
-        if ($duration !== floor($this->baseDuration / $this->musicNote->duration())) {
-            throw new \Exception(sprintf('%s,%s,%s', $duration, $this->baseDuration, $this->musicNote->duration()));
-        }
-        
+        $overDuration = $this->baseDuration % $this->musicNote->duration();
+        $duration = $this->baseDuration / ($this->musicNote->duration() - $overDuration);
         return $duration;
     }
 

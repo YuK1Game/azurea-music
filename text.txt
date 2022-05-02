@@ -1,248 +1,289 @@
-12----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-48----
-1212----
-4896----
-4896----
-4896----
-4896----
-4896----
-4896----
-4896----
-4896----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-90144----
-72144----
-72144----
-78144----
-132144----
-138144----
-108144----
-144144----
-4848144----
-4848144----
-4848144----
-4848144----
-48144----
-48144----
-48144----
-72144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-9696----
-96144----
-90144----
-72144----
-96144----
-90144----
-144144----
-144144----
-144144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-48144----
-90144----
-72144----
-72144----
-78144----
-132144----
-138144----
-108144----
-144144----
-4848144----
-4848144----
-4848144----
-4848144----
-48144----
-48144----
-48144----
-72144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-9696----
-96144----
-96126----
-9696----
-9696----
-9690----
-9696----
-9696----
-9696----
-9672----
-9696----
-9696----
-9696----
-144144----
-4848144----
-4848144----
-4848144----
-4848144----
-48144----
-48144----
-48144----
-72144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-4848144----
-9696----
-96144----
-90144----
-72144----
-48144----
-48144----
-48144----
-48144----
-90144----
-72144----
-96144----
-90144----
-144144----
-144144----
-144144----
-84144----
-192144----
+Part [2]
+<note default-x="16.62" default-y="-282.89">
+        <pitch>
+          <step>B</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="16.62" default-y="-257.89">
+        <chord></chord>
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="16.62" default-y="-247.89">
+        <chord></chord>
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="54.65" default-y="-282.89">
+        <pitch>
+          <step>B</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="54.65" default-y="-257.89">
+        <chord></chord>
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="54.65" default-y="-247.89">
+        <chord></chord>
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="130.47" default-y="-282.89">
+        <pitch>
+          <step>B</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="130.47" default-y="-257.89">
+        <chord></chord>
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="130.47" default-y="-247.89">
+        <chord></chord>
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="178.00" default-y="-282.89">
+        <pitch>
+          <step>B</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="178.00" default-y="-257.89">
+        <chord></chord>
+        <pitch>
+          <step>G</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="178.00" default-y="-247.89">
+        <chord></chord>
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+
+<note default-x="18.64" default-y="-287.89">
+        <pitch>
+          <step>A</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="18.64" default-y="-267.89">
+        <chord></chord>
+        <pitch>
+          <step>E</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="18.64" default-y="-252.89">
+        <chord></chord>
+        <pitch>
+          <step>A</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="53.55" default-y="-287.89">
+        <pitch>
+          <step>A</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="53.55" default-y="-267.89">
+        <chord></chord>
+        <pitch>
+          <step>E</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="53.55" default-y="-252.89">
+        <chord></chord>
+        <pitch>
+          <step>A</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>18</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <dot></dot>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="149.63" default-y="-287.89">
+        <pitch>
+          <step>A</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="149.63" default-y="-267.89">
+        <chord></chord>
+        <pitch>
+          <step>E</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="149.63" default-y="-252.89">
+        <chord></chord>
+        <pitch>
+          <step>A</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>12</duration>
+        <voice>5</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="200.41" default-y="-287.89">
+        <pitch>
+          <step>A</step>
+          <octave>2</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="200.41" default-y="-267.89">
+        <chord></chord>
+        <pitch>
+          <step>E</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+<note default-x="200.41" default-y="-252.89">
+        <chord></chord>
+        <pitch>
+          <step>A</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>5</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <staff>2</staff>
+        </note>
+

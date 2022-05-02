@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Music;
 
+use App\Services\MusicXML\MusicXML\Measure;
+use Collator;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use Illuminate\Support\Collection;
 
@@ -15,6 +17,29 @@ class Part extends Node implements NodeInterface
         });
 
         return $parts;
+    }
+
+    public function trackA() : Collection
+    {
+        return $this->getTrack(0);
+    }
+
+    public function trackB() : Collection
+    {
+        return $this->getTrack(1);
+    }
+
+    public function trackC() : Collection
+    {
+        return $this->getTrack(2);
+    }
+
+    public function getTrack(int $number) : Collection
+    {
+        return $this->measures()->map(function(Parts\Measure $measure) use($number) {
+            return $measure->childrenChunk()->slice($number, 1) ?? null;
+        })
+        ->flatten(1);
     }
 
 }

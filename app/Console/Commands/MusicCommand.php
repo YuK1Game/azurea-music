@@ -16,6 +16,8 @@ use App\Services\Music\{
     Parts\Measures\Backup,
 };
 
+use App\Services\Azurea\Note as AzureaNote;
+
 
 class MusicCommand extends Command
 {
@@ -50,35 +52,51 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
+        $filename = resource_path('musicxml/Mi_Corazn_Encantado.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();
         $scoreParts = $music->scoreParts();
         $scoreParts->each(function(ScorePart $scorePart, $partIndex) {
+
+            echo sprintf('Part [%d]' . PHP_EOL, $partIndex + 1);
+
             $part = $scorePart->part();
-            $measures = $part->measures();
-            $measures->each(function(Measure $measure) use($partIndex) {
-                $measure->childrenChunk()->each(function(MeasureChunk $chunk, $measureChunkIndex) use($partIndex) {
-                    // if ($partIndex === 0 || $measureChunkIndex === 1) {
-                    //     return;
-                    // }
-                    
-                    // $chunk->each(function(MeasureChildrenInterface $measureChildren) {
-                    //     if ($measureChildren instanceof Note) {
-                    //         if ($measureChildren->isRest()) {
-                    //             echo sprintf('%s %d', 'r', $measureChildren->duration());
-                    //         } else {
-                    //             echo sprintf('%s%d %d', $measureChildren->pitchStep(), $measureChildren->pitchOctave(), $measureChildren->duration());
-                    //         }
-                    //     }
-                    //     echo PHP_EOL;
-                    // });
-                    // echo PHP_EOL;
-                    echo $chunk->totalNoteDuration();
+
+            $part->trackA()->each(function(?MeasureChunk $measureChunk) {
+                $measureChunk->notes()->each(function(Note $note) {
+                    $azureaNote = new AzureaNote($note);
+                    echo $azureaNote->code() . '';
                 });
-                echo '----' . PHP_EOL;
+                echo PHP_EOL;
             });
+            die;
+
+            $measures = $part->measures();
+            $measures->slice(26, 2)->each(function(Measure $measure, $measureIndex) {
+                // echo sprintf('[%d] ', $measureIndex + 0);
+
+                $measure->childrenChunk()->each(function(MeasureChunk $chunk, $measureChunkIndex) {
+                    if ($measureChunkIndex === 2) {
+                        $chunk->notes()->each(function(Note $note) {
+                            // $azureaNote = new AzureaNote($note);
+                            // echo $azureaNote->code() . '';
+
+                            echo $note . PHP_EOL;
+
+                            // if ($note->isChord()) {
+                            //     echo ':';
+                            // }
+                            // echo $note->duration() . ' ';
+                        });
+
+                        echo PHP_EOL;
+                    }
+                });
+            });
+            die;
+
+            echo PHP_EOL;
         });
 
         return 0;

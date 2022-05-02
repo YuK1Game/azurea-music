@@ -9,7 +9,18 @@ use Illuminate\Support\Collection;
 
 class Note extends Node implements NodeInterface, MeasureChildrenInterface
 {
+    protected ?int $totalNoteDuration;
     
+    public function setTotalNoteDuration(int $totalNoteDuration) : void
+    {
+        $this->totalNoteDuration = $totalNoteDuration;
+    }
+
+    public function getTotalNoteDuration() : ?int
+    {
+        return $this->totalNoteDuration;
+    }
+
     public function duration() : int
     {
         return (int) $this->crawler->filter('duration')->innerText();

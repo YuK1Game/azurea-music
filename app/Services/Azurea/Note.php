@@ -6,18 +6,26 @@ use App\Services\Azurea\Notes\NotePitchTable;
 
 class Note
 {
-    protected MusicNote $musicNote;
+    protected ?MusicNote $musicNote;
 
     protected int $baseDuration = 0;
 
-    public function __construct(MusicNote $musicNote, int $baseDuration)
+    public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
         $this->musicNote = $musicNote;
-        $this->baseDuration = $baseDuration;
+        $this->measureTotalDuration = $measureTotalDuration;
+    }
+
+    public function isBlank() : bool
+    {
+        return ! $this->musicNote;
     }
 
     public function code()
     {
+        if ($this->isBlank()) {
+            return 'r1';
+        }
         return $this->musicNote->isRest() ? $this->rest() : $this->step();
     }
 
@@ -57,25 +65,34 @@ class Note
 
     public function duration() : string
     {
-        $baseDuration = (string) $this->baseDuration();
+        list($baseDuration, $isDottedDuration) = $this->baseDuration();
 
-        if ($this->isDottedDuration()) {
+        $baseDuration = $baseDuration;
+
+        if ($isDottedDuration) {
             $baseDuration .= '.';
         }
 
         return $baseDuration;
     }
 
-    public function baseDuration() : int
+    public function baseDuration() : array
     {
-        $overDuration = $this->baseDuration % $this->musicNote->duration();
-        $duration = $this->baseDuration / ($this->musicNote->duration() - $overDuration);
-        return $duration;
+        $x = $this->musicNote->duration() / $this->measureTotalDuration;
+        $y = fmod(1, $x);
+
+        $isDottedDuration = $y > 0;
+        $duration = 1 / ($isDottedDuration ? ($x / 1.5) : $x);
+
+        return [ $duration, $isDottedDuration ];
     }
 
-    public function isDottedDuration() : bool
+    public function debugCode() : string
     {
-        return $this->baseDuration % $this->musicNote->duration() > 0;
+        if ($this->musicNote->isChord()) {
+            return '';
+        }
+        return sprintf('%d [%s]', $this->musicNote->duration(), $this->duration());
     }
 
 }

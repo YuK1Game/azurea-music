@@ -46,10 +46,9 @@ class Part extends Node implements NodeInterface
 
     public function getTrack(int $number) : Collection
     {
-        return $this->measures()->map(function(Parts\Measure $measure) use($number) {
-            return $measure->childrenChunk()->slice($number, 1) ?? null;
-        })
-        ->flatten(1);
+        return $this->measures()->map(function(Parts\Measure $measure, $index) use($number) {
+            return $measure->childrenChunk()->get($number);
+        });
     }
 
     public function tracks() : Collection

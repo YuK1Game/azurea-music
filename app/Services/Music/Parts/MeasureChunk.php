@@ -20,7 +20,7 @@ class MeasureChunk
     {
         if( ! $this->totalNoteDuration) {
             $this->totalNoteDuration = $this->measureChunk->sum(function(MeasureChildrenInterface $measureChildren) {
-                if ($measureChildren instanceof Measures\Note) {
+                if ($measureChildren instanceof Measures\Note && ! $measureChildren->isChord()) {
                     return $measureChildren->duration();
                 }
                 return 0;

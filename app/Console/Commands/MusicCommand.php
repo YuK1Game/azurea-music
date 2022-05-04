@@ -52,7 +52,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
+        $filename = resource_path('musicxml/Tokyo_Revengers_OP.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();
@@ -65,16 +65,27 @@ class MusicCommand extends Command
             $part = $scorePart->part();
             $maxDuration = $part->maxDuration();
 
-            $part->tracks()->each(function(Collection $track, string $trackName) use($maxDuration) {
-                echo sprintf('TrackName [%s]' . PHP_EOL, $trackName);
+            $part->tracks()->each(function(Collection $track, string $trackName) use($maxDuration, $partIndex) {
+                echo sprintf('TrackName [%s]' . PHP_EOL . PHP_EOL, $trackName);
 
                 $track->each(function(?MeasureChunk $measureChunk) use($maxDuration) {
-                    $measureChunk->notes()->each(function(Note $note) use($maxDuration) {
-                        $azureaNote = new AzureaNote($note, $maxDuration);
-                        echo $azureaNote->code() . '';
-                    });
+
+                    if ($measureChunk) {
+                        $measureChunk->notes()->each(function(Note $note) use($maxDuration) {
+                            $azureaNote = new AzureaNote($note, $maxDuration);
+                            echo $azureaNote->code();
+
+                        });
+                    } else {
+                        $azureaNote = new AzureaNote(null, $maxDuration);
+                        echo $azureaNote->code();
+                    }
+                    
                     echo PHP_EOL;
                 });
+
+                echo PHP_EOL;
+
             });
 
             echo str_repeat('=', 80) . PHP_EOL;

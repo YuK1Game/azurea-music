@@ -21,11 +21,12 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
     public function duration() : int
     {
         $node = $this->crawler->filter('duration');
+        return $node->count() > 0 ? (int) $node->innerText() : 0;
+    }
 
-        if ( ! $node->count() > 0) {
-            dd($this->__toString());
-        }
-
+    public function volume() : int
+    {
+        $node = $this->crawler->filter('volume');
         return $node->count() > 0 ? (int) $node->innerText() : 0;
     }
 

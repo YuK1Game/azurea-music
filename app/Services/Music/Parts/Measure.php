@@ -4,18 +4,24 @@ namespace App\Services\Music\Parts;
 use App\Services\Music\{ Node, NodeInterface };
 use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
 use App\Services\Music\Parts\MeasureChunk;
-use Collator;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use Illuminate\Support\Collection;
+use App\Services\Music\Parts\Measures\MeasureKey;
 
 class Measure extends Node implements NodeInterface
 {
     public function time() : array
     {
         return [
-            (int) $this->crawler->filter('time > beats')->innerText(),
-            (int) $this->crawler->filter('time > beat-type')->innerText(),
+            (int) $this->crawler->filter('attributes > time > beats')->innerText(),
+            (int) $this->crawler->filter('attributes > time > beat-type')->innerText(),
         ];
+    }
+
+    public function key() : array
+    {
+        $index = (int) $this->crawler->filter('attributes > key > fifths');
+        return MeasureKey::getCodes($index);
     }
 
     public function children() : Collection

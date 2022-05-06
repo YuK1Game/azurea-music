@@ -62,6 +62,12 @@ class Measure extends Node implements NodeInterface
         ];
     }
 
+    public function tempo() : ?int
+    {
+        $node = $this->crawler->filter('direction[placement="above"] > sound[tempo]');
+        return $node->count() > 0 ? $node->attr('tempo') : null;
+    }
+
     public function measureKey() : MeasureKey
     {
         $node = $this->crawler->filter('attributes > key > fifths');

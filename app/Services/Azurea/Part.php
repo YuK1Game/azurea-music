@@ -67,6 +67,10 @@ class Part
         $this->part->tracks()->each(function(Collection $track, int $trackIndex) {
             echo sprintf('TrackNumber [%d]' . PHP_EOL . PHP_EOL, $trackIndex + 1);
 
+            if ($this->metaMeasure->tempo()) {
+                echo sprintf('t%d', $this->metaMeasure->tempo());
+            }
+
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));
                 echo PHP_EOL;

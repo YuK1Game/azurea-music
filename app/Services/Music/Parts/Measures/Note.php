@@ -56,6 +56,21 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
         return $this->accidental() === 'sharp';
     }
 
+    public function isNatural() : bool
+    {
+        return $this->accidental() === 'natural';
+    }
+
+    public function isTieStart() : bool
+    {
+        return $this->crawler->filter('notations > tied[type="start"]')->count() > 0;
+    }
+
+    public function isTieEnd() : bool
+    {
+        return $this->crawler->filter('notations > tied[type="stop"]')->count() > 0;
+    }
+
     public function pitchStep() : string
     {
         $step = $this->crawler->filter('pitch > step')->innerText() ?? null;

@@ -58,6 +58,10 @@ class Note
 
         if ($this->musicNote->isChord()) {
             $step = ':' . $step;
+        } else {
+            if ($this->musicNote->isTieEnd()) {
+                $step = '&' . $step;
+            }
         }
 
         return $step;
@@ -68,12 +72,14 @@ class Note
         $pitchStep = $this->musicNote->pitchStep();
         $pitchOctave = $this->musicNote->pitchOctave();
 
-        if ($this->musicNote->isFlat()) {
-            list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave);
-        }
-
-        if ($this->musicNote->isSharp()) {
-            list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave);
+        if ( ! $this->musicNote->isNatural()) {
+            if ($this->musicNote->isFlat()) {
+                list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave);
+            }
+    
+            if ($this->musicNote->isSharp()) {
+                list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave);
+            }
         }
 
         return [ $pitchStep, $pitchOctave ];
@@ -102,14 +108,6 @@ class Note
         $duration = 1 / ($isDottedDuration ? ($x / 1.5) : $x);
 
         return [ $duration, $isDottedDuration ];
-    }
-
-    public function debugCode() : string
-    {
-        if ($this->musicNote->isChord()) {
-            return '';
-        }
-        return sprintf('%d [%s]', $this->musicNote->duration(), $this->duration());
     }
 
 }

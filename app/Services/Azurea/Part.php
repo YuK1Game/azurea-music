@@ -18,7 +18,7 @@ class Part
 
     protected int $maxDuration;
 
-    protected Collection $measureDurations;
+    protected ?Collection $measureDurations;
 
     protected array $keys = [];
 
@@ -28,8 +28,21 @@ class Part
     {
         $this->part = $part;
         $this->keys = $part->keys();
-        $this->maxDuration = $part->maxDuration();
-        $this->measureDurations = collect();
+
+        $this->initMeasureDurations();
+        $this->initMaxDuration();
+    }
+
+    private function initMeasureDurations() : void
+    {
+        $this->measureDurations = $this->part->trackA()->map(function(MusicMeasure $measure) {
+            return $measure->totalDuration();
+        });
+    }
+
+    private function initMaxDuration() : void
+    {
+        $this->maxDuration = $this->part->maxDuration();
     }
 
     protected function setMeasureDurationByIndex(int $index, ?int $measureDuration) : void
@@ -50,8 +63,7 @@ class Part
             echo sprintf('TrackNumber [%d]' . PHP_EOL . PHP_EOL, $trackIndex + 1);
 
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
-                $this->setMeasureDurationByIndex($measureIndex, $measure ? $measure->totalDuration() : null);
-                $this->exportCodeByMeasure($measure, $this->getMeasureDurationByIndex($measureIndex));
+                $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));
                 echo PHP_EOL;
             });
 

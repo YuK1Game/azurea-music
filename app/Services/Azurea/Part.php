@@ -20,17 +20,17 @@ class Part
 
     protected ?Collection $measureDurations;
 
-    protected array $keys = [];
-
     protected ?Note $prevNote = null;
+
+    protected MusicMeasure $metaMeasure;
 
     public function __construct(MusicPart $part)
     {
         $this->part = $part;
-        $this->keys = $part->keys();
 
         $this->initMeasureDurations();
         $this->initMaxDuration();
+        $this->initMetaMeasure();
     }
 
     private function initMeasureDurations() : void
@@ -43,6 +43,11 @@ class Part
     private function initMaxDuration() : void
     {
         $this->maxDuration = $this->part->maxDuration();
+    }
+
+    private function initMetaMeasure() : void
+    {
+        $this->metaMeasure = $this->part->trackA()->first();
     }
 
     protected function setMeasureDurationByIndex(int $index, ?int $measureDuration) : void
@@ -74,9 +79,8 @@ class Part
 
     public function exportCodeByMeasure(?MusicMeasure $measure, int $measureDuration) : void
     {
-        $this->prevNote = null;
-
         $azureaNotes = $this->getNotesByMeasure($measure) ?? $this->getBlankNotesWithMeasureDuration($measureDuration);
+
         $azureaNotes->each(function(Note $note) {
             $note->setPrevNote($note);
             echo $note->code();
@@ -88,6 +92,7 @@ class Part
     {
         return $measure->hasNotes() ? $measure->notes()->map(function(MusicNote $note) {
             $azureaNote = new Note($note, $this->maxDuration);
+            $azureaNote->setMeasureKey($this->metaMeasure->measureKey());
             return $azureaNote;
         }) : null;
     }

@@ -56,7 +56,6 @@ class Part extends Node implements NodeInterface
         return $this->measures()->map(function(Parts\Measure $measure) use($number) {
             $newMeasure = clone $measure;
             $newMeasure->narrowDownChildrenByIndex($number);
-            $newMeasure->setTrackId($number);
             return $newMeasure;
         });
     }

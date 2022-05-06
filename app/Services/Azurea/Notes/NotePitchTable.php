@@ -12,25 +12,33 @@ class NotePitchTable
         return collect(static::$pitchTable);
     }
 
-    public static function addPitch(string $pitchStep, int $pitchOctave) : array
+    public static function addPitch(string $pitchStep, int $pitchOctave, int $addCount = 1) : array
     {
-        $pitchTableIndex = static::pitchTable()->search(strtolower($pitchStep));
-        $pitchTableIndex++;
+        for ($i = 0 ; $i < $addCount ; $i++) {
+            $pitchTableIndex = static::pitchTable()->search(strtolower($pitchStep));
+            $pitchTableIndex++;
 
-        if ($newPitchStep = static::pitchTable()->get($pitchTableIndex)) {
-            return ['c', $pitchOctave + 1];
+            if ( ! $pitchStep = static::pitchTable()->get($pitchTableIndex)) {
+                $pitchStep    = 'c';
+                $pitchOctave += 1;
+            }
         }
-        return [ $newPitchStep, $pitchOctave ];
+
+        return [ $pitchStep, $pitchOctave ];
     }
 
-    public static function subPitch(string $pitchStep, int $pitchOctave) : array
+    public static function subPitch(string $pitchStep, int $pitchOctave, int $subCount = 1) : array
     {
-        $pitchTableIndex = static::pitchTable()->search(strtolower($pitchStep));
-        $pitchTableIndex--;
+        for ($i = 0 ; $i < $subCount ; $i++) {
+            $pitchTableIndex = static::pitchTable()->search(strtolower($pitchStep));
+            $pitchTableIndex--;
 
-        if ($newPitchStep = static::pitchTable()->get($pitchTableIndex)) {
-            return ['b', $pitchOctave - 1];
+            if ( ! $pitchStep = static::pitchTable()->get($pitchTableIndex)) {
+                $pitchStep    = 'b';
+                $pitchOctave -= 1;
+            }
         }
-        return [ $newPitchStep, $pitchOctave ];
+
+        return [ $pitchStep, $pitchOctave ];
     }
 }

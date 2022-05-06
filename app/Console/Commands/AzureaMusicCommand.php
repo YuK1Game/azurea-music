@@ -21,6 +21,7 @@ use App\Services\Azurea\{
 };
 
 use App\Services\Azurea\Note as AzureaNote;
+use App\Services\Azurea\Notes\NotePitchTable;
 
 class AzureaMusicCommand extends Command
 {
@@ -61,15 +62,20 @@ class AzureaMusicCommand extends Command
         $music = $musicXml->music();
         $scoreParts = $music->scoreParts();
 
-        $scoreParts->slice(1, 1)->each(function(ScorePart $scorePart, int $scorePartIndex) {
-            echo join(PHP_EOL, [
-                str_repeat('=', 100),
-                sprintf('ScorePart [%d]', $scorePartIndex + 1),
-                str_repeat('=', 100),
-            ]) . PHP_EOL;
-            $azureaScorePart = new AzureaScorePart($scorePart);
-            $azureaScorePart->exportCode();
-        });
+        try {
+            $scoreParts->slice(1, 1)->each(function(ScorePart $scorePart, int $scorePartIndex) {
+                echo join(PHP_EOL, [
+                    str_repeat('=', 100),
+                    sprintf('ScorePart [%d]', $scorePartIndex + 1),
+                    str_repeat('=', 100),
+                ]) . PHP_EOL;
+                $azureaScorePart = new AzureaScorePart($scorePart);
+                $azureaScorePart->exportCode();
+            });
+        } catch (\InvalidArgumentException $e) {
+            echo $e;
+            die;
+        }
 
         return 0;
     }

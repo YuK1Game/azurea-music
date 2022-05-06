@@ -3,6 +3,7 @@ namespace App\Services\Azurea;
 
 use App\Services\Music\Parts\Measures\Note as MusicNote;
 use App\Services\Azurea\Notes\NotePitchTable;
+use App\Services\Music\Parts\Measures\MeasureKey;
 
 class Note
 {
@@ -14,10 +15,19 @@ class Note
 
     protected ?Note $prevNote;
 
+    protected int $sharpCount;
+
+    protected int $flatCount;
+
+    protected MeasureKey $measureKey;
+
     public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
         $this->musicNote = $musicNote;
         $this->measureTotalDuration = $measureTotalDuration;
+
+        $this->sharpCount = ($this->musicNote && $this->musicNote->isSharp()) ? 1 : 0;
+        $this->flatCount = ($this->musicNote && $this->musicNote->isFlat()) ? 1 : 0;
     }
 
     public function setNoteDuration(int $noteDuration) : void
@@ -35,9 +45,29 @@ class Note
         $this->prevNote = $prevNote;
     }
 
+    public function setMeasureKey(MeasureKey $measureKey) : void
+    {
+        $this->measureKey = $measureKey;
+    }
+
+    public function addSharpCount(int $count = 1) : void
+    {
+        $this->sharpCount += $count;
+    }
+
+    public function addFlatCount(int $count = 1) : void
+    {
+        $this->flatCount += $count;
+    }
+
     public function isBlank() : bool
     {
         return ! $this->musicNote;
+    }
+
+    public function isSamePitchPrevNote() : bool
+    {
+        return $this->prevNote && $this->prevNote->pitch() === $this->pitch();
     }
 
     public function code()
@@ -53,15 +83,16 @@ class Note
     public function step() : string
     {
         list($pitchStep, $pitchOctave) = $this->pitch();
-
-        $step = sprintf('o%d%s%s', $pitchOctave, $pitchStep, $this->duration());
+        
+        $pitchCode = sprintf('o%d%s', $pitchOctave, $pitchStep);
+        $step = sprintf('%s%s', $pitchCode, $this->duration());
 
         if ($this->musicNote->isChord()) {
             $step = ':' . $step;
-        } else {
-            if ($this->musicNote->isTieEnd()) {
-                $step = '&' . $step;
-            }
+        }
+
+        if ($this->musicNote->isTieEnd() && $this->isSamePitchPrevNote()) {
+            return $this->musicNote->isChord() ? '' : $this->rest();
         }
 
         return $step;
@@ -73,13 +104,8 @@ class Note
         $pitchOctave = $this->musicNote->pitchOctave();
 
         if ( ! $this->musicNote->isNatural()) {
-            if ($this->musicNote->isFlat()) {
-                list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave);
-            }
-    
-            if ($this->musicNote->isSharp()) {
-                list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave);
-            }
+            list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
+            list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
         }
 
         return [ $pitchStep, $pitchOctave ];
@@ -96,6 +122,20 @@ class Note
         }
 
         return $baseDuration;
+    }
+
+    protected function getSharpCount() : int
+    {
+        $count = $this->musicNote->isSharp() ? 1 : 0;
+        $count += $this->measureKey->isSharp($this->musicNote->pitchStep()) ? 1 : 0;
+        return $count;
+    }
+
+    protected function getFlatCount() : int
+    {
+        $count = $this->musicNote->isFlat() ? 1 : 0;
+        $count += $this->measureKey->isFlat($this->musicNote->pitchStep()) ? 1 : 0;
+        return $count;
     }
 
     protected function baseDuration() : array

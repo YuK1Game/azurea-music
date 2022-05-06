@@ -14,17 +14,11 @@ class Measure extends Node implements NodeInterface
 
     protected ?int $totalDuration = null;
 
-    public $trackId;
-
     public function __construct(DOMCrawler $crawler, NodeInterface $parentNode)
     {
         parent::__construct($crawler, $parentNode);
 
         $this->initChildren();
-    }
-
-    public function setTrackId($id) {
-        $this->trackId = $id;
     }
 
     private function initChildren() : void
@@ -68,10 +62,11 @@ class Measure extends Node implements NodeInterface
         ];
     }
 
-    public function keys() : array
+    public function measureKey() : MeasureKey
     {
-        $index = (int) $this->crawler->filter('attributes > key > fifths')->innerText();
-        return MeasureKey::getCodes($index);
+        $node = $this->crawler->filter('attributes > key > fifths');
+        $index = $node->count() > 0 ? $node->innerText() : null;
+        return MeasureKey::factory($index);
     }
     
     public function narrowDownChildrenByIndex(int $index) : void

@@ -54,9 +54,9 @@ class Part extends Node implements NodeInterface
     public function tracks() : Collection
     {
         return collect([
-            'trackA' => $this->trackA(),
-            'trackB' => $this->trackB(),
-            'trackC' => $this->trackC(),
+            $this->trackA(),
+            $this->trackB(),
+            $this->trackC(),
         ]);
     }
 

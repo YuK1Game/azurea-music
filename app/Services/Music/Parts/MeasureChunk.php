@@ -28,7 +28,7 @@ class MeasureChunk
         }
     }
 
-    public function totalNoteDuration() : int
+    public function totalNoteDuration() : ?int
     {
         $this->initTotalNoteDuration();
         return $this->totalNoteDuration;

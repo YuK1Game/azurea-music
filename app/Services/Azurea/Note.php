@@ -10,10 +10,22 @@ class Note
 
     protected int $baseDuration = 0;
 
+    protected ?int $noteDuration = null;
+
     public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
         $this->musicNote = $musicNote;
         $this->measureTotalDuration = $measureTotalDuration;
+    }
+
+    public function setNoteDuration(int $noteDuration) : void
+    {
+        $this->noteDuration = $noteDuration;
+    }
+
+    public function getNoteDuration() : ?int
+    {
+        return $this->noteDuration;
     }
 
     public function isBlank() : bool
@@ -23,10 +35,7 @@ class Note
 
     public function code()
     {
-        if ($this->isBlank()) {
-            return 'r1';
-        }
-        return $this->musicNote->isRest() ? $this->rest() : $this->step();
+        return $this->isBlank() || $this->musicNote->isRest() ? $this->rest() : $this->step();
     }
 
     public function rest() : string
@@ -76,9 +85,10 @@ class Note
         return $baseDuration;
     }
 
-    public function baseDuration() : array
+    protected function baseDuration() : array
     {
-        $x = $this->musicNote->duration() / $this->measureTotalDuration;
+        $noteDuration = $this->getNoteDuration() ?? $this->musicNote->duration();
+        $x = $noteDuration / $this->measureTotalDuration;
         $y = fmod(1, $x);
 
         $isDottedDuration = $y > 0;

@@ -55,14 +55,15 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Tokyo_Revengers_OP.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();
         $scoreParts = $music->scoreParts();
 
-        $scoreParts->each(function(ScorePart $scorePart, $partIndex) {
+        $scoreParts->each(function(ScorePart $scorePart) {
             $azureaScorePart = new AzureaScorePart($scorePart);
+            $azureaScorePart->exportCode();
         });
 
         return 0;

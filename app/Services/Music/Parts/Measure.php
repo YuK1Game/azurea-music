@@ -3,28 +3,31 @@ namespace App\Services\Music\Parts;
 
 use App\Services\Music\{ Node, NodeInterface };
 use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
-use App\Services\Music\Parts\MeasureChunk;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use Illuminate\Support\Collection;
 use App\Services\Music\Parts\Measures\MeasureKey;
+use App\Services\Music\Parts\Measures\Note;
 
 class Measure extends Node implements NodeInterface
 {
-    public function time() : array
+    protected ?Collection $children;
+
+    protected ?int $totalDuration = null;
+
+    public $trackId;
+
+    public function __construct(DOMCrawler $crawler, NodeInterface $parentNode)
     {
-        return [
-            (int) $this->crawler->filter('attributes > time > beats')->innerText(),
-            (int) $this->crawler->filter('attributes > time > beat-type')->innerText(),
-        ];
+        parent::__construct($crawler, $parentNode);
+
+        $this->initChildren();
     }
 
-    public function key() : array
-    {
-        $index = (int) $this->crawler->filter('attributes > key > fifths');
-        return MeasureKey::getCodes($index);
+    public function setTrackId($id) {
+        $this->trackId = $id;
     }
 
-    public function children() : Collection
+    private function initChildren() : void
     {
         $children = collect();
 
@@ -40,18 +43,56 @@ class Measure extends Node implements NodeInterface
             }
         });
 
-        return $children;
+        $this->children = $children;
     }
 
-    public function childrenChunk() : Collection
+    public function totalDuration() : int
     {
-        return $this->children()
-            ->chunkWhile(function(MeasureChildrenInterface $measureChild) {
-                return $measureChild instanceof Measures\Note;
-            })
-            ->map(function(Collection $chunk) {
-                return new MeasureChunk($chunk);
+        if ( ! $this->totalDuration) {
+            $this->totalDuration = $this->notes()->sum(function(Note $note) {
+                if ( ! $note->isChord()) {
+                    return $note->duration();
+                }
+                return 0;
             });
+        }
+
+        return $this->totalDuration;
+    }
+
+    public function time() : array
+    {
+        return [
+            (int) $this->crawler->filter('attributes > time > beats')->innerText(),
+            (int) $this->crawler->filter('attributes > time > beat-type')->innerText(),
+        ];
+    }
+
+    public function keys() : array
+    {
+        $index = (int) $this->crawler->filter('attributes > key > fifths')->innerText();
+        return MeasureKey::getCodes($index);
+    }
+    
+    public function narrowDownChildrenByIndex(int $index) : void
+    {
+        $this->children = $this->children
+            ->chunkWhile(function(MeasureChildrenInterface $measureChildren) {
+                return $measureChildren instanceof Measures\Note;
+            })
+            ->get($index) ?? collect();
+    }
+
+    public function hasNotes() : bool
+    {
+        return $this->notes()->count() > 0;
+    }
+
+    public function notes() : ?Collection
+    {
+        return $this->children->filter(function(MeasureChildrenInterface $measureChildren) {
+            return $measureChildren instanceof Note;
+        });
     }
 
 }

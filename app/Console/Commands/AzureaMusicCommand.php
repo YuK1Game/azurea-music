@@ -55,13 +55,18 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Japanese_Army_March_Godzilla_1954.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();
         $scoreParts = $music->scoreParts();
 
-        $scoreParts->each(function(ScorePart $scorePart) {
+        $scoreParts->slice(1, 1)->each(function(ScorePart $scorePart, int $scorePartIndex) {
+            echo join(PHP_EOL, [
+                str_repeat('=', 100),
+                sprintf('ScorePart [%d]', $scorePartIndex + 1),
+                str_repeat('=', 100),
+            ]) . PHP_EOL;
             $azureaScorePart = new AzureaScorePart($scorePart);
             $azureaScorePart->exportCode();
         });

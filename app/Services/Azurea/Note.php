@@ -12,6 +12,8 @@ class Note
 
     protected ?int $noteDuration = null;
 
+    protected ?Note $prevNote;
+
     public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
         $this->musicNote = $musicNote;
@@ -26,6 +28,11 @@ class Note
     public function getNoteDuration() : ?int
     {
         return $this->noteDuration;
+    }
+
+    public function setPrevNote(?Note $prevNote) : void
+    {
+        $this->prevNote = $prevNote;
     }
 
     public function isBlank() : bool

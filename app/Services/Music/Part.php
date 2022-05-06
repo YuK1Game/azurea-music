@@ -1,31 +1,38 @@
 <?php
 namespace App\Services\Music;
 
-use App\Services\Music\Parts\MeasureChunk;
-use App\Services\MusicXML\MusicXML\Measure;
-use Collator;
 use Symfony\Component\DomCrawler\Crawler as DOMCrawler;
 use Illuminate\Support\Collection;
 
 class Part extends Node implements NodeInterface
 {
+    protected ?Collection $measures = null;
+
+    public function keys() : array
+    {
+        $firstMeasure = $this->measures()->first();
+        return $firstMeasure->keys();
+    }
+
     public function measures() : Collection
     {
-        $parts = collect();
+        if ( ! $this->measures) {
+            $measures = collect();
 
-        $this->crawler->filter('measure')->each(function(DOMCrawler $crawler) use($parts) {
-            $parts->push(new Parts\Measure($crawler, $this));
-        });
-
-        return $parts;
+            $this->crawler->filter('measure')->each(function(DOMCrawler $crawler) use($measures) {
+                $measures->push(new Parts\Measure($crawler, $this));
+            });
+    
+            $this->measures = $measures;
+        }
+ 
+        return $this->measures;
     }
 
     public function maxDuration() : int
     {
-        return $this->measures()->max(function(Parts\Measure $measure) {
-            return $measure->childrenChunk()->max(function(MeasureChunk $measureChunk) {
-                return $measureChunk->totalNoteDuration();
-            });
+        return $this->trackA()->max(function(Parts\Measure $measure) {
+            return $measure->totalDuration();
         });
     }
 
@@ -46,8 +53,11 @@ class Part extends Node implements NodeInterface
 
     public function getTrack(int $number) : Collection
     {
-        return $this->measures()->map(function(Parts\Measure $measure, $index) use($number) {
-            return $measure->childrenChunk()->get($number);
+        return $this->measures()->map(function(Parts\Measure $measure) use($number) {
+            $newMeasure = clone $measure;
+            $newMeasure->narrowDownChildrenByIndex($number);
+            $newMeasure->setTrackId($number);
+            return $newMeasure;
         });
     }
 

@@ -70,9 +70,17 @@ class Note
         return $this->prevNote && $this->prevNote->pitch() === $this->pitch();
     }
 
-    public function code()
+    public function code() : string
     {
-        return $this->isBlank() || $this->musicNote->isRest() ? $this->rest() : $this->step();
+        if ($this->isBlank()) {
+            return $this->rest();
+        }
+
+        if ($this->musicNote->isGrace()) {
+            return '';
+        }
+
+        return $this->musicNote->isRest() ? $this->rest() : $this->step();
     }
 
     public function rest() : string
@@ -140,12 +148,18 @@ class Note
 
     protected function baseDuration() : array
     {
-        $noteDuration = $this->getNoteDuration() ?? $this->musicNote->duration();
-        $x = $noteDuration / $this->measureTotalDuration;
-        $y = fmod(1, $x);
+        try {
+            $noteDuration = $this->getNoteDuration() ?? $this->musicNote->duration();
+            $x = $noteDuration / $this->measureTotalDuration;
+            $y = fmod(1, $x);
+    
+            $isDottedDuration = $y > 0;
+            $duration = 1 / ($isDottedDuration ? ($x / 1.5) : $x);
 
-        $isDottedDuration = $y > 0;
-        $duration = 1 / ($isDottedDuration ? ($x / 1.5) : $x);
+        } catch (\Exception $e) {
+            return [ 0, false ];
+        }
+
 
         return [ $duration, $isDottedDuration ];
     }

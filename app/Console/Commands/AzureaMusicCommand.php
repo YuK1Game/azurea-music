@@ -56,7 +56,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Japanese_Army_March_Godzilla_1954.mxl');
+        $filename = resource_path('musicxml/Therrus_Song__in_D-flat_Major_for_Flute_and_Piano.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();

@@ -40,6 +40,11 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
         return $this->crawler->filter('chord')->count() > 0;
     }
 
+    public function isGrace() : bool
+    {
+        return $this->crawler->filter('grace')->count() > 0;
+    }
+
     public function accidental() : ?string
     {
         $node = $this->crawler->filter('accidental');

@@ -56,7 +56,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Tokyo_Revengers_OP.mxl');
+        $filename = resource_path('musicxml/Main_Street_Electrical_Parade.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();

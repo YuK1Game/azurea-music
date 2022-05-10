@@ -8,6 +8,17 @@ class Part extends Node implements NodeInterface
 {
     protected ?Collection $measures = null;
 
+    protected bool $isForwarding = false;
+
+    protected Collection $forwarding;
+
+    public function __construct(DOMCrawler $crawler, NodeInterface $parentNode)
+    {
+        parent::__construct($crawler, $parentNode);
+
+        $this->looping = collect();
+    }
+
     public function keys() : array
     {
         $firstMeasure = $this->measures()->first();
@@ -17,13 +28,27 @@ class Part extends Node implements NodeInterface
     public function measures() : Collection
     {
         if ( ! $this->measures) {
-            $measures = collect();
+            $this->measures = collect();
 
-            $this->crawler->filter('measure')->each(function(DOMCrawler $crawler) use($measures) {
-                $measures->push(new Parts\Measure($crawler, $this));
+            $this->crawler->filter('measure')->each(function(DOMCrawler $crawler) {
+                $measure = new Parts\Measure($crawler, $this);
+                $this->measures->push($measure);
+
+                if ($measure->isForward()) {
+                    $this->isForwarding = true;
+                }
+
+                if ($this->isForwarding) {
+                    $this->looping->push($measure);
+                }
+
+                if ($measure->isBackward()) {
+                    $this->isForwarding = false;
+                    $this->measures->push(...$this->looping);
+                    $this->looping = collect();
+                }
+
             });
-    
-            $this->measures = $measures;
         }
  
         return $this->measures;

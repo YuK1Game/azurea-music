@@ -71,6 +71,7 @@ class Part
                 echo sprintf('t%d', $this->metaMeasure->tempo());
             }
 
+
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));
                 echo PHP_EOL;

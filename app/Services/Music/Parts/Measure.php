@@ -68,6 +68,18 @@ class Measure extends Node implements NodeInterface
         return $node->count() > 0 ? $node->attr('tempo') : null;
     }
 
+    public function isForward() : bool
+    {
+        $node = $this->crawler->filter('barline > repeat[direction="forward"]');
+        return $node->count() > 0;
+    }
+
+    public function isBackward() : bool
+    {
+        $node = $this->crawler->filter('barline > repeat[direction="backward"]');
+        return $node->count() > 0;
+    }
+
     public function measureKey() : MeasureKey
     {
         $node = $this->crawler->filter('attributes > key > fifths');

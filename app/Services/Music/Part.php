@@ -36,6 +36,7 @@ class Part extends Node implements NodeInterface
 
                 if ($measure->isForward()) {
                     $this->isForwarding = true;
+                    $this->looping = collect();
                 }
 
                 if ($this->isForwarding) {
@@ -45,7 +46,6 @@ class Part extends Node implements NodeInterface
                 if ($measure->isBackward()) {
                     $this->isForwarding = false;
                     $this->measures->push(...$this->looping);
-                    $this->looping = collect();
                 }
 
             });

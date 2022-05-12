@@ -80,11 +80,11 @@ class Measure extends Node implements NodeInterface
         return $node->count() > 0;
     }
 
-    public function measureKey() : MeasureKey
+    public function measureKey() : ?MeasureKey
     {
         $node = $this->crawler->filter('attributes > key > fifths');
         $index = $node->count() > 0 ? $node->innerText() : null;
-        return MeasureKey::factory($index);
+        return $index ? MeasureKey::factory($index) : null;
     }
     
     public function narrowDownChildrenByIndex(int $index) : void

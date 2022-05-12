@@ -56,7 +56,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Therrus_Song__in_D-flat_Major_for_Flute_and_Piano.mxl');
+        $filename = resource_path('musicxml/mix.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();

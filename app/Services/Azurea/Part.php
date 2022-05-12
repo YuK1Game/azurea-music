@@ -11,6 +11,7 @@ use App\Services\Music\{
 };
 
 use App\Services\Azurea\Note;
+use App\Services\Music\Parts\Measures\MeasureKey;
 
 class Part
 {
@@ -23,6 +24,10 @@ class Part
     protected ?Note $prevNote = null;
 
     protected MusicMeasure $metaMeasure;
+
+    protected ?MeasureKey $measureKey = null;
+
+    protected int $tempo = 120;
 
     public function __construct(MusicPart $part)
     {
@@ -67,11 +72,17 @@ class Part
         $this->part->tracks()->each(function(Collection $track, int $trackIndex) {
             echo sprintf('TrackNumber [%d]' . PHP_EOL . PHP_EOL, $trackIndex + 1);
 
-            if ($this->metaMeasure->tempo()) {
-                echo sprintf('t%d', $this->metaMeasure->tempo());
-            }
-
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
+
+                if ($measure->tempo() && $measure->tempo() !== $this->tempo) {
+                    $this->tempo = $measure->tempo();
+                    echo sprintf('t%d', $measure->tempo());
+                }
+
+                if ($measure->measureKey()) {
+                    $this->measureKey = $measure->measureKey();
+                }
+
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));
                 echo PHP_EOL;
             });
@@ -96,7 +107,7 @@ class Part
     {
         return $measure->hasNotes() ? $measure->notes()->map(function(MusicNote $note) {
             $azureaNote = new Note($note, $this->maxDuration);
-            $azureaNote->setMeasureKey($this->metaMeasure->measureKey());
+            $azureaNote->setMeasureKey($this->measureKey);
             return $azureaNote;
         }) : null;
     }

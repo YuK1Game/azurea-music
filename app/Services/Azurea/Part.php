@@ -74,13 +74,13 @@ class Part
 
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
 
-                if ($measure->tempo() && $measure->tempo() !== $this->tempo) {
-                    $this->tempo = $measure->tempo();
-                    echo sprintf('t%d', $measure->tempo());
+                if (($tempo = $measure->tempo()) && $tempo !== $this->tempo) {
+                    echo sprintf('t%d', $tempo);
+                    $this->tempo = $tempo;
                 }
 
-                if ($measure->measureKey()) {
-                    $this->measureKey = $measure->measureKey();
+                if ($measureKey = $measure->measureKey()) {
+                    $this->measureKey = $measureKey;
                 }
 
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));

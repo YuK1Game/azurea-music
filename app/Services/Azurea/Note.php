@@ -45,9 +45,9 @@ class Note
         $this->prevNote = $prevNote;
     }
 
-    public function setMeasureKey(MeasureKey $measureKey) : void
+    public function setMeasureKey(?MeasureKey $measureKey) : void
     {
-        $this->measureKey = $measureKey;
+        $this->measureKey = $measureKey ?? new MeasureKey(0);
     }
 
     public function addSharpCount(int $count = 1) : void

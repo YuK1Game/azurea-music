@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca3e29133834547c66b24f03f5af7c66",
+    "content-hash": "07f84383a01428fd8e8bd7e1b6fa26b5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2851,6 +2851,52 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "stdtabs/phptabs",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stdtabs/phptabs.git",
+                "reference": "492021e7202ae345b398b042a990503d6ebe78ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stdtabs/phptabs/zipball/492021e7202ae345b398b042a990503d6ebe78ea",
+                "reference": "492021e7202ae345b398b042a990503d6ebe78ea",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "symfony/thanks": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpTabs\\": "src/PhpTabs/",
+                    "PhpTabsTest\\": "test/PhpTabs/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1+"
+            ],
+            "description": "A PHP library for reading, writing and rendering Guitar Pro and MIDI files",
+            "homepage": "https://phptabs.readthedocs.io/",
+            "keywords": [
+                "guitar",
+                "midi",
+                "music",
+                "tablature",
+                "tabs"
+            ],
+            "support": {
+                "issues": "https://github.com/stdtabs/phptabs/issues",
+                "source": "https://github.com/stdtabs/phptabs/tree/1.0.5"
+            },
+            "time": "2021-01-28T13:11:14+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

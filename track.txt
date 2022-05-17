@@ -1,0 +1,2975 @@
+PhpTabs\Music\Note {#3322
+  -value: 10
+  -string: 1
+  -tiedNote: false
+  -velocity: 80
+  -effect: PhpTabs\Music\NoteEffect {#3323
+    #bend: null
+    #harmonic: null
+    #grace: null
+    #trill: null
+    #tremoloBar: null
+    #tremoloPicking: null
+    #vibrato: false
+    #deadNote: false
+    #slide: false
+    #hammer: false
+    #ghostNote: false
+    #palmMute: false
+    #staccato: false
+    #tapping: false
+    #slapping: false
+    #popping: false
+    #fadeIn: false
+    #letRing: false
+    #accentuatedNote: false
+    #heavyAccentuatedNote: false
+  }
+  -voice: PhpTabs\Music\Voice {#3316
+    -beat: PhpTabs\Music\Beat {#3314
+      -start: 960
+      -measure: PhpTabs\Music\Measure {#3313
+        -header: PhpTabs\Music\MeasureHeader {#3301
+          -number: 1
+          -marker: null
+          -repeatOpen: false
+          -repeatAlternative: 0
+          -repeatClose: 0
+          -start: 960
+          -timeSignature: PhpTabs\Music\TimeSignature {#3298
+            -numerator: 4
+            -denominator: PhpTabs\Music\Duration {#3299
+              -value: 4
+              -divisionType: PhpTabs\Music\DivisionType {#3300
+                -enters: 1
+                -times: 1
+              }
+              -dotted: false
+              -doubleDotted: false
+            }
+          }
+          -tempo: PhpTabs\Music\Tempo {#3302
+            -value: 135
+          }
+          -tripletFeel: 1
+          -song: PhpTabs\Music\Song {#879
+            #name: null
+            #artist: null
+            #album: null
+            #author: null
+            #date: null
+            #copyright: null
+            #writer: null
+            #transcriber: null
+            #comments: null
+            #tracks: array:2 [
+              0 => PhpTabs\Music\Track {#3309
+                -number: 1
+                -offset: 0
+                -channelId: -1
+                -solo: false
+                -mute: false
+                -name: ""
+                -measures: array:49 [
+                  0 => PhpTabs\Music\Measure {#3313}
+                  1 => PhpTabs\Music\Measure {#3349
+                    -header: PhpTabs\Music\MeasureHeader {#3307
+                      -number: 2
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 4800
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3345
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3346 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3348
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#3350
+                        -start: 4800
+                        -measure: PhpTabs\Music\Measure {#3349}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3351 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3335
+                        -start: 5520
+                        -measure: PhpTabs\Music\Measure {#3349}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3361 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3310
+                        -start: 6240
+                        -measure: PhpTabs\Music\Measure {#3349}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3334 …2}
+                      }
+                    ]
+                  }
+                  2 => PhpTabs\Music\Measure {#3385
+                    -header: PhpTabs\Music\MeasureHeader {#3324
+                      -number: 3
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 8640
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3381
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3382 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3384
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#3386
+                        -start: 8640
+                        -measure: PhpTabs\Music\Measure {#3385}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3387 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3371
+                        -start: 9360
+                        -measure: PhpTabs\Music\Measure {#3385}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3397 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3344
+                        -start: 10080
+                        -measure: PhpTabs\Music\Measure {#3385}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3407 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3360
+                        -start: 11520
+                        -measure: PhpTabs\Music\Measure {#3385}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3380 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3370
+                        -start: 12000
+                        -measure: PhpTabs\Music\Measure {#3385}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3396 …2}
+                      }
+                    ]
+                  }
+                  3 => PhpTabs\Music\Measure {#3441
+                    -header: PhpTabs\Music\MeasureHeader {#3417
+                      -number: 4
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 12480
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3406
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3438 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3440
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:2 [
+                      0 => PhpTabs\Music\Beat {#3442
+                        -start: 14880
+                        -measure: PhpTabs\Music\Measure {#3441}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3443 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3427
+                        -start: 15840
+                        -measure: PhpTabs\Music\Measure {#3441}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3416 …2}
+                      }
+                    ]
+                  }
+                  4 => PhpTabs\Music\Measure {#3467
+                    -header: PhpTabs\Music\MeasureHeader {#3437
+                      -number: 5
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 16320
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3426
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3464 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3466
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#3468
+                        -start: 16320
+                        -measure: PhpTabs\Music\Measure {#3467}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3469 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3453
+                        -start: 18720
+                        -measure: PhpTabs\Music\Measure {#3467}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3436 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3463
+                        -start: 19680
+                        -measure: PhpTabs\Music\Measure {#3467}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3452 …2}
+                      }
+                    ]
+                  }
+                  5 => PhpTabs\Music\Measure {#3503
+                    -header: PhpTabs\Music\MeasureHeader {#3479
+                      -number: 6
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 20160
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3462
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3500 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3502
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#3504
+                        -start: 20160
+                        -measure: PhpTabs\Music\Measure {#3503}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3505 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3489
+                        -start: 22560
+                        -measure: PhpTabs\Music\Measure {#3503}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3478 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3499
+                        -start: 23520
+                        -measure: PhpTabs\Music\Measure {#3503}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3488 …2}
+                      }
+                    ]
+                  }
+                  6 => PhpTabs\Music\Measure {#3539
+                    -header: PhpTabs\Music\MeasureHeader {#3515
+                      -number: 7
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 24000
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3535
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3536 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3538
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#3540
+                        -start: 24000
+                        -measure: PhpTabs\Music\Measure {#3539}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3541 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3525
+                        -start: 24720
+                        -measure: PhpTabs\Music\Measure {#3539}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3551 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3498
+                        -start: 25440
+                        -measure: PhpTabs\Music\Measure {#3539}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3561 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3514
+                        -start: 26160
+                        -measure: PhpTabs\Music\Measure {#3539}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3571 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3524
+                        -start: 26880
+                        -measure: PhpTabs\Music\Measure {#3539}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3550 …2}
+                      }
+                    ]
+                  }
+                  7 => PhpTabs\Music\Measure {#3596
+                    -header: PhpTabs\Music\MeasureHeader {#3590
+                      -number: 8
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 27840
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3592
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3593 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3595
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#3597
+                        -start: 27840
+                        -measure: PhpTabs\Music\Measure {#3596}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3598 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3608
+                        -start: 28560
+                        -measure: PhpTabs\Music\Measure {#3596}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3610 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3620
+                        -start: 29280
+                        -measure: PhpTabs\Music\Measure {#3596}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3622 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3632
+                        -start: 30000
+                        -measure: PhpTabs\Music\Measure {#3596}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3634 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3644
+                        -start: 30720
+                        -measure: PhpTabs\Music\Measure {#3596}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3534 …2}
+                      }
+                    ]
+                  }
+                  8 => PhpTabs\Music\Measure {#3662
+                    -header: PhpTabs\Music\MeasureHeader {#3656
+                      -number: 9
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 31680
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3658
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3659 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3661
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#3663
+                        -start: 31680
+                        -measure: PhpTabs\Music\Measure {#3662}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3664 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3674
+                        -start: 32400
+                        -measure: PhpTabs\Music\Measure {#3662}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3676 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3686
+                        -start: 33120
+                        -measure: PhpTabs\Music\Measure {#3662}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3688 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3698
+                        -start: 33840
+                        -measure: PhpTabs\Music\Measure {#3662}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3700 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3710
+                        -start: 34560
+                        -measure: PhpTabs\Music\Measure {#3662}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3580 …2}
+                      }
+                    ]
+                  }
+                  9 => PhpTabs\Music\Measure {#3728
+                    -header: PhpTabs\Music\MeasureHeader {#3722
+                      -number: 10
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 35520
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3724
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3725 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3727
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#3729
+                        -start: 35520
+                        -measure: PhpTabs\Music\Measure {#3728}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3730 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3740
+                        -start: 36240
+                        -measure: PhpTabs\Music\Measure {#3728}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3742 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3752
+                        -start: 36960
+                        -measure: PhpTabs\Music\Measure {#3728}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3754 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3764
+                        -start: 37680
+                        -measure: PhpTabs\Music\Measure {#3728}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3766 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3776
+                        -start: 38400
+                        -measure: PhpTabs\Music\Measure {#3728}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3581 …2}
+                      }
+                    ]
+                  }
+                  10 => PhpTabs\Music\Measure {#3793
+                    -header: PhpTabs\Music\MeasureHeader {#3655
+                      -number: 11
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 39360
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3789
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3790 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3792
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#3794
+                        -start: 39360
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3795 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3787
+                        -start: 40080
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3805 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3777
+                        -start: 40800
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3721 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3778
+                        -start: 41760
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3788 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3815
+                        -start: 42240
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3804 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#3825
+                        -start: 42720
+                        -measure: PhpTabs\Music\Measure {#3793}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3814 …2}
+                      }
+                    ]
+                  }
+                  11 => PhpTabs\Music\Measure {#3859
+                    -header: PhpTabs\Music\MeasureHeader {#3835
+                      -number: 12
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 43200
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3824
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3856 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3858
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#3860
+                        -start: 45120
+                        -measure: PhpTabs\Music\Measure {#3859}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3861 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3845
+                        -start: 45600
+                        -measure: PhpTabs\Music\Measure {#3859}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3834 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3855
+                        -start: 46080
+                        -measure: PhpTabs\Music\Measure {#3859}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3844 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3871
+                        -start: 46560
+                        -measure: PhpTabs\Music\Measure {#3859}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3854 …2}
+                      }
+                    ]
+                  }
+                  12 => PhpTabs\Music\Measure {#3905
+                    -header: PhpTabs\Music\MeasureHeader {#3881
+                      -number: 13
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 47040
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3870
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3902 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3904
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:2 [
+                      0 => PhpTabs\Music\Beat {#3906
+                        -start: 47040
+                        -measure: PhpTabs\Music\Measure {#3905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3907 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3891
+                        -start: 47520
+                        -measure: PhpTabs\Music\Measure {#3905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3917 …2}
+                      }
+                    ]
+                  }
+                  13 => PhpTabs\Music\Measure {#3931
+                    -header: PhpTabs\Music\MeasureHeader {#3901
+                      -number: 14
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 50880
+                      -timeSignature: PhpTabs\Music\TimeSignature {#3890
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#3928 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#3930
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:7 [
+                      0 => PhpTabs\Music\Beat {#3932
+                        -start: 51360
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3933 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3880
+                        -start: 51840
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3900 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3927
+                        -start: 52080
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3916 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3943
+                        -start: 52560
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3963 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#3953
+                        -start: 53280
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3942 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#3926
+                        -start: 53760
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3952 …2}
+                      }
+                      6 => PhpTabs\Music\Beat {#3973
+                        -start: 54240
+                        -measure: PhpTabs\Music\Measure {#3931}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3962 …2}
+                      }
+                    ]
+                  }
+                  14 => PhpTabs\Music\Measure {#4007
+                    -header: PhpTabs\Music\MeasureHeader {#3983
+                      -number: 15
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 54720
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4003
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4004 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4006
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4008
+                        -start: 54720
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4009 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#3993
+                        -start: 55440
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4019 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#3972
+                        -start: 56160
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#3992 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#3982
+                        -start: 57120
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4002 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4029
+                        -start: 57600
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4018 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4039
+                        -start: 58080
+                        -measure: PhpTabs\Music\Measure {#4007}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4028 …2}
+                      }
+                    ]
+                  }
+                  15 => PhpTabs\Music\Measure {#4073
+                    -header: PhpTabs\Music\MeasureHeader {#4049
+                      -number: 16
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 58560
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4038
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4070 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4072
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#4074
+                        -start: 60480
+                        -measure: PhpTabs\Music\Measure {#4073}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4075 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4059
+                        -start: 60960
+                        -measure: PhpTabs\Music\Measure {#4073}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4048 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4069
+                        -start: 61440
+                        -measure: PhpTabs\Music\Measure {#4073}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4058 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4085
+                        -start: 61920
+                        -measure: PhpTabs\Music\Measure {#4073}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4068 …2}
+                      }
+                    ]
+                  }
+                  16 => PhpTabs\Music\Measure {#4119
+                    -header: PhpTabs\Music\MeasureHeader {#4095
+                      -number: 17
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 62400
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4084
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4116 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4118
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4120
+                        -start: 62400
+                        -measure: PhpTabs\Music\Measure {#4119}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4121 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4105
+                        -start: 62880
+                        -measure: PhpTabs\Music\Measure {#4119}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4131 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4115
+                        -start: 65760
+                        -measure: PhpTabs\Music\Measure {#4119}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4104 …2}
+                      }
+                    ]
+                  }
+                  17 => PhpTabs\Music\Measure {#4155
+                    -header: PhpTabs\Music\MeasureHeader {#4094
+                      -number: 18
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 66240
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4151
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4152 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4154
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#4156
+                        -start: 66240
+                        -measure: PhpTabs\Music\Measure {#4155}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4157 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4141
+                        -start: 66960
+                        -measure: PhpTabs\Music\Measure {#4155}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4167 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4114
+                        -start: 67680
+                        -measure: PhpTabs\Music\Measure {#4155}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4140 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4130
+                        -start: 68160
+                        -measure: PhpTabs\Music\Measure {#4155}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4150 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4177
+                        -start: 69600
+                        -measure: PhpTabs\Music\Measure {#4155}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4166 …2}
+                      }
+                    ]
+                  }
+                  18 => PhpTabs\Music\Measure {#4211
+                    -header: PhpTabs\Music\MeasureHeader {#4187
+                      -number: 19
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 70080
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4207
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4208 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4210
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4212
+                        -start: 70080
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4213 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4197
+                        -start: 70800
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4223 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4176
+                        -start: 71520
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4233 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4186
+                        -start: 72240
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4243 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4196
+                        -start: 72960
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4253 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4206
+                        -start: 73680
+                        -measure: PhpTabs\Music\Measure {#4211}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4232 …2}
+                      }
+                    ]
+                  }
+                  19 => PhpTabs\Music\Measure {#4277
+                    -header: PhpTabs\Music\MeasureHeader {#4222
+                      -number: 20
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 73920
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4242
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4274 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4276
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4278
+                        -start: 74400
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4279 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4263
+                        -start: 74880
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4252 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4273
+                        -start: 75360
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4262 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4289
+                        -start: 75840
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4309 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4299
+                        -start: 76560
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4319 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4272
+                        -start: 77280
+                        -measure: PhpTabs\Music\Measure {#4277}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4298 …2}
+                      }
+                    ]
+                  }
+                  20 => PhpTabs\Music\Measure {#4343
+                    -header: PhpTabs\Music\MeasureHeader {#4288
+                      -number: 21
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 77760
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4339
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4340 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4342
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#4344
+                        -start: 77760
+                        -measure: PhpTabs\Music\Measure {#4343}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4345 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4329
+                        -start: 78480
+                        -measure: PhpTabs\Music\Measure {#4343}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4355 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4308
+                        -start: 79200
+                        -measure: PhpTabs\Music\Measure {#4343}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4365 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4318
+                        -start: 79920
+                        -measure: PhpTabs\Music\Measure {#4343}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4375 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4328
+                        -start: 80640
+                        -measure: PhpTabs\Music\Measure {#4343}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4354 …2}
+                      }
+                    ]
+                  }
+                  21 => PhpTabs\Music\Measure {#4399
+                    -header: PhpTabs\Music\MeasureHeader {#4338
+                      -number: 22
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 81600
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4364
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4396 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4398
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4400
+                        -start: 82080
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4401 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4385
+                        -start: 82560
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4374 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4395
+                        -start: 83040
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4384 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4411
+                        -start: 83520
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4431 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4421
+                        -start: 84240
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4441 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4394
+                        -start: 84960
+                        -measure: PhpTabs\Music\Measure {#4399}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4420 …2}
+                      }
+                    ]
+                  }
+                  22 => PhpTabs\Music\Measure {#4465
+                    -header: PhpTabs\Music\MeasureHeader {#4410
+                      -number: 23
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 85440
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4461
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4462 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4464
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4466
+                        -start: 85440
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4467 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4451
+                        -start: 86160
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4477 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4430
+                        -start: 86880
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4450 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4440
+                        -start: 87840
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4460 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4487
+                        -start: 88320
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4476 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4497
+                        -start: 88800
+                        -measure: PhpTabs\Music\Measure {#4465}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4486 …2}
+                      }
+                    ]
+                  }
+                  23 => PhpTabs\Music\Measure {#4531
+                    -header: PhpTabs\Music\MeasureHeader {#4507
+                      -number: 24
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 89280
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4496
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4528 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4530
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#4532
+                        -start: 90240
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4533 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4517
+                        -start: 90720
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4506 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4527
+                        -start: 91200
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4516 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4543
+                        -start: 91680
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4526 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4553
+                        -start: 92160
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4542 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4563
+                        -start: 92640
+                        -measure: PhpTabs\Music\Measure {#4531}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4552 …2}
+                      }
+                    ]
+                  }
+                  24 => PhpTabs\Music\Measure {#4597
+                    -header: PhpTabs\Music\MeasureHeader {#4573
+                      -number: 25
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 93120
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4593
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4594 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4596
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4598
+                        -start: 93120
+                        -measure: PhpTabs\Music\Measure {#4597}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4599 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4583
+                        -start: 93840
+                        -measure: PhpTabs\Music\Measure {#4597}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4572 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4562
+                        -start: 96480
+                        -measure: PhpTabs\Music\Measure {#4597}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4582 …2}
+                      }
+                    ]
+                  }
+                  25 => PhpTabs\Music\Measure {#4633
+                    -header: PhpTabs\Music\MeasureHeader {#4609
+                      -number: 26
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 96960
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4629
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4630 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4632
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#4634
+                        -start: 96960
+                        -measure: PhpTabs\Music\Measure {#4633}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4635 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4619
+                        -start: 97680
+                        -measure: PhpTabs\Music\Measure {#4633}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4645 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4592
+                        -start: 98400
+                        -measure: PhpTabs\Music\Measure {#4633}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4618 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4608
+                        -start: 98880
+                        -measure: PhpTabs\Music\Measure {#4633}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4628 …2}
+                      }
+                    ]
+                  }
+                  26 => PhpTabs\Music\Measure {#4679
+                    -header: PhpTabs\Music\MeasureHeader {#4655
+                      -number: 27
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 100800
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4675
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4676 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4678
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4680
+                        -start: 100800
+                        -measure: PhpTabs\Music\Measure {#4679}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4681 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4665
+                        -start: 101520
+                        -measure: PhpTabs\Music\Measure {#4679}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4691 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4644
+                        -start: 102240
+                        -measure: PhpTabs\Music\Measure {#4679}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4664 …2}
+                      }
+                    ]
+                  }
+                  27 => PhpTabs\Music\Measure {#4715
+                    -header: PhpTabs\Music\MeasureHeader {#4654
+                      -number: 28
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 104640
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4711
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4712 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4714
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4716
+                        -start: 104640
+                        -measure: PhpTabs\Music\Measure {#4715}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4717 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4701
+                        -start: 105360
+                        -measure: PhpTabs\Music\Measure {#4715}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4727 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4674
+                        -start: 106080
+                        -measure: PhpTabs\Music\Measure {#4715}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4700 …2}
+                      }
+                    ]
+                  }
+                  28 => PhpTabs\Music\Measure {#4751
+                    -header: PhpTabs\Music\MeasureHeader {#4690
+                      -number: 29
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 108480
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4747
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4748 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4750
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#4752
+                        -start: 108480
+                        -measure: PhpTabs\Music\Measure {#4751}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4753 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4737
+                        -start: 109200
+                        -measure: PhpTabs\Music\Measure {#4751}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4763 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4710
+                        -start: 109920
+                        -measure: PhpTabs\Music\Measure {#4751}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4773 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4726
+                        -start: 111360
+                        -measure: PhpTabs\Music\Measure {#4751}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4746 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4736
+                        -start: 111840
+                        -measure: PhpTabs\Music\Measure {#4751}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4762 …2}
+                      }
+                    ]
+                  }
+                  29 => PhpTabs\Music\Measure {#4807
+                    -header: PhpTabs\Music\MeasureHeader {#4783
+                      -number: 30
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 112320
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4772
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4804 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4806
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:2 [
+                      0 => PhpTabs\Music\Beat {#4808
+                        -start: 114720
+                        -measure: PhpTabs\Music\Measure {#4807}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4809 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4793
+                        -start: 115680
+                        -measure: PhpTabs\Music\Measure {#4807}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4782 …2}
+                      }
+                    ]
+                  }
+                  30 => PhpTabs\Music\Measure {#4833
+                    -header: PhpTabs\Music\MeasureHeader {#4803
+                      -number: 31
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 116160
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4792
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4830 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4832
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4834
+                        -start: 116160
+                        -measure: PhpTabs\Music\Measure {#4833}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4835 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4819
+                        -start: 118560
+                        -measure: PhpTabs\Music\Measure {#4833}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4802 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4829
+                        -start: 119520
+                        -measure: PhpTabs\Music\Measure {#4833}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4818 …2}
+                      }
+                    ]
+                  }
+                  31 => PhpTabs\Music\Measure {#4869
+                    -header: PhpTabs\Music\MeasureHeader {#4845
+                      -number: 32
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 120000
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4828
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4866 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4868
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4870
+                        -start: 120000
+                        -measure: PhpTabs\Music\Measure {#4869}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4871 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4855
+                        -start: 122400
+                        -measure: PhpTabs\Music\Measure {#4869}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4844 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4865
+                        -start: 123360
+                        -measure: PhpTabs\Music\Measure {#4869}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4854 …2}
+                      }
+                    ]
+                  }
+                  32 => PhpTabs\Music\Measure {#4905
+                    -header: PhpTabs\Music\MeasureHeader {#4881
+                      -number: 33
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 123840
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4864
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4902 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4904
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#4906
+                        -start: 123840
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4907 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4891
+                        -start: 124320
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4880 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4901
+                        -start: 124800
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4890 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#4917
+                        -start: 125280
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4900 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#4927
+                        -start: 125760
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4916 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#4937
+                        -start: 126240
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4926 …2}
+                      }
+                      6 => PhpTabs\Music\Beat {#4947
+                        -start: 126720
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4936 …2}
+                      }
+                      7 => PhpTabs\Music\Beat {#4957
+                        -start: 127200
+                        -measure: PhpTabs\Music\Measure {#4905}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4946 …2}
+                      }
+                    ]
+                  }
+                  33 => PhpTabs\Music\Measure {#4991
+                    -header: PhpTabs\Music\MeasureHeader {#4967
+                      -number: 34
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 127680
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4956
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#4988 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#4990
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#4992
+                        -start: 128640
+                        -measure: PhpTabs\Music\Measure {#4991}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4993 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#4977
+                        -start: 129600
+                        -measure: PhpTabs\Music\Measure {#4991}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4966 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#4987
+                        -start: 130560
+                        -measure: PhpTabs\Music\Measure {#4991}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#4976 …2}
+                      }
+                    ]
+                  }
+                  34 => PhpTabs\Music\Measure {#5027
+                    -header: PhpTabs\Music\MeasureHeader {#5003
+                      -number: 35
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 131520
+                      -timeSignature: PhpTabs\Music\TimeSignature {#4986
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5024 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5026
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#5028
+                        -start: 131520
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5029 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#5013
+                        -start: 132000
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5002 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#5023
+                        -start: 132480
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5012 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#5039
+                        -start: 132960
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5022 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#5049
+                        -start: 133440
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5038 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#5059
+                        -start: 133920
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5048 …2}
+                      }
+                      6 => PhpTabs\Music\Beat {#5069
+                        -start: 134160
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5058 …2}
+                      }
+                      7 => PhpTabs\Music\Beat {#5079
+                        -start: 134880
+                        -measure: PhpTabs\Music\Measure {#5027}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5068 …2}
+                      }
+                    ]
+                  }
+                  35 => PhpTabs\Music\Measure {#5113
+                    -header: PhpTabs\Music\MeasureHeader {#5089
+                      -number: 36
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 135360
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5078
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5110 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5112
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#5114
+                        -start: 135360
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5115 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#5099
+                        -start: 135840
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5088 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#5109
+                        -start: 136320
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5098 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#5125
+                        -start: 136800
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5108 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#5135
+                        -start: 137280
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5124 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#5145
+                        -start: 137760
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5134 …2}
+                      }
+                      6 => PhpTabs\Music\Beat {#5155
+                        -start: 138000
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5144 …2}
+                      }
+                      7 => PhpTabs\Music\Beat {#5165
+                        -start: 138720
+                        -measure: PhpTabs\Music\Measure {#5113}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5154 …2}
+                      }
+                    ]
+                  }
+                  36 => PhpTabs\Music\Measure {#5199
+                    -header: PhpTabs\Music\MeasureHeader {#5175
+                      -number: 37
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 139200
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5164
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5196 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5198
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#5200
+                        -start: 139200
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5201 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#5185
+                        -start: 139680
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5174 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#5195
+                        -start: 139920
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5184 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#5211
+                        -start: 140640
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5194 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#5221
+                        -start: 141120
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5210 …2}
+                      }
+                      5 => PhpTabs\Music\Beat {#5231
+                        -start: 141600
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5220 …2}
+                      }
+                      6 => PhpTabs\Music\Beat {#5241
+                        -start: 142080
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5230 …2}
+                      }
+                      7 => PhpTabs\Music\Beat {#5251
+                        -start: 142560
+                        -measure: PhpTabs\Music\Measure {#5199}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5240 …2}
+                      }
+                    ]
+                  }
+                  37 => PhpTabs\Music\Measure {#5285
+                    -header: PhpTabs\Music\MeasureHeader {#5261
+                      -number: 38
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 143040
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5250
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5282 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5284
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#5286
+                        -start: 143040
+                        -measure: PhpTabs\Music\Measure {#5285}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5287 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#5271
+                        -start: 144000
+                        -measure: PhpTabs\Music\Measure {#5285}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5260 …2}
+                      }
+                      2 => PhpTabs\Music\Beat {#5281
+                        -start: 144960
+                        -measure: PhpTabs\Music\Measure {#5285}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5307 …2}
+                      }
+                      3 => PhpTabs\Music\Beat {#5297
+                        -start: 145680
+                        -measure: PhpTabs\Music\Measure {#5285}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5317 …2}
+                      }
+                      4 => PhpTabs\Music\Beat {#5270
+                        -start: 146400
+                        -measure: PhpTabs\Music\Measure {#5285}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5296 …2}
+                      }
+                    ]
+                  }
+                  38 => PhpTabs\Music\Measure {#5341
+                    -header: PhpTabs\Music\MeasureHeader {#5280
+                      -number: 39
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 146880
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5337
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5338 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5340
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#5342
+                        -start: 146880
+                        -measure: PhpTabs\Music\Measure {#5341}
+                        -chord: null
+                        -text: null
+                        -voices: array:2 [ …2]
+                        -stroke: PhpTabs\Music\Stroke {#5343 …2}
+                      }
+                      1 => PhpTabs\Music\Beat {#5327
+                        -start: 148320
+                        -measure: PhpTabs\Music\Measure {#5341}
+                        -chord: null
+                        -text: null
+                         …2
+                      }
+                      2 => PhpTabs\Music\Beat {#5306 …6}
+                      3 => PhpTabs\Music\Beat {#5353 …6}
+                      4 => PhpTabs\Music\Beat {#5363 …6}
+                    ]
+                  }
+                  39 => PhpTabs\Music\Measure {#5397
+                    -header: PhpTabs\Music\MeasureHeader {#5373
+                      -number: 40
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 150720
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5362
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5394 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5396
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#5398 …6}
+                      1 => PhpTabs\Music\Beat {#5383 …6}
+                      2 => PhpTabs\Music\Beat {#5393 …6}
+                      3 => PhpTabs\Music\Beat {#5409 …6}
+                    ]
+                  }
+                  40 => PhpTabs\Music\Measure {#5444
+                    -header: PhpTabs\Music\MeasureHeader {#5438
+                      -number: 41
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 154560
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5440
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5441 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5443
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#5445 …6}
+                      1 => PhpTabs\Music\Beat {#5456 …6}
+                      2 => PhpTabs\Music\Beat {#5468 …6}
+                      3 => PhpTabs\Music\Beat {#5480 …6}
+                    ]
+                  }
+                  41 => PhpTabs\Music\Measure {#5497
+                    -header: PhpTabs\Music\MeasureHeader {#5419
+                      -number: 42
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 158400
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5481
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5494 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5496
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#5498 …6}
+                      1 => PhpTabs\Music\Beat {#5491 …6}
+                      2 => PhpTabs\Music\Beat {#5493 …6}
+                    ]
+                  }
+                  42 => PhpTabs\Music\Measure {#5533
+                    -header: PhpTabs\Music\MeasureHeader {#5509
+                      -number: 43
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 162240
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5492
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5530 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5532
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#5534 …6}
+                      1 => PhpTabs\Music\Beat {#5519 …6}
+                      2 => PhpTabs\Music\Beat {#5529 …6}
+                      3 => PhpTabs\Music\Beat {#5545 …6}
+                      4 => PhpTabs\Music\Beat {#5555 …6}
+                      5 => PhpTabs\Music\Beat {#5565 …6}
+                      6 => PhpTabs\Music\Beat {#5575 …6}
+                      7 => PhpTabs\Music\Beat {#5585 …6}
+                    ]
+                  }
+                  43 => PhpTabs\Music\Measure {#5619
+                    -header: PhpTabs\Music\MeasureHeader {#5595
+                      -number: 44
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 166080
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5584
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5616 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5618
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:8 [
+                      0 => PhpTabs\Music\Beat {#5620 …6}
+                      1 => PhpTabs\Music\Beat {#5605 …6}
+                      2 => PhpTabs\Music\Beat {#5615 …6}
+                      3 => PhpTabs\Music\Beat {#5631 …6}
+                      4 => PhpTabs\Music\Beat {#5641 …6}
+                      5 => PhpTabs\Music\Beat {#5651 …6}
+                      6 => PhpTabs\Music\Beat {#5661 …6}
+                      7 => PhpTabs\Music\Beat {#5671 …6}
+                    ]
+                  }
+                  44 => PhpTabs\Music\Measure {#5705
+                    -header: PhpTabs\Music\MeasureHeader {#5681
+                      -number: 45
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 169920
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5701
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5702 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5704
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#5706 …6}
+                      1 => PhpTabs\Music\Beat {#5691 …6}
+                      2 => PhpTabs\Music\Beat {#5670 …6}
+                      3 => PhpTabs\Music\Beat {#5680 …6}
+                      4 => PhpTabs\Music\Beat {#5727 …6}
+                      5 => PhpTabs\Music\Beat {#5737 …6}
+                    ]
+                  }
+                  45 => PhpTabs\Music\Measure {#5771
+                    -header: PhpTabs\Music\MeasureHeader {#5747
+                      -number: 46
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 173760
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5736
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5768 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5770
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:4 [
+                      0 => PhpTabs\Music\Beat {#5772 …6}
+                      1 => PhpTabs\Music\Beat {#5757 …6}
+                      2 => PhpTabs\Music\Beat {#5767 …6}
+                      3 => PhpTabs\Music\Beat {#5746 …6}
+                    ]
+                  }
+                  46 => PhpTabs\Music\Measure {#5817
+                    -header: PhpTabs\Music\MeasureHeader {#5756
+                      -number: 47
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 177600
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5813
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5814 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5816
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:5 [
+                      0 => PhpTabs\Music\Beat {#5818 …6}
+                      1 => PhpTabs\Music\Beat {#5803 …6}
+                      2 => PhpTabs\Music\Beat {#5782 …6}
+                      3 => PhpTabs\Music\Beat {#5829 …6}
+                      4 => PhpTabs\Music\Beat {#5839 …6}
+                    ]
+                  }
+                  47 => PhpTabs\Music\Measure {#5873
+                    -header: PhpTabs\Music\MeasureHeader {#5849
+                      -number: 48
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 181440
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5838
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5870 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5872
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:3 [
+                      0 => PhpTabs\Music\Beat {#5874 …6}
+                      1 => PhpTabs\Music\Beat {#5859 …6}
+                      2 => PhpTabs\Music\Beat {#5869 …6}
+                    ]
+                  }
+                  48 => PhpTabs\Music\Measure {#5910
+                    -header: PhpTabs\Music\MeasureHeader {#5904
+                      -number: 49
+                      -marker: null
+                      -repeatOpen: false
+                      -repeatAlternative: 0
+                      -repeatClose: 0
+                      -start: 185280
+                      -timeSignature: PhpTabs\Music\TimeSignature {#5906
+                        -numerator: 4
+                        -denominator: PhpTabs\Music\Duration {#5907 …4}
+                      }
+                      -tempo: PhpTabs\Music\Tempo {#5909
+                        -value: 135
+                      }
+                      -tripletFeel: 1
+                      -song: PhpTabs\Music\Song {#879}
+                    }
+                    -track: PhpTabs\Music\Track {#3309}
+                    -clef: 1
+                    -keySignature: 0
+                    -beats: array:6 [
+                      0 => PhpTabs\Music\Beat {#5911 …6}
+                      1 => PhpTabs\Music\Beat {#5922 …6}
+                      2 => PhpTabs\Music\Beat {#5934 …6}
+                      3 => PhpTabs\Music\Beat {#5946 …6}
+                      4 => PhpTabs\Music\Beat {#5958 …6}
+                      5 => PhpTabs\Music\Beat {#5970 …6}
+                    ]
+                  }
+                ]
+                -strings: array:6 [
+                  0 => PhpTabs\Music\TabString {#7898
+                    -number: 1
+                    -value: 69
+                  }
+                  1 => PhpTabs\Music\TabString {#7836
+                    -number: 2
+                    -value: 68
+                  }
+                  2 => PhpTabs\Music\TabString {#7909
+                    -number: 3
+                    -value: 67
+                  }
+                  3 => PhpTabs\Music\TabString {#7910
+                    -number: 4
+                    -value: 66
+                  }
+                  4 => PhpTabs\Music\TabString {#7911
+                    -number: 5
+                    -value: 65
+                  }
+                  5 => PhpTabs\Music\TabString {#7912
+                    -number: 6
+                    -value: 64
+                  }
+                ]
+                -color: PhpTabs\Music\Color {#3311
+                  -value: array:3 [
+                    0 => 255
+                    1 => 0
+                    2 => 0
+                  ]
+                }
+                -lyrics: PhpTabs\Music\Lyric {#3312
+                  -from: 1
+                  -lyrics: ""
+                }
+                -song: PhpTabs\Music\Song {#879}
+              }
+              1 => PhpTabs\Music\Track {#5982
+                -number: 2
+                -offset: 0
+                -channelId: 1
+                -solo: false
+                -mute: false
+                -name: ""
+                -measures: array:49 [
+                  0 => PhpTabs\Music\Measure {#5986 …5}
+                  1 => PhpTabs\Music\Measure {#5987 …5}
+                  2 => PhpTabs\Music\Measure {#5988 …5}
+                  3 => PhpTabs\Music\Measure {#5989 …5}
+                  4 => PhpTabs\Music\Measure {#5990 …5}
+                  5 => PhpTabs\Music\Measure {#5991 …5}
+                  6 => PhpTabs\Music\Measure {#5992 …5}
+                  7 => PhpTabs\Music\Measure {#5993 …5}
+                  8 => PhpTabs\Music\Measure {#5994 …5}
+                  9 => PhpTabs\Music\Measure {#5995 …5}
+                  10 => PhpTabs\Music\Measure {#5996 …5}
+                  11 => PhpTabs\Music\Measure {#5997 …5}
+                  12 => PhpTabs\Music\Measure {#5998 …5}
+                  13 => PhpTabs\Music\Measure {#5999 …5}
+                  14 => PhpTabs\Music\Measure {#6000 …5}
+                  15 => PhpTabs\Music\Measure {#6001 …5}
+                  16 => PhpTabs\Music\Measure {#6002 …5}
+                  17 => PhpTabs\Music\Measure {#6003 …5}
+                  18 => PhpTabs\Music\Measure {#6004 …5}
+                  19 => PhpTabs\Music\Measure {#6005 …5}
+                  20 => PhpTabs\Music\Measure {#6006 …5}
+                  21 => PhpTabs\Music\Measure {#6007 …5}
+                  22 => PhpTabs\Music\Measure {#6008 …5}
+                  23 => PhpTabs\Music\Measure {#6009 …5}
+                  24 => PhpTabs\Music\Measure {#6010 …5}
+                  25 => PhpTabs\Music\Measure {#6011 …5}
+                  26 => PhpTabs\Music\Measure {#6012 …5}
+                  27 => PhpTabs\Music\Measure {#6013 …5}
+                  28 => PhpTabs\Music\Measure {#6014 …5}
+                  29 => PhpTabs\Music\Measure {#6015 …5}
+                  30 => PhpTabs\Music\Measure {#6016 …5}
+                  31 => PhpTabs\Music\Measure {#6017 …5}
+                  32 => PhpTabs\Music\Measure {#6018 …5}
+                  33 => PhpTabs\Music\Measure {#6019 …5}
+                  34 => PhpTabs\Music\Measure {#6020 …5}
+                  35 => PhpTabs\Music\Measure {#6021 …5}
+                  36 => PhpTabs\Music\Measure {#6022 …5}
+                  37 => PhpTabs\Music\Measure {#6023 …5}
+                  38 => PhpTabs\Music\Measure {#6024 …5}
+                  39 => PhpTabs\Music\Measure {#6025 …5}
+                  40 => PhpTabs\Music\Measure {#6026 …5}
+                  41 => PhpTabs\Music\Measure {#6027 …5}
+                  42 => PhpTabs\Music\Measure {#6028 …5}
+                  43 => PhpTabs\Music\Measure {#6029 …5}
+                  44 => PhpTabs\Music\Measure {#6030 …5}
+                  45 => PhpTabs\Music\Measure {#6031 …5}
+                  46 => PhpTabs\Music\Measure {#6032 …5}
+                  47 => PhpTabs\Music\Measure {#6033 …5}
+                  48 => PhpTabs\Music\Measure {#6034 …5}
+                ]
+                -strings: array:4 [
+                  0 => PhpTabs\Music\TabString {#7913 …2}
+                  1 => PhpTabs\Music\TabString {#7914 …2}
+                  2 => PhpTabs\Music\TabString {#7915 …2}
+                  3 => PhpTabs\Music\TabString {#7916 …2}
+                ]
+                -color: PhpTabs\Music\Color {#5984
+                  -value: array:3 [ …3]
+                }
+                -lyrics: PhpTabs\Music\Lyric {#5985
+                  -from: 1
+                  -lyrics: ""
+                }
+                -song: PhpTabs\Music\Song {#879}
+              }
+            ]
+            #measureHeaders: array:49 [
+              0 => PhpTabs\Music\MeasureHeader {#3301}
+              1 => PhpTabs\Music\MeasureHeader {#3307}
+              2 => PhpTabs\Music\MeasureHeader {#3324}
+              3 => PhpTabs\Music\MeasureHeader {#3417}
+              4 => PhpTabs\Music\MeasureHeader {#3437}
+              5 => PhpTabs\Music\MeasureHeader {#3479}
+              6 => PhpTabs\Music\MeasureHeader {#3515}
+              7 => PhpTabs\Music\MeasureHeader {#3590}
+              8 => PhpTabs\Music\MeasureHeader {#3656}
+              9 => PhpTabs\Music\MeasureHeader {#3722}
+              10 => PhpTabs\Music\MeasureHeader {#3655}
+              11 => PhpTabs\Music\MeasureHeader {#3835}
+              12 => PhpTabs\Music\MeasureHeader {#3881}
+              13 => PhpTabs\Music\MeasureHeader {#3901}
+              14 => PhpTabs\Music\MeasureHeader {#3983}
+              15 => PhpTabs\Music\MeasureHeader {#4049}
+              16 => PhpTabs\Music\MeasureHeader {#4095}
+              17 => PhpTabs\Music\MeasureHeader {#4094}
+              18 => PhpTabs\Music\MeasureHeader {#4187}
+              19 => PhpTabs\Music\MeasureHeader {#4222}
+              20 => PhpTabs\Music\MeasureHeader {#4288}
+              21 => PhpTabs\Music\MeasureHeader {#4338}
+              22 => PhpTabs\Music\MeasureHeader {#4410}
+              23 => PhpTabs\Music\MeasureHeader {#4507}
+              24 => PhpTabs\Music\MeasureHeader {#4573}
+              25 => PhpTabs\Music\MeasureHeader {#4609}
+              26 => PhpTabs\Music\MeasureHeader {#4655}
+              27 => PhpTabs\Music\MeasureHeader {#4654}
+              28 => PhpTabs\Music\MeasureHeader {#4690}
+              29 => PhpTabs\Music\MeasureHeader {#4783}
+              30 => PhpTabs\Music\MeasureHeader {#4803}
+              31 => PhpTabs\Music\MeasureHeader {#4845}
+              32 => PhpTabs\Music\MeasureHeader {#4881}
+              33 => PhpTabs\Music\MeasureHeader {#4967}
+              34 => PhpTabs\Music\MeasureHeader {#5003}
+              35 => PhpTabs\Music\MeasureHeader {#5089}
+              36 => PhpTabs\Music\MeasureHeader {#5175}
+              37 => PhpTabs\Music\MeasureHeader {#5261}
+              38 => PhpTabs\Music\MeasureHeader {#5280}
+              39 => PhpTabs\Music\MeasureHeader {#5373}
+              40 => PhpTabs\Music\MeasureHeader {#5438}
+              41 => PhpTabs\Music\MeasureHeader {#5419}
+              42 => PhpTabs\Music\MeasureHeader {#5509}
+              43 => PhpTabs\Music\MeasureHeader {#5595}
+              44 => PhpTabs\Music\MeasureHeader {#5681}
+              45 => PhpTabs\Music\MeasureHeader {#5747}
+              46 => PhpTabs\Music\MeasureHeader {#5756}
+              47 => PhpTabs\Music\MeasureHeader {#5849}
+              48 => PhpTabs\Music\MeasureHeader {#5904}
+            ]
+            #channels: array:1 [
+              0 => PhpTabs\Music\Channel {#7908
+                -id: 1
+                -name: "#1"
+                -parameters: []
+                -bank: 0
+                -program: 0
+                -volume: 100
+                -balance: 64
+                -chorus: 0
+                -reverb: 0
+                -phaser: 0
+                -tremolo: 0
+              }
+            ]
+          }
+        }
+        -track: PhpTabs\Music\Track {#3309}
+        -clef: 1
+        -keySignature: 0
+        -beats: array:3 [
+          0 => PhpTabs\Music\Beat {#3314}
+          1 => PhpTabs\Music\Beat {#3304
+            -start: 1680
+            -measure: PhpTabs\Music\Measure {#3313}
+            -chord: null
+            -text: null
+            -voices: array:2 [
+              0 => PhpTabs\Music\Voice {#3326
+                -beat: PhpTabs\Music\Beat {#3304}
+                -duration: PhpTabs\Music\Duration {#3327 …4}
+                -index: 0
+                -direction: 0
+                -notes: array:1 [ …1]
+                -empty: false
+              }
+              1 => PhpTabs\Music\Voice {#3329
+                -beat: PhpTabs\Music\Beat {#3304}
+                -duration: PhpTabs\Music\Duration {#3330 …4}
+                -index: 1
+                -direction: 0
+                -notes: []
+                -empty: true
+              }
+            ]
+            -stroke: PhpTabs\Music\Stroke {#3325
+              -direction: 0
+              -value: null
+            }
+          }
+          2 => PhpTabs\Music\Beat {#3308
+            -start: 2400
+            -measure: PhpTabs\Music\Measure {#3313}
+            -chord: null
+            -text: null
+            -voices: array:2 [
+              0 => PhpTabs\Music\Voice {#3336
+                -beat: PhpTabs\Music\Beat {#3308}
+                -duration: PhpTabs\Music\Duration {#3337 …4}
+                -index: 0
+                -direction: 0
+                -notes: array:1 [ …1]
+                -empty: false
+              }
+              1 => PhpTabs\Music\Voice {#3339
+                -beat: PhpTabs\Music\Beat {#3308}
+                -duration: PhpTabs\Music\Duration {#3340 …4}
+                -index: 1
+                -direction: 0
+                -notes: []
+                -empty: true
+              }
+            ]
+            -stroke: PhpTabs\Music\Stroke {#3306
+              -direction: 0
+              -value: null
+            }
+          }
+        ]
+      }
+      -chord: null
+      -text: null
+      -voices: array:2 [
+        0 => PhpTabs\Music\Voice {#3316}
+        1 => PhpTabs\Music\Voice {#3319
+          -beat: PhpTabs\Music\Beat {#3314}
+          -duration: PhpTabs\Music\Duration {#3320
+            -value: 4
+            -divisionType: PhpTabs\Music\DivisionType {#3321
+              -enters: 1
+              -times: 1
+            }
+            -dotted: false
+            -doubleDotted: false
+          }
+          -index: 1
+          -direction: 0
+          -notes: []
+          -empty: true
+        }
+      ]
+      -stroke: PhpTabs\Music\Stroke {#3315
+        -direction: 0
+        -value: null
+      }
+    }
+    -duration: PhpTabs\Music\Duration {#3317
+      -value: 8
+      -divisionType: PhpTabs\Music\DivisionType {#3318
+        -enters: 1
+        -times: 1
+      }
+      -dotted: false
+      -doubleDotted: false
+    }
+    -index: 0
+    -direction: 0
+    -notes: array:1 [
+      0 => PhpTabs\Music\Note {#3322}
+    ]
+    -empty: false
+  }
+}

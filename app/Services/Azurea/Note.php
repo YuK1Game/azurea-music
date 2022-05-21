@@ -112,6 +112,17 @@ class Note
         $pitchOctave = $this->musicNote->pitchOctave();
 
         if ( ! $this->musicNote->isNatural()) {
+            if ($this->getSharpCount() > 0 || $this->getFlatCount() > 0) {
+                // dd("\n", [
+                //     $pitchStep,
+                //     $pitchOctave,
+                //     $this->getSharpCount(),
+                //     $this->getFlatCount(),
+                //     NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount()),
+                //     NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getFlatCount()),
+                // ]);
+            }
+
             list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
             list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
         }

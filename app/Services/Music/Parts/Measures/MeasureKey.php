@@ -57,4 +57,9 @@ class MeasureKey
         }
         return false;
     }
+
+    public function __toString()
+    {
+        return collect(['index' => $this->index])->toJson();
+    }
 }

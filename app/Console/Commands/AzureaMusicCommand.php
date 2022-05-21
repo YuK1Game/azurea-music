@@ -56,7 +56,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Super_Mario_Bros._-_Main_Theme.mxl');
+        $filename = resource_path('musicxml/Kanade__.mxl');
 
         $musicXml = new MusicXML($filename);
         $music = $musicXml->music();

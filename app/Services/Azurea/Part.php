@@ -81,6 +81,7 @@ class Part
 
                 if ($measureKey = $measure->measureKey()) {
                     $this->measureKey = $measureKey;
+                    // echo "\n" . $measureKey . "\n";
                 }
 
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));

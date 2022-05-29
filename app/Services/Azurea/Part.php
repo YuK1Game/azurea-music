@@ -95,12 +95,23 @@ class Part
 
     public function exportCodeByMeasure(?MusicMeasure $measure, int $measureDuration) : void
     {
+        $pitchSharps = collect();
+        $pitchFlats = collect();
+
         $azureaNotes = $this->getNotesByMeasure($measure) ?? $this->getBlankNotesWithMeasureDuration($measureDuration);
 
-        $azureaNotes->each(function(Note $note) {
+        $azureaNotes->each(function(Note $note) use(&$pitchSharps, &$pitchFlats) {
+
+            $note->isSharp() && $pitchSharps->push($note->pitchStep());
+            $note->isFlat() && $pitchFlats->push($note->pitchStep());
+
             $note->setPrevNote($note);
+            $note->setMeasureSharpPitches($pitchSharps);
+            $note->setMeasureFlatPitches($pitchFlats);
+
             echo $note->code();
             $this->prevNote = $note;
+            
         });
     }
 

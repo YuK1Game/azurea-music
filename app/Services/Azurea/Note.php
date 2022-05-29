@@ -4,6 +4,7 @@ namespace App\Services\Azurea;
 use App\Services\Music\Parts\Measures\Note as MusicNote;
 use App\Services\Azurea\Notes\NotePitchTable;
 use App\Services\Music\Parts\Measures\MeasureKey;
+use Illuminate\Support\Collection;
 
 class Note
 {
@@ -20,6 +21,10 @@ class Note
     protected int $flatCount;
 
     protected MeasureKey $measureKey;
+
+    protected Collection $measureSharpPitches;
+    
+    protected Collection $measureFlatPitches;
 
     public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
@@ -50,15 +55,25 @@ class Note
         $this->measureKey = $measureKey ?? new MeasureKey(0);
     }
 
-    public function addSharpCount(int $count = 1) : void
+    public function setMeasureSharpPitches(Collection $pitchSharps)
     {
-        $this->sharpCount += $count;
+        $this->measureSharpPitches = $pitchSharps;
     }
 
-    public function addFlatCount(int $count = 1) : void
+    public function setMeasureFlatPitches(Collection $pitchFlats)
     {
-        $this->flatCount += $count;
+        $this->measureFlatPitches = $pitchFlats;
     }
+
+    // public function addSharpCount(int $count = 1) : void
+    // {
+    //     $this->sharpCount += $count;
+    // }
+
+    // public function addFlatCount(int $count = 1) : void
+    // {
+    //     $this->flatCount += $count;
+    // }
 
     public function isBlank() : bool
     {
@@ -81,6 +96,37 @@ class Note
         }
 
         return $this->musicNote->isRest() ? $this->rest() : $this->step();
+    }
+
+    public function codeDebug() : string
+    {
+        if ($this->isBlank() || $this->musicNote->isRest()) {
+            return $this->rest();
+        }
+
+        if ($this->musicNote->isGrace()) {
+            return '';
+        }
+
+        $pitchStep = $this->musicNote->pitchStep();
+
+        $list = [
+            'c' => 'ド',
+            'd' => 'レ',
+            'e' => 'ミ',
+            'f' => 'ファ',
+            'g' => 'ソ',
+            'a' => 'ラ',
+            'b' => 'シ',
+        ];
+
+        $text = sprintf('%s(%d,%d)', collect($list)->get($pitchStep), $this->getSharpCount(), $this->getFlatCount());
+
+        if ( ! $this->musicNote->isChord()) {
+            $text = ' ' . $text;
+        }
+
+        return $text;
     }
 
     public function rest() : string
@@ -112,17 +158,6 @@ class Note
         $pitchOctave = $this->musicNote->pitchOctave();
 
         if ( ! $this->musicNote->isNatural()) {
-            if ($this->getSharpCount() > 0 || $this->getFlatCount() > 0) {
-                // dd("\n", [
-                //     $pitchStep,
-                //     $pitchOctave,
-                //     $this->getSharpCount(),
-                //     $this->getFlatCount(),
-                //     NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount()),
-                //     NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getFlatCount()),
-                // ]);
-            }
-
             list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
             list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
         }
@@ -143,16 +178,27 @@ class Note
         return $baseDuration;
     }
 
+    protected function hasMeasureSharp() : bool
+    {
+        return $this->measureSharpPitches->contains($this->musicNote->pitchStep());
+    }
+
+    protected function hasMeasureFlat() : bool
+    {
+        return $this->measureFlatPitches->contains($this->musicNote->pitchStep());
+    }
+
     protected function getSharpCount() : int
     {
-        $count = $this->musicNote->isSharp() ? 1 : 0;
+        $count = $this->musicNote->isSharp() || $this->hasMeasureSharp() ? 1 : 0;
         $count += $this->measureKey->isSharp($this->musicNote->pitchStep()) ? 1 : 0;
+
         return $count;
     }
 
     protected function getFlatCount() : int
     {
-        $count = $this->musicNote->isFlat() ? 1 : 0;
+        $count = $this->musicNote->isFlat() || $this->hasMeasureFlat() ? 1 : 0;
         $count += $this->measureKey->isFlat($this->musicNote->pitchStep()) ? 1 : 0;
         return $count;
     }
@@ -175,4 +221,13 @@ class Note
         return [ $duration, $isDottedDuration ];
     }
 
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this, $name)) {
+            return $this->{ $name }(...$arguments);
+        }
+        if (method_exists($this->musicNote, $name)) {
+            return $this->musicNote->{ $name }(...$arguments);
+        }
+    }
 }

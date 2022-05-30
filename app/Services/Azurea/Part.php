@@ -29,6 +29,8 @@ class Part
 
     protected int $tempo = 120;
 
+    protected ?Collection $tempos;
+
     public function __construct(MusicPart $part)
     {
         $this->part = $part;
@@ -36,6 +38,7 @@ class Part
         $this->initMeasureDurations();
         $this->initMaxDuration();
         $this->initMetaMeasure();
+        $this->initTempos();
     }
 
     private function initMeasureDurations() : void
@@ -55,6 +58,20 @@ class Part
         $this->metaMeasure = $this->part->trackA()->first();
     }
 
+    private function initTempos() : void
+    {
+        $this->tempos = collect();
+
+        $this->part->tracks()->each(function(Collection $track) {
+            $track->each(function(?MusicMeasure $measure, int $measureIndex) {
+
+                if (($tempo = $measure->tempo()) && $tempo !== $this->tempo) {
+                    $this->tempos->put($measureIndex, $tempo);
+                }
+            });
+        });
+    }
+
     protected function setMeasureDurationByIndex(int $index, ?int $measureDuration) : void
     {
         if ( ! $this->measureDurations->has($index) && $measureDuration) {
@@ -67,6 +84,17 @@ class Part
         return $this->measureDurations->get($index);
     }
 
+    public function setTempos(Collection $tempos) : void
+    {
+        $this->tempos = $tempos;
+    }
+
+    public function getTempos() : Collection
+    {
+        ! $this->tempos && $this->initTempos();
+        return $this->tempos;
+    }
+
     public function exportCode() : void
     {
         $this->part->tracks()->each(function(Collection $track, int $trackIndex) {
@@ -75,13 +103,15 @@ class Part
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
 
                 if (($tempo = $measure->tempo()) && $tempo !== $this->tempo) {
+                    $this->tempos->put($measureIndex, $tempo);
+                }
+
+                if ($tempo = $this->tempos->get($measureIndex)) {
                     echo sprintf('t%d', $tempo);
-                    $this->tempo = $tempo;
                 }
 
                 if ($measureKey = $measure->measureKey()) {
                     $this->measureKey = $measureKey;
-                    // echo "\n" . $measureKey . "\n";
                 }
 
                 $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));

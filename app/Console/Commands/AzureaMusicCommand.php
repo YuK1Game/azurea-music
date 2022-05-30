@@ -3,25 +3,17 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 
 use App\Services\Music\{
     MusicXML,
     ScorePart,
-    Part,
-    Parts\Measure,
-    Parts\MeasureChunk,
-    Parts\Measures\MeasureChildrenInterface,
-    Parts\Measures\Note,
-    Parts\Measures\Backup,
 };
+
+use App\Services\Azurea\MusicXML as AzureaMusicXML;
 
 use App\Services\Azurea\{
     ScorePart as AzureaScorePart,
 };
-
-use App\Services\Azurea\Note as AzureaNote;
-use App\Services\Azurea\Notes\NotePitchTable;
 
 class AzureaMusicCommand extends Command
 {
@@ -56,26 +48,11 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Kanade__.mxl');
+        $filename = resource_path('musicxml/Romancing_Saga_3_-_Four_Noble_Devils_1_Quartet_ver..mxl');
 
         $musicXml = new MusicXML($filename);
-        $music = $musicXml->music();
-        $scoreParts = $music->scoreParts();
-
-        try {
-            $scoreParts->each(function(ScorePart $scorePart, int $scorePartIndex) {
-                echo join(PHP_EOL, [
-                    str_repeat('=', 100),
-                    sprintf('ScorePart [%d]', $scorePartIndex + 1),
-                    str_repeat('=', 100),
-                ]) . PHP_EOL;
-                $azureaScorePart = new AzureaScorePart($scorePart);
-                $azureaScorePart->exportCode();
-            });
-        } catch (\InvalidArgumentException $e) {
-            echo $e;
-            die;
-        }
+        $azureaMusicXml = new AzureaMusicXML($musicXml);
+        $azureaMusicXml->exportCode();
 
         return 0;
     }

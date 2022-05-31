@@ -173,8 +173,8 @@ class Note
             case 'o5d' : return ['d+', 4]; // ロータム
             case 'o5e' : return ['d',  4]; // ハイタム
             case 'o5f' : return ['a',  4]; // ライドシンバル
-            case 'o5g' : return ['a+', 4]; // ハイハットシンバル
-            case 'o5a' : return ['g',  5]; // クラッシュシンバル
+            case 'o5g' : return ['f',  4]; // クローズハット
+            case 'o5a' : return ['g',  4]; // クラッシュシンバル
             
             default : throw new \Exception(sprintf('Pitch not fount [%s]', $pitch));
         }

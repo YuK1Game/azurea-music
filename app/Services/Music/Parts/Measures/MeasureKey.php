@@ -42,17 +42,17 @@ class MeasureKey
         return collect($list);
     }
     
-    public function isSharp(string $pitch) : bool
+    public function isSharp(?string $pitch) : bool
     {
-        if ($this->index > 0) {
+        if ($pitch && $this->index > 0) {
             return $this->keys()->contains($pitch);
         }
         return false;
     }
 
-    public function isFlat(string $pitch) : bool
+    public function isFlat(?string $pitch) : bool
     {
-        if ($this->index < 0) {
+        if ($pitch && $this->index < 0) {
             return $this->keys()->contains($pitch);
         }
         return false;

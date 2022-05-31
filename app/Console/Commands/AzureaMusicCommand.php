@@ -48,7 +48,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Romancing_Saga_3_-_Four_Noble_Devils_1_Quartet_ver..mxl');
+        $filename = resource_path('musicxml/Beggin.mxl');
 
         $musicXml = new MusicXML($filename);
         $azureaMusicXml = new AzureaMusicXML($musicXml);

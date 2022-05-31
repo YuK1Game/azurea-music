@@ -65,16 +65,6 @@ class Note
         $this->measureFlatPitches = $pitchFlats;
     }
 
-    // public function addSharpCount(int $count = 1) : void
-    // {
-    //     $this->sharpCount += $count;
-    // }
-
-    // public function addFlatCount(int $count = 1) : void
-    // {
-    //     $this->flatCount += $count;
-    // }
-
     public function isBlank() : bool
     {
         return ! $this->musicNote;
@@ -157,12 +147,37 @@ class Note
         $pitchStep = $this->musicNote->pitchStep();
         $pitchOctave = $this->musicNote->pitchOctave();
 
+        if ( ! $pitchStep && ! $pitchOctave) {
+            return $this->unpitched();
+        }
+
         if ( ! $this->musicNote->isNatural()) {
             list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
             list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
         }
 
         return [ $pitchStep, $pitchOctave ];
+    }
+
+    public function unpitched() : array
+    {
+        $pitchStep = $this->musicNote->unpitchedStep();
+        $pitchOctave = $this->musicNote->unpitchedOctave();
+        $pitch = sprintf('o%d%s', $pitchOctave, $pitchStep);
+
+        switch ($pitch) {
+            case 'o4d' : return ['a+', 4]; // ハイハット・シンバル(足)
+            case 'o4f' : return ['c',  4]; // バス・ドラム
+            case 'o4a' : return ['e',  4]; // フロアタム
+            case 'o5c' : return ['c+', 4]; // スネア・ドラム
+            case 'o5d' : return ['d+', 4]; // ロータム
+            case 'o5e' : return ['d',  4]; // ハイタム
+            case 'o5f' : return ['a',  4]; // ライドシンバル
+            case 'o5g' : return ['a+', 4]; // ハイハットシンバル
+            case 'o5a' : return ['g',  5]; // クラッシュシンバル
+            
+            default : throw new \Exception(sprintf('Pitch not fount [%s]', $pitch));
+        }
     }
 
     public function duration() : string

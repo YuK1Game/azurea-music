@@ -76,14 +76,28 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
         return $this->crawler->filter('notations > tied[type="stop"]')->count() > 0;
     }
 
-    public function pitchStep() : string
+    public function pitchStep() : ?string
     {
-        $step = $this->crawler->filter('pitch > step')->innerText() ?? null;
-        return $step ? strtolower($step) : null;
+        $step = $this->crawler->filter('pitch > step');
+        return $step->count() > 0 ? strtolower($step->innerText()) : null;
     }
 
     public function pitchOctave() : int
     {
-        return (int) $this->crawler->filter('pitch > octave')->innerText() ?? 0;
+        $octave = $this->crawler->filter('pitch > octave');
+        return $octave->count() > 0 ? (int) $octave->innerText() : 0;
     }
+
+    public function unpitchedStep() : ?string
+    {
+        $step = $this->crawler->filter('unpitched > display-step');
+        return $step->count() > 0 ? strtolower($step->innerText()) : null;
+    }
+
+    public function unpitchedOctave() : ?int
+    {
+        $octave = $this->crawler->filter('unpitched > display-octave');
+        return $octave->count() > 0 ? (int) $octave->innerText() : 0;
+    }
+
 }

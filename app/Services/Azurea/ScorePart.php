@@ -23,6 +23,11 @@ class ScorePart
         return new AzureaPart($this->scorePart->part());
     }
 
+    public function partName() : ?string
+    {
+        return $this->scorePart->partName();
+    }
+
     public function exportCode() : void
     {
         echo join(PHP_EOL, [

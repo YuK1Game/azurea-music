@@ -14,4 +14,10 @@ class ScorePart extends Node implements NodeInterface
         return new Part($partDom, $this);
     }
 
+    public function partName() : ?string
+    {
+        $partNameDom = $this->crawler->filter('part-name');
+        return $partNameDom->count() > 0 ? $partNameDom->innerText() : null;
+    }
+
 }

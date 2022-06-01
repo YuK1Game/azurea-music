@@ -17,6 +17,7 @@ class MusicXML
     public function __construct(Music_MusicXML $musicXml)
     {
         $this->musicXml = $musicXml;
+        $this->tempos = collect();
     }
 
     protected function getScoreParts()
@@ -41,7 +42,7 @@ class MusicXML
 
             echo join(PHP_EOL, [
                 str_repeat('=', 100),
-                sprintf('ScorePart [%d]', $index + 1),
+                sprintf('ScorePart [%s]', $azureaScorePart->partName() ?? $index + 1),
                 str_repeat('=', 100),
             ]) . PHP_EOL;
 

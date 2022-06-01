@@ -48,7 +48,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/One-Winged_Angel_Rebirth_-_Final_Fantasy_VII_Remake.mxl');
+        $filename = resource_path('musicxml/Ojamajo_Carnival_Ojamajo_Doremi_Opening.mxl');
 
         $musicXml = new MusicXML($filename);
         $azureaMusicXml = new AzureaMusicXML($musicXml);

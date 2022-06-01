@@ -26,6 +26,8 @@ class Note
     
     protected Collection $measureFlatPitches;
 
+    protected Collection $measureNaturalPitches;
+
     public function __construct(?MusicNote $musicNote, int $measureTotalDuration)
     {
         $this->musicNote = $musicNote;
@@ -63,6 +65,11 @@ class Note
     public function setMeasureFlatPitches(Collection $pitchFlats)
     {
         $this->measureFlatPitches = $pitchFlats;
+    }
+
+    public function setMeasureMaturalPitches(Collection $pitchNaturals)
+    {
+        $this->measureNaturalPitches = $pitchNaturals;
     }
 
     public function isBlank() : bool
@@ -151,7 +158,7 @@ class Note
             return $this->unpitched();
         }
 
-        if ( ! $this->musicNote->isNatural()) {
+        if ( ! $this->musicNote->isNatural() && ! $this->hasMeasureNatural()) {
             list($pitchStep, $pitchOctave) = NotePitchTable::addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
             list($pitchStep, $pitchOctave) = NotePitchTable::subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
         }
@@ -193,14 +200,24 @@ class Note
         return $baseDuration;
     }
 
+    public function defaultPitch() : string
+    {
+        return sprintf('o%d%s', $this->musicNote->pitchOctave(), $this->musicNote->pitchStep());
+    }
+
     protected function hasMeasureSharp() : bool
     {
-        return $this->measureSharpPitches->contains($this->musicNote->pitchStep());
+        return $this->measureSharpPitches->contains($this->defaultPitch());
     }
 
     protected function hasMeasureFlat() : bool
     {
-        return $this->measureFlatPitches->contains($this->musicNote->pitchStep());
+        return $this->measureFlatPitches->contains($this->defaultPitch());
+    }
+
+    protected function hasMeasureNatural() : bool
+    {
+        return $this->measureNaturalPitches->contains($this->defaultPitch());
     }
 
     protected function getSharpCount() : int

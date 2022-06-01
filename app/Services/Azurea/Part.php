@@ -127,17 +127,20 @@ class Part
     {
         $pitchSharps = collect();
         $pitchFlats = collect();
+        $pitchNaturals = collect();
 
         $azureaNotes = $this->getNotesByMeasure($measure) ?? $this->getBlankNotesWithMeasureDuration($measureDuration);
 
-        $azureaNotes->each(function(Note $note) use(&$pitchSharps, &$pitchFlats) {
+        $azureaNotes->each(function(Note $note) use(&$pitchSharps, &$pitchFlats, &$pitchNaturals) {
 
-            $note->isSharp() && $pitchSharps->push($note->pitchStep());
-            $note->isFlat() && $pitchFlats->push($note->pitchStep());
+            $note->isSharp() && $pitchSharps->push($note->defaultPitch());
+            $note->isFlat() && $pitchFlats->push($note->defaultPitch());
+            $note->isNatural() && $pitchNaturals->push($note->defaultPitch());
 
             $note->setPrevNote($note);
             $note->setMeasureSharpPitches($pitchSharps);
             $note->setMeasureFlatPitches($pitchFlats);
+            $note->setMeasureMaturalPitches($pitchNaturals);
 
             echo $note->code();
             $this->prevNote = $note;

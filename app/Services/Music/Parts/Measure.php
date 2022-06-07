@@ -14,6 +14,8 @@ class Measure extends Node implements NodeInterface
 
     protected ?int $totalDuration = null;
 
+    protected ?int $totalLength = null;
+
     public function __construct(DOMCrawler $crawler, NodeInterface $parentNode)
     {
         parent::__construct($crawler, $parentNode);
@@ -40,6 +42,11 @@ class Measure extends Node implements NodeInterface
         $this->children = $children;
     }
 
+    public function getNumber() : int
+    {
+        return (int) $this->crawler->attr('number');
+    }
+
     public function totalDuration() : int
     {
         if ( ! $this->totalDuration) {
@@ -52,6 +59,20 @@ class Measure extends Node implements NodeInterface
         }
 
         return $this->totalDuration;
+    }
+
+    public function totalLength() : int
+    {
+        if ( ! $this->totalLength) {
+            $this->totalLength = $this->notes()->sum(function(Note $note) {
+                if ( ! $note->isChord()) {
+                    return $note->length();
+                }
+                return 0;
+            });
+        }
+
+        return $this->totalLength;
     }
 
     public function time() : array

@@ -12,7 +12,7 @@ class Note
 
     protected int $baseDuration = 0;
 
-    protected ?int $noteDuration = null;
+    protected ?int $noteLength = null;
 
     protected ?Note $prevNote;
 
@@ -37,14 +37,14 @@ class Note
         $this->flatCount = ($this->musicNote && $this->musicNote->isFlat()) ? 1 : 0;
     }
 
-    public function setNoteDuration(int $noteDuration) : void
+    public function setNoteLength(int $noteLength) : void
     {
-        $this->noteDuration = $noteDuration;
+        $this->noteLength = $noteLength;
     }
 
-    public function getNoteDuration() : ?int
+    public function getNoteLength() : ?int
     {
-        return $this->noteDuration;
+        return $this->noteLength;
     }
 
     public function setPrevNote(?Note $prevNote) : void
@@ -67,7 +67,7 @@ class Note
         $this->measureFlatPitches = $pitchFlats;
     }
 
-    public function setMeasureMaturalPitches(Collection $pitchNaturals)
+    public function setMeasureNaturalPitches(Collection $pitchNaturals)
     {
         $this->measureNaturalPitches = $pitchNaturals;
     }
@@ -189,15 +189,44 @@ class Note
 
     public function duration() : string
     {
-        list($baseDuration, $isDottedDuration) = $this->baseDuration();
-
-        $baseDuration = $baseDuration;
-
-        if ($isDottedDuration) {
-            $baseDuration .= '.';
+        if ($this->isBlank()) {
+            return 1;
         }
 
-        return $baseDuration;
+        $duration = $this->musicNote->duration();
+        $isDot = $this->musicNote->isDot();
+
+        if ($timeModification = $this->musicNote->timeModification()) {
+            list( $actualNotes, $normalNotes ) = $timeModification;
+            $duration = $duration * pow(2, $actualNotes) / pow(2, $normalNotes);
+        }
+
+        return (string) $duration . ($isDot ? '.' : '');
+    }
+
+    public function length() : int
+    {
+        return $this->musicNote->length();
+    }
+
+    public function debugDuration() {
+        if ($this->isBlank()) {
+            return '-';
+        }
+
+        if ($this->musicNote->isChord()) {
+            return '';
+        }
+
+        $duration = $this->musicNote->duration();
+        $isDot = $this->musicNote->isDot();
+
+        if ($timeModification = $this->musicNote->timeModification()) {
+            list( $actualNotes, $normalNotes ) = $timeModification;
+            $duration = $duration * $actualNotes / $normalNotes;
+        }
+
+        return "\t" . (48 / $duration * ($isDot ? 1.5 : 1));
     }
 
     public function defaultPitch() : string

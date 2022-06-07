@@ -10,7 +10,7 @@ use App\Services\Music\{
     Parts\Measures\Note as MusicNote,
 };
 
-use App\Services\Azurea\Note;
+use App\Services\Azurea\{ Measure, Note };
 use App\Services\Music\Parts\Measures\MeasureKey;
 
 class Part
@@ -19,7 +19,7 @@ class Part
 
     protected int $maxDuration;
 
-    protected ?Collection $measureDurations;
+    protected ?Collection $measureLengths;
 
     protected ?Note $prevNote = null;
 
@@ -43,8 +43,8 @@ class Part
 
     private function initMeasureDurations() : void
     {
-        $this->measureDurations = $this->part->trackA()->map(function(MusicMeasure $measure) {
-            return $measure->totalDuration();
+        $this->measureLengths = $this->part->trackA()->map(function(MusicMeasure $measure) {
+            return $measure->totalLength();
         });
     }
 
@@ -72,16 +72,9 @@ class Part
         });
     }
 
-    protected function setMeasureDurationByIndex(int $index, ?int $measureDuration) : void
+    protected function getMeasureLengthByIndex(int $index) : int
     {
-        if ( ! $this->measureDurations->has($index) && $measureDuration) {
-            $this->measureDurations->put($index, $measureDuration);
-        }
-    }
-
-    protected function getMeasureDurationByIndex(int $index) : int
-    {
-        return $this->measureDurations->get($index);
+        return $this->measureLengths->get($index);
     }
 
     public function setTempos(Collection $tempos) : void
@@ -101,20 +94,26 @@ class Part
             echo sprintf('TrackNumber [%d]' . PHP_EOL . PHP_EOL, $trackIndex + 1);
 
             $track->each(function(?MusicMeasure $measure, int $measureIndex) {
+                $azureaMeasure = new Measure($measure);
 
-                if (($tempo = $measure->tempo()) && $tempo !== $this->tempo) {
+                if (($tempo = $azureaMeasure->tempo()) && $tempo !== $this->tempo) {
                     $this->tempos->put($measureIndex, $tempo);
                 }
 
                 if ($tempo = $this->tempos->get($measureIndex)) {
                     echo sprintf('t%d', $tempo);
+                    echo PHP_EOL;
                 }
 
-                if ($measureKey = $measure->measureKey()) {
+                if ($measureKey = $azureaMeasure->measureKey()) {
                     $this->measureKey = $measureKey;
                 }
 
-                $this->exportCodeByMeasure($measure, $this->measureDurations->get($measureIndex));
+                $azureaMeasure->setMeasureKey($this->measureKey);
+
+                // echo '[' . $azureaMeasure->getNumber() . '] ';
+
+                $this->exportCodeByMeasure($azureaMeasure, $this->getMeasureLengthByIndex($measureIndex));
                 echo PHP_EOL;
             });
 
@@ -123,15 +122,13 @@ class Part
         });
     }
 
-    public function exportCodeByMeasure(?MusicMeasure $measure, int $measureDuration) : void
+    public function exportCodeByMeasure(?Measure $measure, int $globalMeasureTotalLength) : void
     {
         $pitchSharps = collect();
         $pitchFlats = collect();
         $pitchNaturals = collect();
 
-        $azureaNotes = $this->getNotesByMeasure($measure) ?? $this->getBlankNotesWithMeasureDuration($measureDuration);
-
-        $azureaNotes->each(function(Note $note) use(&$pitchSharps, &$pitchFlats, &$pitchNaturals) {
+        $measure->getNotes()->each(function(Note $note) use(&$pitchSharps, &$pitchFlats, &$pitchNaturals) {
 
             $note->isSharp() && $pitchSharps->push($note->defaultPitch());
             $note->isFlat() && $pitchFlats->push($note->defaultPitch());
@@ -140,28 +137,21 @@ class Part
             $note->setPrevNote($note);
             $note->setMeasureSharpPitches($pitchSharps);
             $note->setMeasureFlatPitches($pitchFlats);
-            $note->setMeasureMaturalPitches($pitchNaturals);
+            $note->setMeasureNaturalPitches($pitchNaturals);
 
+            // echo $note->debugDuration();
             echo $note->code();
+
             $this->prevNote = $note;
             
         });
-    }
 
-    protected function getNotesByMeasure(?MusicMeasure $measure) : ?Collection
-    {
-        return $measure->hasNotes() ? $measure->notes()->map(function(MusicNote $note) {
-            $azureaNote = new Note($note, $this->maxDuration);
-            $azureaNote->setMeasureKey($this->measureKey);
-            return $azureaNote;
-        }) : null;
-    }
+        if ($measure->hasNotes()) {
+            if ($measure->totalLength() < $globalMeasureTotalLength) {
+                echo sprintf('r%d', $globalMeasureTotalLength / $measure->totalLength());
+            }
+        }
 
-    protected function getBlankNotesWithMeasureDuration($measureDuration) : Collection
-    {
-        $azureaNote = new Note(null, $this->maxDuration);
-        $azureaNote->setNoteDuration($measureDuration);
-        return collect([ $azureaNote ]);
     }
 
 }

@@ -18,10 +18,34 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
         return $this->totalNoteDuration;
     }
 
-    public function duration() : int
+    public function duration() : ?int
+    {
+        $node = $this->crawler->filter('type');
+        
+        if ($node->count() > 0) {
+            switch ($node->innerText()) {
+                case 'whole'   : return  1;
+                case 'half'    : return  2;
+                case 'quarter' : return  4;
+                case 'eighth'  : return  8;
+                case '16th'    : return 16;
+                default : throw new \Exception('Error');
+            }
+        }
+
+        return 1;
+    }
+
+    public function length() : int
     {
         $node = $this->crawler->filter('duration');
         return $node->count() > 0 ? (int) $node->innerText() : 0;
+    }
+
+    public function isDot() : bool
+    {
+        $node = $this->crawler->filter('dot');
+        return $node->count() > 0;
     }
 
     public function volume() : int
@@ -98,6 +122,19 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
     {
         $octave = $this->crawler->filter('unpitched > display-octave');
         return $octave->count() > 0 ? (int) $octave->innerText() : 0;
+    }
+
+    public function timeModification() : ?array
+    {
+        $timeModification = $this->crawler->filter('time-modification');
+
+        if ($timeModification->count() > 0) {
+            $actualNotes = (int) $timeModification->filter('actual-notes')->innerText();
+            $normalNotes = (int) $timeModification->filter('normal-notes')->innerText();
+            return [ $actualNotes, $normalNotes ];
+        }
+
+        return null;
     }
 
 }

@@ -44,8 +44,13 @@ class Note extends Node implements NodeInterface, MeasureChildrenInterface
 
     public function isDot() : bool
     {
+        return $this->dotCount() > 0;
+    }
+
+    public function dotCount() : int
+    {
         $node = $this->crawler->filter('dot');
-        return $node->count() > 0;
+        return $node->count();
     }
 
     public function volume() : int

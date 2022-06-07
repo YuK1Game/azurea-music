@@ -194,14 +194,19 @@ class Note
         }
 
         $duration = $this->musicNote->duration();
-        $isDot = $this->musicNote->isDot();
+        $dotCount = $this->musicNote->dotCount();
 
         if ($timeModification = $this->musicNote->timeModification()) {
             list( $actualNotes, $normalNotes ) = $timeModification;
             $duration = $duration * pow(2, $actualNotes) / pow(2, $normalNotes);
         }
-
-        return (string) $duration . ($isDot ? '.' : '');
+        
+        switch ($dotCount) {
+            case 0 : return sprintf('%d', $duration);
+            case 1 : return sprintf('%d.', $duration);
+            case 2 : return sprintf('%d.r%d', $duration, $duration * 2 * 2);
+            default : throw new \Exception(sprintf('Invalid dot count [%d]', $dotCount));
+        }        
     }
 
     public function length() : int

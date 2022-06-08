@@ -4,25 +4,16 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Services\Music\{
-    MusicXML,
-    ScorePart,
-};
+use App\Services\Parser\MusicXML;
 
-use App\Services\Azurea\MusicXML as AzureaMusicXML;
-
-use App\Services\Azurea\{
-    ScorePart as AzureaScorePart,
-};
-
-class AzureaMusicCommand extends Command
+class MusicCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'music:azurea';
+    protected $signature = 'music:run';
 
     /**
      * The console command description.
@@ -48,11 +39,20 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/The_Sound_of_Music_-_Edelweiss__Piano_and_Tenor.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $musicXml = new MusicXML($filename);
-        $azureaMusicXml = new AzureaMusicXML($musicXml);
-        $azureaMusicXml->exportCode();
+        $part = $musicXml->parts()->first();
+        
+        foreach ($musicXml->parts() as $part) {
+            foreach ($part->measures() as $measure) {
+                foreach ($measure->notes() as $note) {
+                    echo $note->isRest() ? 'rest' : 'note';
+                    echo PHP_EOL;
+                }
+            }
+            echo '---------------------' . PHP_EOL;
+        }
 
         return 0;
     }

@@ -7,26 +7,20 @@ use App\Services\Parser\MusicXML\Parts\Measure;
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class Note implements MusicXMLChildrenInterface 
+class BlankNote
 {
     protected SimpleXMLElement $xml;
 
     protected Measure $parent;
 
-    public function __construct(SimpleXMLElement $xml, $parent)
+    public function __construct($parent)
     {
-        $this->xml = $xml;
         $this->parent = $parent;
     }
 
     public function isRest() : bool
     {
-        return isset($this->xml->rest);
-    }
-
-    public function duration() : ?int
-    {
-        return $this->xml->duration ? (int) $this->xml->duration : null;
+        return true;
     }
 
     public function getMeasure() : Measure

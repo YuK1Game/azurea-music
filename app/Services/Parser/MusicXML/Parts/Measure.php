@@ -7,6 +7,7 @@ use App\Services\Parser\MusicXML\Parts\Measures\{
     Note,
     Backup,
     Attribute,
+    Track,
 };
 
 use Illuminate\Support\Collection;
@@ -51,6 +52,13 @@ class Measure implements MusicXMLChildrenInterface
         }
         
         return $data;
+    }
+
+    public function getDividedTracks()
+    {
+        return $this->notes()->chunkWhile(function($anyNote) {
+            return $anyNote instanceof Note;
+        });
     }
 
     public function getPart() : Part

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\Services\Parser\MusicXML;
+use App\Services\Parser\MusicXML\Parts\Measures\Note;
 
 class MusicCommand extends Command
 {
@@ -39,19 +40,20 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
+        $filename = resource_path('musicxml/Dango_Daikazoku_Full_Version_-_Clannad_Original_Soundtrack.mxl');
 
         $musicXml = new MusicXML($filename);
         $part = $musicXml->parts()->first();
         
         foreach ($musicXml->parts() as $part) {
-            foreach ($part->measures() as $measure) {
-                foreach ($measure->notes() as $note) {
-                    echo $note->isRest() ? 'rest' : 'note';
-                    echo PHP_EOL;
+            dd($part->tracks());
+            foreach ($part->tracks() as $track) {
+                foreach ($track->notes() as $note) {
+                    if ($note instanceof Note) {
+                        echo $note->duration() . PHP_EOL;
+                    }
                 }
             }
-            echo '---------------------' . PHP_EOL;
         }
 
         return 0;

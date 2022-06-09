@@ -1,8 +1,8 @@
 <?php
-namespace App\Services\Parser\MusicXML\Parts\Measures;
+namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
-use App\Services\Parser\MusicXMLChildrenInterface;
-use App\Services\Parser\MusicXML\Parts\Measure;
+use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\V2\MusicXML\Parts\Measure;
 use SimpleXMLElement;
 
 class Backup implements MusicXMLChildrenInterface 

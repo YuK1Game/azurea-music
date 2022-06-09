@@ -1,12 +1,13 @@
 <?php
-namespace App\Services\Parser\MusicXML\Parts;
+namespace App\Services\Music\V2\MusicXML\Parts;
 
-use App\Services\Parser\MusicXMLChildrenInterface;
-use App\Services\Parser\MusicXML\Part;
-use App\Services\Parser\MusicXML\Parts\Measures\{
+use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\V2\MusicXML\Part;
+use App\Services\Music\V2\MusicXML\Parts\Measures\{
     Note,
     Backup,
     Attribute,
+    Direction,
     Track,
 };
 
@@ -30,6 +31,14 @@ class Measure implements MusicXMLChildrenInterface
     {
         if ($attribute = $this->xml->attributes) {
             return new Attribute($attribute, $this);
+        }
+        return null;
+    }
+
+    public function direction() : ?Direction
+    {
+        if ($direction = $this->xml->direction) {
+            return new Direction($direction, $this);
         }
         return null;
     }

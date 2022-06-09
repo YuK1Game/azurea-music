@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Parser;
+namespace App\Services\Music\V2;
 
 use SimpleXMLElement;
 

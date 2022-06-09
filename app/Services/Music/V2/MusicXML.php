@@ -1,8 +1,8 @@
 <?php
-namespace App\Services\Parser;
+namespace App\Services\Music\V2;
 
-use App\Services\Parser\Parser;
-use App\Services\Parser\MusicXML\Part;
+use App\Services\Music\V2\Parser;
+use App\Services\Music\V2\MusicXML\Part;
 use Illuminate\Support\Collection;
 
 class MusicXML

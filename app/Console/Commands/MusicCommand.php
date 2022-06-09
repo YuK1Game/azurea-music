@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use App\Services\Parser\MusicXML;
-use App\Services\Parser\MusicXML\Parts\Measures\Note;
+use App\Services\Azurea\V2\Music as AzureaMusic;
+
+use App\Services\Music\V2\MusicXML;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 
 class MusicCommand extends Command
 {
@@ -42,19 +44,8 @@ class MusicCommand extends Command
     {
         $filename = resource_path('musicxml/Dango_Daikazoku_Full_Version_-_Clannad_Original_Soundtrack.mxl');
 
-        $musicXml = new MusicXML($filename);
-        $part = $musicXml->parts()->first();
-        
-        foreach ($musicXml->parts() as $part) {
-            dd($part->tracks());
-            foreach ($part->tracks() as $track) {
-                foreach ($track->notes() as $note) {
-                    if ($note instanceof Note) {
-                        echo $note->duration() . PHP_EOL;
-                    }
-                }
-            }
-        }
+        $azureaMusic = new AzureaMusic($filename);
+        $codes = $azureaMusic->getCodes();
 
         return 0;
     }

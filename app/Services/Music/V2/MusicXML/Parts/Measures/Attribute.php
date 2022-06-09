@@ -1,8 +1,8 @@
 <?php
-namespace App\Services\Parser\MusicXML\Parts\Measures;
+namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
-use App\Services\Parser\MusicXMLChildrenInterface;
-use App\Services\Parser\MusicXML\Parts\Measure;
+use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\V2\MusicXML\Parts\Measure;
 use SimpleXMLElement;
 
 class Attribute implements MusicXMLChildrenInterface 
@@ -21,6 +21,18 @@ class Attribute implements MusicXMLChildrenInterface
     {
         $division = $this->xml->divisions;
         return $division ? (int) $division : null;
+    }
+
+    public function beat() : ?int
+    {
+        $beat = $this->xml->time->beat;
+        return $beat ? (int) $beat : null;
+    }
+
+    public function beatType() : ?int
+    {
+        $beatType = $this->xml->time->{'beat-type'};
+        return $beatType ? (int) $beatType : null;
     }
 
     public function getMeasure() : Measure

@@ -1,9 +1,9 @@
 <?php
-namespace App\Services\Parser\MusicXML\Parts;
+namespace App\Services\Music\V2\MusicXML\Parts;
 
-use App\Services\Parser\MusicXMLChildrenInterface;
-use App\Services\Parser\MusicXML\Part;
-use App\Services\Parser\MusicXML\Parts\Tracks\TrackMeasure;
+use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\V2\MusicXML\Part;
+use App\Services\Music\V2\MusicXML\Parts\Tracks\TrackMeasure;
 
 use Illuminate\Support\Collection;
 use SimpleXMLElement;

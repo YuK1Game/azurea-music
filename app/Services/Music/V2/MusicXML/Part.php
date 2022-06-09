@@ -1,11 +1,11 @@
 <?php
-namespace App\Services\Parser\MusicXML;
+namespace App\Services\Music\V2\MusicXML;
 
-use App\Services\Parser\MusicXMLChildrenInterface;
-use App\Services\Parser\MusicXML;
-use App\Services\Parser\MusicXML\Parts\Measure;
-use App\Services\Parser\MusicXML\Parts\Track;
-use App\Services\Parser\MusicXML\Parts\Measures\BlankNote;
+use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\V2\MusicXML;
+use App\Services\Music\V2\MusicXML\Parts\Measure;
+use App\Services\Music\V2\MusicXML\Parts\Track;
+use App\Services\Music\V2\MusicXML\Parts\Measures\BlankNote;
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 

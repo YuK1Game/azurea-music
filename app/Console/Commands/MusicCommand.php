@@ -6,9 +6,6 @@ use Illuminate\Console\Command;
 
 use App\Services\Azurea\V2\Music as AzureaMusic;
 
-use App\Services\Music\V2\MusicXML;
-use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
-
 class MusicCommand extends Command
 {
     /**
@@ -42,7 +39,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Dango_Daikazoku_Full_Version_-_Clannad_Original_Soundtrack.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $codes = $azureaMusic->getCodes();

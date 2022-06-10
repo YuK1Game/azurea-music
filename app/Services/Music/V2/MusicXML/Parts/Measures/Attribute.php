@@ -25,7 +25,7 @@ class Attribute implements MusicXMLChildrenInterface
 
     public function beat() : ?int
     {
-        $beat = $this->xml->time->beat;
+        $beat = $this->xml->time->beats;
         return $beat ? (int) $beat : null;
     }
 
@@ -33,6 +33,12 @@ class Attribute implements MusicXMLChildrenInterface
     {
         $beatType = $this->xml->time->{'beat-type'};
         return $beatType ? (int) $beatType : null;
+    }
+
+    public function key() : int
+    {
+        $key = $this->xml->key->fifths;
+        return $key ? (int) $key : null;
     }
 
     public function getMeasure() : Measure

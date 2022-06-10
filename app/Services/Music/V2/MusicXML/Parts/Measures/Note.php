@@ -2,12 +2,13 @@
 namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
 use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
 
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class Note implements MusicXMLChildrenInterface 
+class Note implements MusicXMLChildrenInterface, MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -19,14 +20,31 @@ class Note implements MusicXMLChildrenInterface
         $this->parent = $parent;
     }
 
-    public function isRest() : bool
+    public function pitchStep() : ?string
     {
-        return isset($this->xml->rest);
+        $pitchStep = $this->xml->pitch->step;
+        return $pitchStep ? strtolower($pitchStep) : null;
+    }
+
+    public function pitchOctave() : ?int
+    {
+        $pitchOctave = $this->xml->pitch->octave;
+        return $pitchOctave ? (int) $pitchOctave : null;
     }
 
     public function duration() : ?int
     {
         return $this->xml->duration ? (int) $this->xml->duration : null;
+    }
+
+    public function isRest() : bool
+    {
+        return isset($this->xml->rest);
+    }
+
+    public function isChord() : bool
+    {
+        return isset($this->xml->chord);
     }
 
     public function getMeasure() : Measure

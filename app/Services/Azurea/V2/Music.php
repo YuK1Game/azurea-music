@@ -7,17 +7,13 @@ use App\Services\Music\V2\MusicXML\Parts\Measures\Attribute;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 use Illuminate\Support\Collection;
 
+use App\Services\Azurea\V2\Track as AzureaTrack;
+use App\Services\Azurea\V2\Note as AzureaNote;
+
+
 class Music
 {
     protected MusicXML $musicXml;
-
-    protected int $currentTempo = 120;
-
-    protected int $currentDivision = 12;
-
-    protected int $currentBeat = 4;
-
-    protected int $currentBeatType = 4;
 
     public function __construct(string $filename)
     {
@@ -30,55 +26,20 @@ class Music
 
         foreach ($this->musicXml->parts() as $part) {
             foreach ($part->tracks() as $track) {
-                foreach ($track->notes() as $note) {
-                    $currentMeasure = $note->getMeasure();
-                    $modifyAttributes = $this->modifyMeasureAttribute($currentMeasure);
-                    $modifyDirections = $this->modifyMeasureDirection($currentMeasure);
-
-                    if ($note instanceof Note) {
-                        echo PHP_EOL;
-                    }
-                }
+                $azureaTrack = new AzureaTrack($track);
+                $measures = $azureaTrack->measures();
+                $measures->each(function(Collection $notes, int $measureId) {
+                    echo '[' . $measureId . '] ';
+                    $notes->each(function(AzureaNote $note) {
+                        echo $note->getCode();
+                    });
+                    echo PHP_EOL;
+                });
             }
+            echo PHP_EOL;
         }
 
         return $codes;
-    }
-
-    protected function modifyMeasureAttribute(Measure $measure) : ?Collection
-    {
-        if ($attribute = $measure->attribute()) {
-            return $this->modifyAttribute(['division', 'beat', 'beatType'], $attribute);
-        }
-        return null;
-    }
-
-    protected function modifyMeasureDirection(Measure $measure) : ?Collection
-    {
-        if ($direction = $measure->direction()) {
-            return $this->modifyAttribute(['tempo'], $direction);
-        }
-        return null;
-    }
-
-    protected function modifyAttribute(array $keys, $data) : Collection
-    {
-        $keys = collect($keys);
-
-        return $keys->mapWithKeys(function(string $key) use($data) {
-            $dataName = sprintf('current%s', ucfirst($key));
-            $value = $data->{ $key }();
-
-            if ($value && $value !== $this->{ $dataName }) {
-                $this->{ $dataName } = $value;
-                echo sprintf('Change value [%s] => %s' . PHP_EOL, $key, $value);
-                return [ $key => $value ];
-            }
-            return [ $key => null ];
-        })
-        ->filter(function($value) {
-            return !! $value;
-        });
     }
 
 }

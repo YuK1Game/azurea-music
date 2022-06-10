@@ -1,13 +1,14 @@
 <?php
 namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
-use App\Services\Music\V2\MusicXMLChildrenInterface;
+use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class BlankNote
+class BlankNote implements MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -21,6 +22,28 @@ class BlankNote
     public function isRest() : bool
     {
         return true;
+    }
+
+    public function duration() : int
+    {
+        $tracks = $this->getMeasure()->getDividedTracks()->get(0);
+
+        return $tracks->sum(function($note) {
+            if ($note instanceof Note) {
+                return $note->duration();
+            }
+            return 0;
+        });
+    }
+
+    public function pitchStep() : ?string
+    {
+        return '';
+    }
+
+    public function pitchOctave() : ?int
+    {
+        return '';
     }
 
     public function getMeasure() : Measure

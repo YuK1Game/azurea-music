@@ -27,6 +27,14 @@ class Measure implements MusicXMLChildrenInterface
         $this->parent = $parent;
     }
 
+    public function number() : int
+    {
+        if (isset($this->xml['number'])) {
+            return (int) $this->xml['number'];
+        }
+        return null;
+    }
+
     public function attribute() : ?Attribute
     {
         if ($attribute = $this->xml->attributes) {

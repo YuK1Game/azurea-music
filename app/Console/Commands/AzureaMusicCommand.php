@@ -48,7 +48,7 @@ class AzureaMusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/The_Sound_of_Music_-_Edelweiss__Piano_and_Tenor.mxl');
+        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
 
         $musicXml = new MusicXML($filename);
         $azureaMusicXml = new AzureaMusicXML($musicXml);

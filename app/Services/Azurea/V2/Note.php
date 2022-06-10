@@ -2,9 +2,9 @@
 namespace App\Services\Azurea\V2;
 
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note as MusicXMLNote;
-use App\Services\Music\Parts\Measures\MeasureChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Backup;
 use App\Services\Music\V2\MusicXML\Parts\Measures\BlankNote;
+use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Notes\Duration;

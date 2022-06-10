@@ -7,7 +7,7 @@ use App\Services\Music\V2\MusicXML\Parts\Measures\BlankNote;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use Illuminate\Support\Collection;
 
-use App\Services\Azurea\V2\Notes\Duration;
+use App\Services\Azurea\V2\Notes\{ Duration, Key };
 
 class Note
 {
@@ -57,7 +57,12 @@ class Note
 
     public function getNoteCode() : string
     {
-        return sprintf('%s%s', $this->measureChildren->pitchStep(), $this->getDurationCode());
+        $key = new Key();
+        $key->setPitchStep($this->measureChildren->pitchStep());
+        $key->setPitchOctave($this->measureChildren->pitchOctave());
+        $key->setKey($this->currentTrackProperties->get('currentKey'));
+
+        return sprintf('o%d%s%s', $key->newOctave(), $key->newPitch(), $this->getDurationCode());
     }
 
     public function getBlankCode() : string

@@ -3,8 +3,6 @@ namespace App\Services\Azurea\V2;
 
 use App\Services\Music\V2\MusicXML;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
-use App\Services\Music\V2\MusicXML\Parts\Measures\Attribute;
-use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 use App\Services\Music\V2\MusicXML\Parts\Track as MusicXMLTrack;
 use App\Services\Azurea\V2\Note as AzureaNote;
 use Illuminate\Support\Collection;

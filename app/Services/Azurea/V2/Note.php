@@ -62,7 +62,9 @@ class Note
         $key->setPitchOctave($this->measureChildren->pitchOctave());
         $key->setKey($this->currentTrackProperties->get('currentKey'));
 
-        return sprintf('o%d%s%s', $key->newOctave(), $key->newPitch(), $this->getDurationCode());
+        list($newPitchStep, $newPitchOctave) = $key->getNewPitch();
+
+        return sprintf('o%d%s%s', $newPitchOctave, $newPitchStep, $this->getDurationCode());
     }
 
     public function getBlankCode() : string
@@ -86,10 +88,43 @@ class Note
         return $duration->duration();
     }
 
+    public function getSharpCount() : int
+    {
+        if ($this->measureChildren instanceof MusicXMLNote) {
+            switch ($this->measureChildren->accidental()) {
+                case 'sharp' : return 1;
+                case 'double-sharp' : return 2;
+            }
+        }
+        return 0;
+    }
+
+    public function getFlatCount() : int
+    {
+        if ($this->measureChildren instanceof MusicXMLNote) {
+            switch ($this->measureChildren->accidental()) {
+                case 'flat' : return 1;
+                case 'double-flat' : return 2;
+            }
+        }
+        return 0;
+    }
+
     public function getCurrentMeasureNumber() : int
     {
         $currentMeasure = $this->measureChildren->getMeasure();
         return $currentMeasure->number();
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this, $name)) {
+            return $this->{ $name }(...$arguments);
+        }
+        if (method_exists($this->measureChildren, $name)) {
+            return $this->measureChildren->{ $name }(...$arguments);
+        }
+        throw new \Exception(sprintf('Method not exists. [%s]', $name));
     }
 
 }

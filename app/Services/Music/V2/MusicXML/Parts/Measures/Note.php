@@ -47,6 +47,36 @@ class Note implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return isset($this->xml->chord);
     }
 
+    public function accidental() : ?string
+    {
+        return $this->xml->accidental ? (string) $this->xml->accidental : null;
+    }
+
+    public function isSharp() : bool
+    {
+        return $this->accidental() === 'sharp';
+    }
+
+    public function isDoubleSharp() : bool
+    {
+        return $this->accidental() === 'double-sharp';
+    }
+
+    public function isFlat() : bool
+    {
+        return $this->accidental() === 'flat';
+    }
+
+    public function isDoubleFlat() : bool
+    {
+        return $this->accidental() === 'double-flat';
+    }
+
+    public function isNatural() : bool
+    {
+        return $this->accidental() === 'natural';
+    }
+
     public function getMeasure() : Measure
     {
         return $this->parent;

@@ -1,15 +1,21 @@
 <?php
 namespace App\Services\Azurea\V2\Notes;
 
+use Illuminate\Support\Collection;
+
 class Key
 {
     protected string $pitchStep;
 
     protected int $pitchOctave;
 
-    protected int $key;
+    protected int $sharpCount = 0;
 
-    protected array $keys = [
+    protected int $flatCount = 0;
+
+    protected int $key = 0;
+
+    protected array $list = [
         0 => [],
         1 => ['f'],
         2 => ['c', 'f'],
@@ -27,11 +33,14 @@ class Key
        -7 => ['f', 'g', 'a', 'b', 'c', 'd', 'e'],
     ];
 
+    protected static array $pitchStepTable = ['c', 'c+', 'd', 'd+', 'e', 'f', 'f+', 'g', 'g+', 'a', 'a+', 'b'];
+
+
     public function setKey(int $key) : void
     {
         $this->key = $key;
     }
-    
+  
     public function setPitchStep(string $pitchStep) : void
     {
         $this->pitchStep = $pitchStep;
@@ -42,14 +51,87 @@ class Key
         $this->pitchOctave = $pitchOctave;
     }
 
-    public function newPitch() : string
+    public function setSharpCount(int $sharpCount) : void
     {
-        return $this->pitchStep;
+        $this->sharpCount = $sharpCount;
     }
 
-    public function newOctave() : int
+    public function setFlatCount(int $flatCount) : void
     {
-        return $this->pitchOctave;
+        $this->flatCount = $flatCount;
+    }
+
+    public function getNewPitch() : array
+    {
+        $pitchStep = $this->pitchStep;
+        $pitchOctave = $this->pitchOctave;
+
+        list($pitchStep, $pitchOctave) = $this->addPitch($pitchStep, $pitchOctave, $this->getSharpCount());
+        list($pitchStep, $pitchOctave) = $this->subPitch($pitchStep, $pitchOctave, $this->getFlatCount());
+
+        return [ $pitchStep, $pitchOctave ];
+    }
+
+    public function getSharpCount() : int
+    {
+        return $this->sharpCount + ($this->hasMajorKey() ? 1 : 0);
+    }
+
+    public function getFlatCount() : int
+    {
+        return $this->flatCount + ($this->hasMinorKey() ? 1 : 0);
+    }
+
+    protected function getCurrentKeys() : Collection
+    {
+        $keys = collect($this->list)->get($this->key);
+        return collect($keys);
+    }
+
+    protected function hasMajorKey() : bool
+    {
+        if ($this->key > 0) {
+            return $this->getCurrentKeys()->contains($this->pitchStep);
+        }
+        return false;
+    }
+
+    protected function hasMinorKey() : bool
+    {
+        if ($this->key < 0) {
+            return $this->getCurrentKeys()->contains($this->pitchStep);
+        }
+        return false;
+    }
+
+    public function addPitch(string $pitchStep, int $pitchOctave, int $addCount = 1) : array
+    {
+        for ($i = 0 ; $i < $addCount ; $i++) {
+            $pitchTableIndex = collect($this->pitchStepTable)->search(strtolower($pitchStep));
+            $pitchTableIndex++;
+
+            if ( ! $pitchStep = collect($this->pitchStepTable)->get($pitchTableIndex)) {
+                $pitchStep = 'c';
+                $pitchOctave += 1;
+            }
+        }
+
+        return [ $pitchStep, $pitchOctave ];
+    }
+
+    public function subPitch(string $pitchStep, int $pitchOctave, int $subCount = 1) : array
+    {
+        for ($i = 0 ; $i < $subCount ; $i++) {
+            $pitchTableIndex = collect($this->pitchStepTable)->search(strtolower($pitchStep));
+            $pitchTableIndex--;
+
+            if ( ! $pitchStep = collect($this->pitchStepTable)->get($pitchTableIndex)) {
+                $pitchStep = 'b';
+                $pitchOctave -= 1;
+            }
+        }
+
+        return [ $pitchStep, $pitchOctave ];
     }
 
 }

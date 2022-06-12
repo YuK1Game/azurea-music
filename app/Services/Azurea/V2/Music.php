@@ -29,7 +29,7 @@ class Music
                 $azureaTrack = new AzureaTrack($track);
                 $measures = $azureaTrack->measures();
                 $measures->each(function(Collection $notes, int $measureId) {
-                    echo '[' . $measureId . '] ';
+                    // echo '[' . $measureId . '] ';
 
                     $notes->each(function(array $data) {
                         list($note, $modifyData) = $data;

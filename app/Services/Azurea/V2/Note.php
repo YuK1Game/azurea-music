@@ -38,19 +38,15 @@ class Note
         $measureChildren = $this->measureChildren;
 
         if ($measureChildren instanceof MusicXMLNote) {
-            if ($this->isTieEnded()) {
-                return sprintf('%s%s', $this->getRestCode(), $this->getDurationCode());
-            }
-            return sprintf('%s%s%s', $this->getMusicXMLNote()->isChord() ? ':' : '', $this->getNoteCode(), $this->getDurationCode());
+            return $this->getNoteCode();
         }
 
         if ($measureChildren instanceof BlankNote) {
-            return sprintf('%s%s', $this->getBlankCode(), $this->getDurationCode());
+            return sprintf('r%s', $this->getDurationCode());
         }
 
         if ($measureChildren instanceof Backup) {
-            return $this->getBackupCode();
-            return sprintf('%s%s', $this->getBlankCode(), $this->getDurationCode());
+            return '';
         }
 
         throw new \Exception(sprintf('Invalid class [%s]', get_class($measureChildren)));
@@ -58,17 +54,25 @@ class Note
 
     public function getNoteCode() : string
     {
-        return $this->getMusicXMLNote()->isRest() ? $this->getRestCode() : $this->getPhonicNoteCode();
+        $code = $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+
+        if ($this->getMusicXMLNote()->isTieEnd()) {
+            if ($this->getMusicXMLNote()->isChord()) {
+                return '';
+            }
+            return sprintf('r%s', $this->getDurationCode());
+        }
+
+        if ($this->getMusicXMLNote()->isChord()) {
+            return sprintf(':%s%s', $code, $this->getDurationCode());
+        }
+
+        return sprintf('%s%s', $code, $this->getDurationCode());
     }
 
-    public function getRestCode() : string
+    public function getPhonicNotePitch() : string
     {
-        return 'r';
-    }
-
-    public function getPhonicNoteCode() : string
-    {
-        return $this->isNatural() ? $this->getNaturalNoteCode() : $this->getScaleAdjustmentsNoteCode();
+        return $this->isNatural() ? $this->getNaturalNotePitch() : $this->getScaleAdjustmentsNotePitch();
     }
 
     public function getPitch() : string
@@ -76,7 +80,7 @@ class Note
         return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
     }
 
-    protected function getScaleAdjustmentsNoteCode() : string
+    protected function getScaleAdjustmentsNotePitch() : string
     {
         $pitchStep = $this->measureChildren->pitchStep();
         $pitchOctave = $this->measureChildren->pitchOctave();
@@ -93,7 +97,7 @@ class Note
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
     }
 
-    protected function getNaturalNoteCode() : string
+    protected function getNaturalNotePitch() : string
     {
         $pitchStep = $this->measureChildren->pitchStep();
         $pitchOctave = $this->measureChildren->pitchOctave();

@@ -30,7 +30,7 @@ class BlankNote implements MeasureChildrenInterface
 
         return $tracks->sum(function($note) {
             if ($note instanceof Note) {
-                return $note->duration();
+                return $note->isChord() ? 0 : $note->duration();
             }
             return 0;
         });

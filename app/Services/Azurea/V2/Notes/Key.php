@@ -9,6 +9,8 @@ class Key
 
     protected int $pitchOctave;
 
+    protected ?int $pitchAlter = null;
+
     protected int $sharpCount = 0;
 
     protected int $flatCount = 0;
@@ -51,6 +53,11 @@ class Key
         $this->pitchOctave = $pitchOctave;
     }
 
+    public function setPitchAlter(?int $pitchAlter) : void
+    {
+        $this->pitchAlter = $pitchAlter;
+    }
+
     public function setSharpCount(int $sharpCount) : void
     {
         $this->sharpCount = $sharpCount;
@@ -59,6 +66,26 @@ class Key
     public function setFlatCount(int $flatCount) : void
     {
         $this->flatCount = $flatCount;
+    }
+
+    public function newPitch() : array
+    {
+        $pitchStepTable = collect($this->pitchStepTable);
+        $pitchStepTableIndex = $pitchStepTable->search($this->pitchStep);
+        $pitchStepTableIndex += ($this->pitchAlter ?? 0);
+
+        if ($pitchStepTableIndex < 0) {
+            $pitchStep = $pitchStepTable->get($pitchStepTableIndex + $pitchStepTable->count());
+            $pitchOctave = $this->pitchOctave - 1;
+        } else if ($pitchStepTableIndex >= $pitchStepTable->count()) {
+            $pitchStep = $pitchStepTable->get($pitchStepTableIndex - $pitchStepTable->count());
+            $pitchOctave = $this->pitchOctave + 1;
+        } else {
+            $pitchStep = $pitchStepTable->get($pitchStepTableIndex);
+            $pitchOctave = $this->pitchOctave;
+        }
+
+        return [ $pitchStep, $pitchOctave ];
     }
 
     public function getNewPitch() : array

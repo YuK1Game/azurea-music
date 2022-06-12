@@ -76,38 +76,21 @@ class Note
         return sprintf('%s%s', $code, $this->getDurationCode());
     }
 
-    public function getPhonicNotePitch() : string
-    {
-        return $this->isNatural() ? $this->getNaturalNotePitch() : $this->getScaleAdjustmentsNotePitch();
-    }
-
     public function getPitch() : string
     {
         return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
     }
 
-    protected function getScaleAdjustmentsNotePitch() : string
+    protected function getPhonicNotePitch() : string
     {
-        $pitchStep = $this->measureChildren->pitchStep();
-        $pitchOctave = $this->measureChildren->pitchOctave();
-
         $key = new Key();
-        $key->setPitchStep($pitchStep);
-        $key->setPitchOctave($pitchOctave);
-        $key->setSharpCount($this->getSharpCount());
-        $key->setFlatCount($this->getFlatCount());
-        $key->setKey($this->currentTrackProperties->get('currentKey'));
+        $key->setPitchStep($this->measureChildren->pitchStep());
+        $key->setPitchOctave($this->measureChildren->pitchOctave());
+        $key->setPitchAlter($this->measureChildren->pitchAlter());
 
-        list($newPitchStep, $newPitchOctave) = $key->getNewPitch();
+        list($newPitchStep, $newPitchOctave) = $key->newPitch();
 
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
-    }
-
-    protected function getNaturalNotePitch() : string
-    {
-        $pitchStep = $this->measureChildren->pitchStep();
-        $pitchOctave = $this->measureChildren->pitchOctave();
-        return sprintf('o%d%s', $pitchStep, $pitchOctave);
     }
 
     protected function getBlankCode() : string
@@ -133,37 +116,6 @@ class Note
             case 2 : return sprintf('%s.r%s', $duration->duration(), $duration->duration() * 4);
             default : return sprintf('%s', $duration->duration());
         }
-    }
-
-    protected function getAccidental() : ?string
-    {
-        if ($this->accidental) {
-            return $this->accidental;
-        }
-        return $this->getMusicXMLNote()->accidental();
-    }
-
-    protected function getSharpCount() : int
-    {
-        switch ($this->getAccidental()) {
-            case 'sharp' : return 1;
-            case 'double-sharp' : return 2;
-            default : return 0;
-        }
-    }
-
-    protected function getFlatCount() : int
-    {
-        switch ($this->getAccidental()) {
-            case 'flat' : return 1;
-            case 'double-flat' : return 2;
-            default : return 0;
-        }
-    }
-
-    protected function isNatural() : bool
-    {
-        return $this->getAccidental() === 'natural';
     }
 
     protected function isTieEnded() : bool

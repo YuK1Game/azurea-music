@@ -34,6 +34,11 @@ class Backup implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return '';
     }
 
+    public function pitchAlter() : ?int
+    {
+        return null;
+    }
+
     public function accidental() : ?string
     {
         return null;

@@ -42,7 +42,7 @@ class Music
             foreach ($part->tracks() as $track) {
                 $azureaTrack = new AzureaTrack($track);
                 $measures = $azureaTrack->measures();
-                $measures->each(function(Collection $notes, int $measureId) {
+                $measures->each(function(Collection $notes, int $measureId) use($codes) {
                     
                     if ($tempo = $this->getTempoByMeasureId($measureId)) {
                         echo sprintf('t%d' . PHP_EOL, $tempo);

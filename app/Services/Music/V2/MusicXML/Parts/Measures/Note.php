@@ -32,6 +32,12 @@ class Note implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return $pitchOctave ? (int) $pitchOctave : null;
     }
 
+    public function pitchAlter() : ?int
+    {
+        $pitchAlter = $this->xml->pitch->alter;
+        return $pitchAlter ? (int) $pitchAlter : null;
+    }
+
     public function duration() : ?int
     {
         return $this->xml->duration ? (int) $this->xml->duration : null;

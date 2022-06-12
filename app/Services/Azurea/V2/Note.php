@@ -63,13 +63,13 @@ class Note
         $code = $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
 
         if ($this->getMusicXMLNote()->isTieEnd()) {
-            if ($this->getMusicXMLNote()->isChord()) {
+            if ($this->isChord()) {
                 return '';
             }
             return sprintf('r%s', $this->getDurationCode());
         }
 
-        if ($this->getMusicXMLNote()->isChord()) {
+        if ($this->isChord()) {
             return sprintf(':%s%s', $code, $this->getDurationCode());
         }
 
@@ -103,13 +103,18 @@ class Note
         return '';
     }
 
-    protected function getDurationCode() : string
+    public function getDurationManager() : Duration
     {
-        $duration = new Duration(
+        return new Duration(
             $this->measureChildren->duration(),
             (int) $this->currentTrackProperties->get('currentDivision'),
             (int) $this->currentTrackProperties->get('currentBeatType')
         );
+    }
+
+    public function getDurationCode() : string
+    {
+        $duration = $this->getDurationManager();
 
         switch($duration->dotCount()) {
             case 1 : return sprintf('%s.', $duration->duration());
@@ -127,6 +132,14 @@ class Note
                 }
             }
             return false;
+        }
+        return false;
+    }
+
+    public function isChord() : bool
+    {
+        if ($this->isMusicXMLNote()) {
+            return $this->getMusicXMLNote()->isChord();
         }
         return false;
     }

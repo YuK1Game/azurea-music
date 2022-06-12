@@ -49,12 +49,29 @@ class Music
                     }
 
                     $notes->each(function(AzureaNote $azureaNote) {
-                        echo $azureaNote->getCode();
+                        // echo $azureaNote->getCode();
+                        
+                        // if ($azureaNote->isMusicXMLNote() && ! $azureaNote->isChord()) {
+                        //     $duration = $azureaNote->getDurationManager();
+                        //     $value = 192 / $duration->duration();
+
+                        //     if ($duration->dotCount() === 1) {
+                        //         $value *= 1.5;
+                        //     } else if ($duration->dotCount() === 2) {
+                        //         $value *= 1.75;
+                        //     }
+                        //     echo $value . "\t";
+                        // }
+
+                        echo $azureaNote->getDurationCode() . ' ';
                     });
+
                     echo PHP_EOL;
                 });
+
+                echo PHP_EOL;
+                echo PHP_EOL;
             }
-            echo PHP_EOL;
         }
 
         return $codes;

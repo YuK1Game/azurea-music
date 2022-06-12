@@ -39,7 +39,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/One_Piece_-_Opening_2_-_Believe.mxl');
+        $filename = resource_path('musicxml/Sorairo_Days__Gurren_Lagann_OP__F.B._Piano_Anime.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $codes = $azureaMusic->getCodes();

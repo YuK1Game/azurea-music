@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Azurea\V2\Notes;
 
+use App\Services\Azurea\V2\Note as AzureaNote;
+
 class Duration
 {
     protected int $duration;
@@ -14,6 +16,7 @@ class Duration
         $this->duration = $duration;
         $this->division = $division;
         $this->beatType = $beatType;
+
     }
 
     public function wholeDuration() : int
@@ -21,42 +24,43 @@ class Duration
         return $this->division * $this->beatType;
     }
 
-    public function durationDecimal() : float
+    public function durationDenominator() : float
     {
-        return $this->duration / $this->wholeDuration();
-    }
-
-    public function durationFraction() : float
-    {
-        $durationDecimal = $this->durationDecimal();
-
-        if ($durationDecimal >= 1) {
-            return 1;
-        } else if ($durationDecimal >= 0.5) {
-            return 0.5;
-        } else if ($durationDecimal >= 0.25) {
-            return 0.25;
-        } else if ($durationDecimal >= 0.125) {
-            return 0.125;
-        } else if ($durationDecimal >= 0.0625) {
-            return 0.0625;
-        } else if ($durationDecimal >= 0.03125) {
-            return 0.03125;
-        }
-        throw new \Exception(sprintf('Invalid value [%s]', $durationDecimal));
+        return $this->wholeDuration() / $this->duration;
     }
 
     public function duration() : int
     {
-        return (int) 1 / $this->durationFraction();
+        $durationDenominator = $this->durationDenominator();
+
+        $notes = [ 1, 2, 4, 8, 16, 24, 32, 48, 64 ];
+
+        foreach ($notes as $noteValue) {
+            if ($durationDenominator <= $noteValue) {
+                return $noteValue;
+            }
+        }
+        
+        throw new \Exception(sprintf('Invalid value [%s]', $durationDenominator));
     }
 
     public function dotCount() : int
     {
-        switch ($this->durationDecimal() / $this->durationFraction()) {
-            case 1.5  : return 1;
-            case 1.75 : return 2;
-            default : return 0;
+        $ratio = $this->duration() / $this->durationDenominator();
+
+        switch ($ratio) {
+            case 1.00  : return 0;
+            case 1.50  : return 1;
+            case 1.75  : return 2;
+            default :
+                dd([
+                    '$ratio' => $ratio,
+                    'wholeDuration' => $this->wholeDuration(),
+                    'baseDuration' => $this->duration,
+                    'calcDuration' => $this->duration(),
+                    'durationDenominator' => $this->durationDenominator(),
+                ]);
+                throw new \Exception('Error');
         }
     }
     

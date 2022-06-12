@@ -35,7 +35,7 @@ class Attribute implements MusicXMLChildrenInterface
         return $beatType ? (int) $beatType : null;
     }
 
-    public function key() : int
+    public function key() : ?int
     {
         $key = $this->xml->key->fifths;
         return $key ? (int) $key : null;

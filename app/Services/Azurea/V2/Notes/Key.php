@@ -33,7 +33,7 @@ class Key
        -7 => ['f', 'g', 'a', 'b', 'c', 'd', 'e'],
     ];
 
-    protected static array $pitchStepTable = ['c', 'c+', 'd', 'd+', 'e', 'f', 'f+', 'g', 'g+', 'a', 'a+', 'b'];
+    protected array $pitchStepTable = ['c', 'c+', 'd', 'd+', 'e', 'f', 'f+', 'g', 'g+', 'a', 'a+', 'b'];
 
 
     public function setKey(int $key) : void

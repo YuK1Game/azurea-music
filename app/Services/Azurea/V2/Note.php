@@ -13,7 +13,7 @@ class Note
 {
     protected MeasureChildrenInterface $measureChildren;
 
-    protected ?MeasureChildrenInterface $prevMeasureChildren;
+    protected ?Note $prevAzureaNote;
 
     protected ?Collection $currentTrackProperties = null;
 
@@ -23,9 +23,9 @@ class Note
         $this->measureChildren = $measureChildren;
     }
 
-    public function setPrevNote(?MeasureChildrenInterface $prevMeasureChildren)
+    public function setPrevAzureaNote(?Note $prevAzureaNote)
     {
-        $this->prevMeasureChildren = $prevMeasureChildren;
+        $this->prevAzureaNote = $prevAzureaNote;
     }
 
     public function setCurrentTrackProperties(Collection $currentTrackProperties) : void
@@ -35,49 +35,82 @@ class Note
 
     public function getCode() : string
     {
-        if ($this->measureChildren instanceof MusicXMLNote) {
-            return $this->measureChildren->isRest() ? $this->getRestCode() : $this->getNoteCode();
+        $measureChildren = $this->measureChildren;
+
+        if ($measureChildren instanceof MusicXMLNote) {
+            if ($this->isTieEnded()) {
+                return sprintf('%s%s', $this->getRestCode(), $this->getDurationCode());
+            }
+            return sprintf('%s%s%s', $this->getMusicXMLNote()->isChord() ? ':' : '', $this->getNoteCode(), $this->getDurationCode());
         }
 
-        if ($this->measureChildren instanceof BlankNote) {
-            return $this->getBlankCode();
+        if ($measureChildren instanceof BlankNote) {
+            return sprintf('%s%s', $this->getBlankCode(), $this->getDurationCode());
         }
 
-        if ($this->measureChildren instanceof Backup) {
+        if ($measureChildren instanceof Backup) {
             return $this->getBackupCode();
+            return sprintf('%s%s', $this->getBlankCode(), $this->getDurationCode());
         }
 
-        throw new \Exception(sprintf('Invalid class [%s]', get_class($this->measureChildren)));
-    }
-
-    public function getRestCode() : string
-    {
-        return sprintf('r%s', $this->getDurationCode());
+        throw new \Exception(sprintf('Invalid class [%s]', get_class($measureChildren)));
     }
 
     public function getNoteCode() : string
     {
+        return $this->getMusicXMLNote()->isRest() ? $this->getRestCode() : $this->getPhonicNoteCode();
+    }
+
+    public function getRestCode() : string
+    {
+        return 'r';
+    }
+
+    public function getPhonicNoteCode() : string
+    {
+        return $this->isNatural() ? $this->getNaturalNoteCode() : $this->getScaleAdjustmentsNoteCode();
+    }
+
+    public function getPitch() : string
+    {
+        return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
+    }
+
+    protected function getScaleAdjustmentsNoteCode() : string
+    {
+        $pitchStep = $this->measureChildren->pitchStep();
+        $pitchOctave = $this->measureChildren->pitchOctave();
+
         $key = new Key();
-        $key->setPitchStep($this->measureChildren->pitchStep());
-        $key->setPitchOctave($this->measureChildren->pitchOctave());
+        $key->setPitchStep($pitchStep);
+        $key->setPitchOctave($pitchOctave);
+        $key->setSharpCount($this->getSharpCount());
+        $key->setFlatCount($this->getFlatCount());
         $key->setKey($this->currentTrackProperties->get('currentKey'));
 
         list($newPitchStep, $newPitchOctave) = $key->getNewPitch();
 
-        return sprintf('o%d%s%s', $newPitchOctave, $newPitchStep, $this->getDurationCode());
+        return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
     }
 
-    public function getBlankCode() : string
+    protected function getNaturalNoteCode() : string
     {
-        return sprintf('r%s', $this->getDurationCode());
+        $pitchStep = $this->measureChildren->pitchStep();
+        $pitchOctave = $this->measureChildren->pitchOctave();
+        return sprintf('o%d%s', $pitchStep, $pitchOctave);
     }
 
-    public function getBackupCode() : string
+    protected function getBlankCode() : string
+    {
+        return 'r';
+    }
+
+    protected function getBackupCode() : string
     {
         return '';
     }
 
-    public function getDurationCode() : int
+    protected function getDurationCode() : string
     {
         $duration = new Duration(
             $this->measureChildren->duration(),
@@ -85,46 +118,66 @@ class Note
             (int) $this->currentTrackProperties->get('currentBeatType')
         );
 
-        return $duration->duration();
+        switch($duration->dotCount()) {
+            case 1 : return sprintf('%s.', $duration->duration());
+            case 2 : return sprintf('%s.r%s', $duration->duration(), $duration->duration() / 4);
+            default : return sprintf('%s', $duration->duration());
+        }
     }
 
-    public function getSharpCount() : int
+    protected function getSharpCount() : int
     {
-        if ($this->measureChildren instanceof MusicXMLNote) {
-            switch ($this->measureChildren->accidental()) {
-                case 'sharp' : return 1;
-                case 'double-sharp' : return 2;
-            }
+        switch ($this->getMusicXMLNote()->accidental()) {
+            case 'sharp' : return 1;
+            case 'double-sharp' : return 2;
+            default : return 0;
         }
-        return 0;
     }
 
-    public function getFlatCount() : int
+    protected function getFlatCount() : int
     {
-        if ($this->measureChildren instanceof MusicXMLNote) {
-            switch ($this->measureChildren->accidental()) {
-                case 'flat' : return 1;
-                case 'double-flat' : return 2;
-            }
+        switch ($this->getMusicXMLNote()->accidental()) {
+            case 'flat' : return 1;
+            case 'double-flat' : return 2;
+            default : return 0;
         }
-        return 0;
+    }
+
+    protected function isNatural() : bool
+    {
+        return $this->getMusicXMLNote()->isNatural();
+    }
+
+    protected function isTieEnded() : bool
+    {
+        if ($this->getMusicXMLNote()->isTieEnd()) {
+            if ($prevAzureaNote = $this->prevAzureaNote) {
+                if ($this->isMusicXMLNote() && $prevAzureaNote->isMusicXMLNote()) {
+                    return $prevAzureaNote->getNoteCode() === $this->getNoteCode();
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function isMusicXMLNote() : bool
+    {
+        return $this->measureChildren instanceof MusicXMLNote;
+    }
+
+    public function getMusicXMLNote() : MusicXMLNote
+    {
+        if ($this->isMusicXMLNote()) {
+            return $this->measureChildren;
+        }
+        throw new \Exception('Not a MusicXMLNote Object.');
     }
 
     public function getCurrentMeasureNumber() : int
     {
         $currentMeasure = $this->measureChildren->getMeasure();
         return $currentMeasure->number();
-    }
-
-    public function __call($name, $arguments)
-    {
-        if (method_exists($this, $name)) {
-            return $this->{ $name }(...$arguments);
-        }
-        if (method_exists($this->measureChildren, $name)) {
-            return $this->measureChildren->{ $name }(...$arguments);
-        }
-        throw new \Exception(sprintf('Method not exists. [%s]', $name));
     }
 
 }

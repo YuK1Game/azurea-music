@@ -30,7 +30,14 @@ class Music
                 $measures = $azureaTrack->measures();
                 $measures->each(function(Collection $notes, int $measureId) {
                     echo '[' . $measureId . '] ';
-                    $notes->each(function(AzureaNote $note) {
+
+                    $notes->each(function(array $data) {
+                        list($note, $modifyData) = $data;
+
+                        if ($tempo = $modifyData->dataGet('modifyMeasureDirection.tempo')) {
+                            echo sprintf('t%d' . PHP_EOL, $tempo);
+                        }
+
                         echo $note->getCode();
                     });
                     echo PHP_EOL;

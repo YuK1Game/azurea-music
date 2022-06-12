@@ -33,18 +33,22 @@ class Track
 
         $this->musicXmlTrack->notes()->each(function($note) use(&$notes, &$prevNote) {
             $currentMeasure = $note->getMeasure();
-            $this->modifyMeasureAttribute($currentMeasure);
-            $this->modifyMeasureDirection($currentMeasure);
+
+            $modifyMeasures = collect([
+                'modifyMeasureAttribute' => $this->modifyMeasureAttribute($currentMeasure),
+                'modifyMeasureDirection' => $this->modifyMeasureDirection($currentMeasure),
+            ]);
 
             $azureaNote = new AzureaNote($note);
-            $azureaNote->setPrevNote($prevNote);
+            $azureaNote->setPrevAzureaNote($prevNote);
             $azureaNote->setCurrentTrackProperties($this->getCurrentTrackProperties());
-            $notes->push($azureaNote);
+            $notes->push([ $azureaNote, $modifyMeasures ]);
 
-            $prevNote = $note;
+            $prevNote = $azureaNote;
         });
 
-        return $notes->groupBy(function(AzureaNote $azureaNote) {
+        return $notes->groupBy(function(array $data) {
+            list($azureaNote) = $data;
             return $azureaNote->getCurrentMeasureNumber();
         });
     }
@@ -83,9 +87,9 @@ class Track
             $dataName = sprintf('current%s', ucfirst($key));
             $value = $data->{ $key }();
 
-            if ($value && $value !== $this->{ $dataName }) {
+            if ($value !== null && $value !== $this->{ $dataName }) {
                 $this->{ $dataName } = $value;
-                echo sprintf('Change value [%s] => %s' . PHP_EOL, $key, $value);
+                // echo sprintf('Change value [%s] => %s' . PHP_EOL, $key, $value);
                 return [ $key => $value ];
             }
             return [ $key => null ];

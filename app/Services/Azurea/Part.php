@@ -111,7 +111,7 @@ class Part
 
                 $azureaMeasure->setMeasureKey($this->measureKey);
 
-                // echo '[' . $azureaMeasure->getNumber() . '] ';
+                echo '[' . $azureaMeasure->getNumber() . '] ';
 
                 $this->exportCodeByMeasure($azureaMeasure, $this->getMeasureLengthByIndex($measureIndex));
                 echo PHP_EOL;

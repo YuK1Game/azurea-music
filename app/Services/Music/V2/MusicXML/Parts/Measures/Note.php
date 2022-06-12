@@ -77,6 +77,21 @@ class Note implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return $this->accidental() === 'natural';
     }
 
+    public function tieType() : ?string
+    {
+        return $this->xml->notations->tied ? $this->xml->notations->tied['type'] : null;
+    }
+
+    public function isTieStart() : bool
+    {
+        return 'start' === $this->tieType();
+    }
+
+    public function isTieEnd() : bool
+    {
+        return 'stop' === $this->tieType();
+    }
+
     public function getMeasure() : Measure
     {
         return $this->parent;

@@ -20,6 +20,20 @@ class Music
         $this->musicXml = new MusicXML($filename);
     }
 
+    protected function getTempoByMeasureId(int $measureId) : ?int
+    {
+        $measures = $this->musicXml->parts()->first()->measures();
+        $measure = $measures->filter(function(Measure $measure) use($measureId) {
+            return $measure->number() === $measureId;
+        })->first();
+        
+        if ($direction = $measure->direction()) {
+            return $direction->tempo();
+        }
+
+        return null;
+    }
+
     public function getCodes()
     {
         $codes = collect();
@@ -29,16 +43,13 @@ class Music
                 $azureaTrack = new AzureaTrack($track);
                 $measures = $azureaTrack->measures();
                 $measures->each(function(Collection $notes, int $measureId) {
-                    // echo '[' . $measureId . '] ';
+                    
+                    if ($tempo = $this->getTempoByMeasureId($measureId)) {
+                        echo sprintf('t%d' . PHP_EOL, $tempo);
+                    }
 
-                    $notes->each(function(array $data) {
-                        list($note, $modifyData) = $data;
-
-                        if ($tempo = $modifyData->dataGet('modifyMeasureDirection.tempo')) {
-                            echo sprintf('t%d' . PHP_EOL, $tempo);
-                        }
-
-                        echo $note->getCode();
+                    $notes->each(function(AzureaNote $azureaNote) {
+                        echo $azureaNote->getCode();
                     });
                     echo PHP_EOL;
                 });

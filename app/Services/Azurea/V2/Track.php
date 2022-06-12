@@ -42,13 +42,12 @@ class Track
             $azureaNote = new AzureaNote($note);
             $azureaNote->setPrevAzureaNote($prevNote);
             $azureaNote->setCurrentTrackProperties($this->getCurrentTrackProperties());
-            $notes->push([ $azureaNote, $modifyMeasures ]);
+            $notes->push($azureaNote);
 
             $prevNote = $azureaNote;
         });
 
-        return $notes->groupBy(function(array $data) {
-            list($azureaNote) = $data;
+        return $notes->groupBy(function(AzureaNote $azureaNote) {
             return $azureaNote->getCurrentMeasureNumber();
         });
     }

@@ -124,7 +124,7 @@ class Note
 
         switch($duration->dotCount()) {
             case 1 : return sprintf('%s.', $duration->duration());
-            case 2 : return sprintf('%s.r%s', $duration->duration(), $duration->duration() / 4);
+            case 2 : return sprintf('%s.r%s', $duration->duration(), $duration->duration() * 4);
             default : return sprintf('%s', $duration->duration());
         }
     }

@@ -17,6 +17,8 @@ class Note
 
     protected ?Collection $currentTrackProperties = null;
 
+    protected ?string $accidental = null;
+
 
     public function __construct(MeasureChildrenInterface $measureChildren)
     {
@@ -31,6 +33,10 @@ class Note
     public function setCurrentTrackProperties(Collection $currentTrackProperties) : void
     {
         $this->currentTrackProperties = $currentTrackProperties;
+    }
+
+    public function setAccidental(?string $accidental) {
+        $this->accidental = $accidental;
     }
 
     public function getCode() : string
@@ -129,9 +135,17 @@ class Note
         }
     }
 
+    protected function getAccidental() : ?string
+    {
+        if ($this->accidental) {
+            return $this->accidental;
+        }
+        return $this->getMusicXMLNote()->accidental();
+    }
+
     protected function getSharpCount() : int
     {
-        switch ($this->getMusicXMLNote()->accidental()) {
+        switch ($this->getAccidental()) {
             case 'sharp' : return 1;
             case 'double-sharp' : return 2;
             default : return 0;
@@ -140,7 +154,7 @@ class Note
 
     protected function getFlatCount() : int
     {
-        switch ($this->getMusicXMLNote()->accidental()) {
+        switch ($this->getAccidental()) {
             case 'flat' : return 1;
             case 'double-flat' : return 2;
             default : return 0;
@@ -149,7 +163,7 @@ class Note
 
     protected function isNatural() : bool
     {
-        return $this->getMusicXMLNote()->isNatural();
+        return $this->getAccidental() === 'natural';
     }
 
     protected function isTieEnded() : bool

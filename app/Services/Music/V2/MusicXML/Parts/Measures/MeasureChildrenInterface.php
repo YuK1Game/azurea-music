@@ -11,5 +11,7 @@ interface MeasureChildrenInterface
 
     public function pitchOctave() : ?int;
 
+    public function accidental() : ?string;
+
     public function getMeasure() : Measure;
 }

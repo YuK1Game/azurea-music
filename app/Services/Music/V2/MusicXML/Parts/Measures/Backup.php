@@ -34,6 +34,11 @@ class Backup implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return '';
     }
 
+    public function accidental() : ?string
+    {
+        return null;
+    }
+
     public function getMeasure() : Measure
     {
         return $this->parent;

@@ -4,6 +4,8 @@ namespace App\Services\Azurea\V2;
 use App\Services\Music\V2\MusicXML;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
 use App\Services\Music\V2\MusicXML\Parts\Track as MusicXMLTrack;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Note as MusicXMLNote;
+use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface as MeasureChildren;
 use App\Services\Azurea\V2\Note as AzureaNote;
 use Illuminate\Support\Collection;
 
@@ -31,19 +33,27 @@ class Track
         $notes = collect();
         $prevNote = null;
 
-        $this->musicXmlTrack->notes()->each(function($note) use(&$notes, &$prevNote) {
+        $accidentals = collect();
+
+        $this->musicXmlTrack->notes()->each(function(MeasureChildren $note) use(&$notes, &$prevNote, &$accidentals) {
             $currentMeasure = $note->getMeasure();
 
-            $modifyMeasures = collect([
-                'modifyMeasureAttribute' => $this->modifyMeasureAttribute($currentMeasure),
-                'modifyMeasureDirection' => $this->modifyMeasureDirection($currentMeasure),
-            ]);
+            if ($accidental = $note->accidental()) {
+                $accidentals->put($note->pitchStep(), $accidental);
+            }
+
+            $this->modifyMeasureAttribute($currentMeasure);
+            $this->modifyMeasureDirection($currentMeasure);
 
             $azureaNote = new AzureaNote($note);
             $azureaNote->setPrevAzureaNote($prevNote);
             $azureaNote->setCurrentTrackProperties($this->getCurrentTrackProperties());
-            $notes->push($azureaNote);
 
+            if ($accidental = $accidentals->get($note->pitchStep())) {
+                $azureaNote->setAccidental($accidental);
+            }
+
+            $notes->push($azureaNote);
             $prevNote = $azureaNote;
         });
 

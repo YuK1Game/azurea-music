@@ -103,18 +103,13 @@ class Note
         return '';
     }
 
-    public function getDurationManager() : Duration
+    public function getDurationCode() : string
     {
-        return new Duration(
+        $duration = new Duration(
             $this->measureChildren->duration(),
             (int) $this->currentTrackProperties->get('currentDivision'),
             (int) $this->currentTrackProperties->get('currentBeatType')
         );
-    }
-
-    public function getDurationCode() : string
-    {
-        $duration = $this->getDurationManager();
         return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
     }
 

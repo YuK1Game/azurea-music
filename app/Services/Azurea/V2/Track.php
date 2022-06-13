@@ -28,30 +28,20 @@ class Track
         $this->musicXmlTrack = $musicXmlTrack;
     }
 
-    public function measures()
+    public function measures() : Collection
     {
         $notes = collect();
         $prevNote = null;
 
-        $accidentals = collect();
-
-        $this->musicXmlTrack->notes()->each(function(MeasureChildren $note) use(&$notes, &$prevNote, &$accidentals) {
+        $this->musicXmlTrack->notes()->each(function(MeasureChildren $note) use(&$notes, &$prevNote) {
             $currentMeasure = $note->getMeasure();
-
-            if ($accidental = $note->accidental()) {
-                $accidentals->put($note->pitchStep(), $accidental);
-            }
 
             $this->modifyMeasureAttribute($currentMeasure);
             $this->modifyMeasureDirection($currentMeasure);
 
-            $azureaNote = new AzureaNote($note);
+            $azureaNote = new AzureaNote($note, $this);
             $azureaNote->setPrevAzureaNote($prevNote);
             $azureaNote->setCurrentTrackProperties($this->getCurrentTrackProperties());
-
-            if ($accidental = $accidentals->get($note->pitchStep())) {
-                $azureaNote->setAccidental($accidental);
-            }
 
             $notes->push($azureaNote);
             $prevNote = $azureaNote;
@@ -98,7 +88,6 @@ class Track
 
             if ($value !== null && $value !== $this->{ $dataName }) {
                 $this->{ $dataName } = $value;
-                // echo sprintf('Change value [%s] => %s' . PHP_EOL, $key, $value);
                 return [ $key => $value ];
             }
             return [ $key => null ];

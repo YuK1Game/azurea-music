@@ -8,16 +8,24 @@ use App\Services\Music\V2\MusicXML\Parts\Measure;
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class Note implements MusicXMLChildrenInterface, MeasureChildrenInterface
+class Note implements MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
     protected Measure $parent;
 
-    public function __construct(SimpleXMLElement $xml, $parent)
+    protected int $noteIndex;
+
+    public function __construct(SimpleXMLElement $xml, $parent, int $noteIndex)
     {
         $this->xml = $xml;
         $this->parent = $parent;
+        $this->noteIndex = $noteIndex;
+    }
+
+    public function index() : int
+    {
+        return $this->noteIndex;
     }
 
     public function pitchStep() : ?string

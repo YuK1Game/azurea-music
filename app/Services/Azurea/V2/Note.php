@@ -1,28 +1,32 @@
 <?php
 namespace App\Services\Azurea\V2;
 
+use App\Services\Music\V2\MusicXML\Parts\Measure as MusicXMLMeasure;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note as MusicXMLNote;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Backup;
 use App\Services\Music\V2\MusicXML\Parts\Measures\BlankNote;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use Illuminate\Support\Collection;
 
+use App\Services\Azurea\V2\Track as AzureaTrack;
 use App\Services\Azurea\V2\Notes\{ Duration, Key };
 
 class Note
 {
     protected MeasureChildrenInterface $measureChildren;
 
+    protected AzureaTrack $azureaTrack;
+
     protected ?Note $prevAzureaNote;
 
     protected ?Collection $currentTrackProperties = null;
 
-    protected ?string $accidental = null;
 
-
-    public function __construct(MeasureChildrenInterface $measureChildren)
+    public function __construct(MeasureChildrenInterface $measureChildren, AzureaTrack $azureaTrack)
     {
         $this->measureChildren = $measureChildren;
+
+        $this->azureaTrack = $azureaTrack;
     }
 
     public function setPrevAzureaNote(?Note $prevAzureaNote)
@@ -35,8 +39,9 @@ class Note
         $this->currentTrackProperties = $currentTrackProperties;
     }
 
-    public function setAccidental(?string $accidental) {
-        $this->accidental = $accidental;
+    public function index() : ?int
+    {
+        return $this->getMusicXMLNote() && $this->getMusicXMLNote()->index();
     }
 
     public function getCode() : string
@@ -44,7 +49,7 @@ class Note
         $measureChildren = $this->measureChildren;
 
         if ($measureChildren instanceof MusicXMLNote) {
-            return $this->getNoteCode();
+            return $this->isTieEnd() ? '' : $this->getNoteCode();
         }
 
         if ($measureChildren instanceof BlankNote) {
@@ -60,20 +65,18 @@ class Note
 
     public function getNoteCode() : string
     {
-        $code = $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $pitch = $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $code = sprintf('%s%s', $pitch, $this->getDurationCode());
 
-        if ($this->getMusicXMLNote()->isTieEnd()) {
-            if ($this->isChord()) {
-                return '';
-            }
-            return sprintf('r%s', $this->getDurationCode());
+        if ($tieEndNote = $this->getRelationalTieEnd()) {
+            $code = sprintf('%s&%s', $code, $tieEndNote->getNoteCode());
         }
 
         if ($this->isChord()) {
-            return sprintf(':%s%s', $code, $this->getDurationCode());
+            return sprintf(':%s', $code);
         }
 
-        return sprintf('%s%s', $code, $this->getDurationCode());
+        return $code;
     }
 
     public function getPitch() : string
@@ -112,31 +115,48 @@ class Note
         );
         return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
     }
-
-    protected function isTieEnded() : bool
-    {
-        if ($this->getMusicXMLNote()->isTieEnd()) {
-            if ($prevAzureaNote = $this->prevAzureaNote) {
-                if ($this->isMusicXMLNote() && $prevAzureaNote->isMusicXMLNote()) {
-                    return $prevAzureaNote->getNoteCode() === $this->getNoteCode();
-                }
-            }
-            return false;
-        }
-        return false;
-    }
-
+    
     public function isChord() : bool
     {
-        if ($this->isMusicXMLNote()) {
-            return $this->getMusicXMLNote()->isChord();
-        }
-        return false;
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isChord();
     }
 
-    public function isMusicXMLNote() : bool
+    public function isTieStart() : bool
+    {
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieStart();
+    }
+
+    public function isTieEnd() : bool
+    {
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieEnd();
+    }
+
+    protected function getRelationalTieEnd() : ?Note
+    {
+        if ($this->isTieStart()) {
+            return $this->azureaTrack->measures()->filter(function(Collection $notes, int $measureNumber) {
+                return $measureNumber >= $this->getCurrentMeasureNumber();
+            })
+            ->flatten(1)
+            ->filter(function(Note $note) {
+                return $note->isTieEnd() && $this->defaultPitch() === $note->defaultPitch();
+            })
+            ->first();
+        }
+        return null;
+    }
+
+    protected function isMusicXMLNote() : bool
     {
         return $this->measureChildren instanceof MusicXMLNote;
+    }
+
+    protected function defaultPitch() : ?string
+    {
+        if ($this->isMusicXMLNote()) {
+            return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
+        }
+        return null;
     }
 
     public function getMusicXMLNote() : MusicXMLNote

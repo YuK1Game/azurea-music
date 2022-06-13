@@ -9,7 +9,8 @@ use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Track as AzureaTrack;
 use App\Services\Azurea\V2\Note as AzureaNote;
-
+use App\Services\Music\V2\MusicXML\Part as MusicXMLPart;
+use App\Services\Music\V2\MusicXML\Parts\Track as MusicXMLTrack;
 
 class Music
 {
@@ -38,11 +39,14 @@ class Music
     {
         $codes = collect();
 
-        foreach ($this->musicXml->parts() as $part) {
-            foreach ($part->tracks() as $track) {
+        $this->musicXml->parts()->each(function(MusicXMLPart $part) {
+            $part->tracks()->each(function(MusicXMLTrack $track) {
+                
                 $azureaTrack = new AzureaTrack($track);
+
                 $measures = $azureaTrack->measures();
-                $measures->each(function(Collection $notes, int $measureId) use($codes) {
+                
+                $measures->each(function(Collection $notes, int $measureId) {
                     
                     if ($tempo = $this->getTempoByMeasureId($measureId)) {
                         echo sprintf('t%d' . PHP_EOL, $tempo);
@@ -59,9 +63,8 @@ class Music
 
                 echo PHP_EOL;
                 echo PHP_EOL;
-            }
-        }
-
+            });
+        });
         return $codes;
     }
 

@@ -54,12 +54,13 @@ class Measure implements MusicXMLChildrenInterface
     public function notes() : Collection
     {
         $data = collect();
+        $noteIndex = 1;
 
         foreach ($this->xml->xpath('note|backup') as $node) {
             if ($node) {
                 switch ($node->getName()) {
                     case 'note':
-                        $data->push(new Note($node, $this));
+                        $data->push(new Note($node, $this, $noteIndex++));
                         break;
                     case 'backup':
                         $data->push(new Backup($node, $this));

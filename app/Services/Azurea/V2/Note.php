@@ -115,12 +115,7 @@ class Note
     public function getDurationCode() : string
     {
         $duration = $this->getDurationManager();
-
-        switch($duration->dotCount()) {
-            case 1 : return sprintf('%s.', $duration->duration());
-            case 2 : return sprintf('%s.r%s', $duration->duration(), $duration->duration() * 4);
-            default : return sprintf('%s', $duration->duration());
-        }
+        return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
     }
 
     protected function isTieEnded() : bool

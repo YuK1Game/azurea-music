@@ -49,7 +49,7 @@ class Music
                     }
 
                     $notes->each(function(AzureaNote $azureaNote) {
-                        // echo $azureaNote->getCode();
+                        echo $azureaNote->getCode();
                         
                         // if ($azureaNote->isMusicXMLNote() && ! $azureaNote->isChord()) {
                         //     $duration = $azureaNote->getDurationManager();
@@ -63,7 +63,7 @@ class Music
                         //     echo $value . "\t";
                         // }
 
-                        echo $azureaNote->getDurationCode() . ' ';
+                        // echo $azureaNote->getDurationCode() . ' ';
                     });
 
                     echo PHP_EOL;

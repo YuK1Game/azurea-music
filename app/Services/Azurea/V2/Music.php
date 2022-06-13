@@ -48,6 +48,8 @@ class Music
                         echo sprintf('t%d' . PHP_EOL, $tempo);
                     }
 
+                    echo sprintf('[%d] ', $measureId);
+
                     $notes->each(function(AzureaNote $azureaNote) {
                         echo $azureaNote->getCode();
                     });

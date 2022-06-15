@@ -51,11 +51,6 @@ class BlankNote implements MeasureChildrenInterface
         return null;
     }
 
-    public function accidental() : ?string
-    {
-        return null;
-    }
-
     public function getMeasure() : Measure
     {
         return $this->parent;

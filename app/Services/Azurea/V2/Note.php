@@ -72,6 +72,14 @@ class Note
             $code = sprintf(':%s', $code);
         }
 
+        if ($this->isAccent()) {
+            $code = sprintf('%s*14', $code);
+        }
+
+        if ($this->isStaccato()) {
+            $code = sprintf('%s*13', $code);
+        }
+
         if ($this->isChord() && $this->isTieEnd()) {
             return '';
         }
@@ -119,6 +127,16 @@ class Note
     public function isChord() : bool
     {
         return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isChord();
+    }
+
+    public function isAccent() : bool
+    {
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->accent();
+    }
+
+    public function isStaccato() : bool
+    {
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->staccato();
     }
 
     public function isTieStart() : bool

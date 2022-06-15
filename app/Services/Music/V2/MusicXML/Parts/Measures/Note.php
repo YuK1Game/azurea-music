@@ -61,34 +61,14 @@ class Note implements MeasureChildrenInterface
         return isset($this->xml->chord);
     }
 
-    public function accidental() : ?string
+    public function accent() : bool
     {
-        return $this->xml->accidental ? (string) $this->xml->accidental : null;
+        return isset($this->xml->notations->articulations->accent);
     }
 
-    public function isSharp() : bool
+    public function staccato() : bool
     {
-        return $this->accidental() === 'sharp';
-    }
-
-    public function isDoubleSharp() : bool
-    {
-        return $this->accidental() === 'double-sharp';
-    }
-
-    public function isFlat() : bool
-    {
-        return $this->accidental() === 'flat';
-    }
-
-    public function isDoubleFlat() : bool
-    {
-        return $this->accidental() === 'double-flat';
-    }
-
-    public function isNatural() : bool
-    {
-        return $this->accidental() === 'natural';
+        return isset($this->xml->notations->articulations->staccato);
     }
 
     public function tieType() : ?string

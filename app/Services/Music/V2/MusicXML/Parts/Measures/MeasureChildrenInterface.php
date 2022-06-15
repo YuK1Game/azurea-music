@@ -13,7 +13,5 @@ interface MeasureChildrenInterface
 
     public function pitchAlter() : ?int;
 
-    public function accidental() : ?string;
-
     public function getMeasure() : Measure;
 }

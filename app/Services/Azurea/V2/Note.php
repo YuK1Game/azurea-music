@@ -49,7 +49,7 @@ class Note
         $measureChildren = $this->measureChildren;
 
         if ($measureChildren instanceof MusicXMLNote) {
-            return $this->isTieEnd() ? '' : $this->getNoteCode();
+            return $this->getNoteCode();
         }
 
         if ($measureChildren instanceof BlankNote) {
@@ -65,15 +65,15 @@ class Note
 
     public function getNoteCode() : string
     {
-        $pitch = $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $pitch =  $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
         $code = sprintf('%s%s', $pitch, $this->getDurationCode());
 
-        if ($tieEndNote = $this->getRelationalTieEnd()) {
-            $code = sprintf('%s&%s', $code, $tieEndNote->getNoteCode());
+        if ($this->isChord()) {
+            $code = sprintf(':%s', $code);
         }
 
-        if ($this->isChord()) {
-            return sprintf(':%s', $code);
+        if ($this->isChord() && $this->isTieEnd()) {
+            return '';
         }
 
         return $code;

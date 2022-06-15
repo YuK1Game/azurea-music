@@ -39,11 +39,10 @@ class Part implements MusicXMLChildrenInterface
         $tracks = collect();
 
         for($i = 0 ; $i < $maxTrackCount ; $i++) {
-            $track = $this->measures()->map(function(Measure $measure) use($i) {
-                $dividedTracks = $measure->getDividedTracks();
-                return $dividedTracks->get($i) ?? new BlankNote($measure);
+            $measureTracks = $this->measures()->map(function(Measure $measure) use($i) {
+                return $measure->getDividedTrackByIndex($i);
             });
-            $tracks->push(new Track($track->flatten(), $this));
+            $tracks->push(new Track($measureTracks, $this));
         }
 
         return $tracks;

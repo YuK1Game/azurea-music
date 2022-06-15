@@ -6,10 +6,10 @@ use App\Services\Music\V2\MusicXML\Part;
 use App\Services\Music\V2\MusicXML\Parts\MeasureTrack;
 use App\Services\Music\V2\MusicXML\Parts\Measures\{
     Note,
+    BlankNote,
     Backup,
     Attribute,
     Direction,
-    Track,
 };
 
 use Illuminate\Support\Collection;
@@ -73,10 +73,21 @@ class Measure implements MusicXMLChildrenInterface
         return $data;
     }
 
+    public function getDividedTrackByIndex(int $index) : Collection
+    {
+        if ($track = $this->getDividedTracks()->get($index)) {
+            return $track;
+        }
+        return MeasureTrack::create(collect([ new BlankNote($this) ]), $this);
+    }
+
     public function getDividedTracks()
     {
         return $this->notes()->chunkWhile(function($anyNote, $key, $chunk) {
             return $chunk->last() instanceof Note;
+        })
+        ->map(function(Collection $notes) {
+            return MeasureTrack::create($notes, $this);
         });
     }
 

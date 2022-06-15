@@ -42,10 +42,8 @@ class Music
             $tracks = $part->tracks()->map(function(MusicXMLTrack $track) {
                 
                 $azureaTrack = new AzureaTrack($track);
-
-                $measures = $azureaTrack->measures();
                 
-                $measureNotes = $measures->mapWithKeys(function(Collection $notes, int $measureId) {
+                $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) {
                     
                     $noteCode = collect();
 

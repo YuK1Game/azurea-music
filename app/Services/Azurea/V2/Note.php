@@ -57,6 +57,12 @@ class Note
         }
 
         if ($measureChildren instanceof Backup) {
+            $extraDuration = $this->getWholeDuration() - $this->measureChildren->duration();
+
+            if ($extraDuration > 0) {
+                $duration = $this->createDuration($extraDuration);
+                return sprintf('r%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
+            }
             return '';
         }
 
@@ -116,12 +122,17 @@ class Note
 
     public function getDurationCode() : string
     {
-        $duration = new Duration(
-            $this->measureChildren->duration(),
+        $duration = $this->createDuration($this->measureChildren->duration());
+        return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
+    }
+
+    protected function createDuration(int $duration) : Duration
+    {
+        return new Duration(
+            $duration,
             (int) $this->currentTrackProperties->get('currentDivision'),
             (int) $this->currentTrackProperties->get('currentBeatType')
         );
-        return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
     }
     
     public function isChord() : bool
@@ -148,20 +159,12 @@ class Note
     {
         return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieEnd();
     }
-
-    protected function getRelationalTieEnd() : ?Note
+    
+    protected function getWholeDuration() : int
     {
-        if ($this->isTieStart()) {
-            return $this->azureaTrack->measures()->filter(function(Collection $notes, int $measureNumber) {
-                return $measureNumber >= $this->getCurrentMeasureNumber();
-            })
-            ->flatten(1)
-            ->filter(function(Note $note) {
-                return $note->isTieEnd() && $this->defaultPitch() === $note->defaultPitch();
-            })
-            ->first();
-        }
-        return null;
+        $currentDivision = (int) $this->currentTrackProperties->get('currentDivision');
+        $currentBeatType = (int) $this->currentTrackProperties->get('currentBeatType');
+        return $currentDivision * $currentBeatType;
     }
 
     protected function isMusicXMLNote() : bool

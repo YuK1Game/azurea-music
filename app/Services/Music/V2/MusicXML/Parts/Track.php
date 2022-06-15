@@ -14,15 +14,20 @@ class Track
 
     protected Part $parent;
 
-    public function __construct(Collection $trackNotes, $parent)
+    public function __construct(Collection $measureTracks, $parent)
     {
-        $this->trackNotes = $trackNotes;
+        $this->measureTracks = $measureTracks;
         $this->parent = $parent;
+    }
+
+    public function measureTracks() : Collection
+    {
+        return $this->measureTracks;
     }
 
     public function notes() : Collection
     {
-        return $this->trackNotes;
+        return $this->measureTracks->flatten();
     }
 
     public function getPart() : Part

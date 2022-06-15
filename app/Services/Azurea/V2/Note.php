@@ -57,12 +57,15 @@ class Note
         }
 
         if ($measureChildren instanceof Backup) {
-            $extraDuration = $this->getWholeDuration() - $this->measureChildren->duration();
+            if($duration = $this->measureChildren->duration()) {
+                $extraDuration = $this->getWholeDuration() - $duration;
 
-            if ($extraDuration > 0) {
-                $duration = $this->createDuration($extraDuration);
-                return sprintf('r%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
+                if ($extraDuration > 0) {
+                    $durationManager = $this->createDuration($extraDuration);
+                    return sprintf('r%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
+                }
             }
+
             return '';
         }
 
@@ -87,6 +90,10 @@ class Note
         }
 
         if ($this->isChord() && $this->isTieEnd()) {
+            return '';
+        }
+
+        if ($this->isGrace()) {
             return '';
         }
 
@@ -122,8 +129,12 @@ class Note
 
     public function getDurationCode() : string
     {
-        $duration = $this->createDuration($this->measureChildren->duration());
-        return sprintf('%s%s', $duration->duration(), str_repeat('.', $duration->dotCount()));
+        if ($duration = $this->measureChildren->duration()) {
+            $durationManager = $this->createDuration($duration);
+            return sprintf('%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
+        }
+        return '[Error]';
+        throw new \Exception('Duration is null.');
     }
 
     protected function createDuration(int $duration) : Duration
@@ -148,6 +159,11 @@ class Note
     public function isStaccato() : bool
     {
         return $this->isMusicXMLNote() && $this->getMusicXMLNote()->staccato();
+    }
+
+    public function isGrace() : bool
+    {
+        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->grace();
     }
 
     public function isTieStart() : bool

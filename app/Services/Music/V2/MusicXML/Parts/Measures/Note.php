@@ -71,6 +71,11 @@ class Note implements MeasureChildrenInterface
         return isset($this->xml->notations->articulations->staccato);
     }
 
+    public function grace() : bool
+    {
+        return isset($this->xml->grace);
+    }
+
     public function tieType() : ?string
     {
         return $this->xml->notations->tied ? $this->xml->notations->tied['type'] : null;

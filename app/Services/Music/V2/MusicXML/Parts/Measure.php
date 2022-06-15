@@ -3,6 +3,7 @@ namespace App\Services\Music\V2\MusicXML\Parts;
 
 use App\Services\Music\V2\MusicXMLChildrenInterface;
 use App\Services\Music\V2\MusicXML\Part;
+use App\Services\Music\V2\MusicXML\Parts\MeasureTrack;
 use App\Services\Music\V2\MusicXML\Parts\Measures\{
     Note,
     Backup,
@@ -74,8 +75,8 @@ class Measure implements MusicXMLChildrenInterface
 
     public function getDividedTracks()
     {
-        return $this->notes()->chunkWhile(function($anyNote) {
-            return $anyNote instanceof Note;
+        return $this->notes()->chunkWhile(function($anyNote, $key, $chunk) {
+            return $chunk->last() instanceof Note;
         });
     }
 

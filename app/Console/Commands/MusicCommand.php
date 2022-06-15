@@ -39,7 +39,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/A_Town_With_an_Ocean_View_Umi_No_Mieru_Machi.mxl');
+        $filename = resource_path('musicxml/Kimi_no_Shiranai_Monogatari_-_Bakemonogatari_ED.mscz.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

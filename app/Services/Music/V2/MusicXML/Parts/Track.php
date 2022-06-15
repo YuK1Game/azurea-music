@@ -1,12 +1,11 @@
 <?php
 namespace App\Services\Music\V2\MusicXML\Parts;
 
-use App\Services\Music\V2\MusicXMLChildrenInterface;
 use App\Services\Music\V2\MusicXML\Part;
-use App\Services\Music\V2\MusicXML\Parts\Tracks\TrackMeasure;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Backup;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 
 use Illuminate\Support\Collection;
-use SimpleXMLElement;
 
 
 class Track

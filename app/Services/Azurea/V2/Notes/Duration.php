@@ -53,14 +53,7 @@ class Duration
             case 1.50  : return 1;
             case 1.75  : return 2;
             default :
-                dd([
-                    '$ratio' => $ratio,
-                    'wholeDuration' => $this->wholeDuration(),
-                    'baseDuration' => $this->duration,
-                    'calcDuration' => $this->duration(),
-                    'durationDenominator' => $this->durationDenominator(),
-                ]);
-                throw new \Exception('Error');
+                throw new \Exception(sprintf('Invalid duration.'));
         }
     }
     

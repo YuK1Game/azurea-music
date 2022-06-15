@@ -42,7 +42,21 @@ class MusicCommand extends Command
         $filename = resource_path('musicxml/A_Town_With_an_Ocean_View_Umi_No_Mieru_Machi.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
-        $codes = $azureaMusic->getCodes();
+        $parts = $azureaMusic->getCodes();
+
+        $parts->each(function($part) {
+            $part->get('tracks')->each(function($track) {
+                $track->get('measures')->each(function($notes, $measureIndex) {
+                    echo sprintf('[%d] ', $measureIndex);
+                    echo $notes->join('');
+                    echo PHP_EOL;
+                });
+                echo PHP_EOL;
+                echo PHP_EOL;
+            });
+            echo PHP_EOL;
+            echo PHP_EOL;
+        });
 
         return 0;
     }

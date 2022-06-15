@@ -37,35 +37,39 @@ class Music
 
     public function getCodes()
     {
-        $codes = collect();
+        return $this->musicXml->parts()->map(function(MusicXMLPart $part) {
 
-        $this->musicXml->parts()->each(function(MusicXMLPart $part) {
-            $part->tracks()->each(function(MusicXMLTrack $track) {
+            $tracks = $part->tracks()->map(function(MusicXMLTrack $track) {
                 
                 $azureaTrack = new AzureaTrack($track);
 
                 $measures = $azureaTrack->measures();
                 
-                $measures->each(function(Collection $notes, int $measureId) {
+                $measureNotes = $measures->mapWithKeys(function(Collection $notes, int $measureId) {
                     
+                    $noteCode = collect();
+
                     if ($tempo = $this->getTempoByMeasureId($measureId)) {
-                        echo sprintf('t%d' . PHP_EOL, $tempo);
+                        $noteCode->push(sprintf('t%d', $tempo));
                     }
 
-                    echo sprintf('[%d] ', $measureId);
-
-                    $notes->each(function(AzureaNote $azureaNote) {
-                        echo $azureaNote->getCode();
+                    $notes->each(function(AzureaNote $azureaNote) use($noteCode) {
+                        $noteCode->push($azureaNote->getCode());
                     });
 
-                    echo PHP_EOL;
+                    return [ $measureId => $noteCode ];
                 });
 
-                echo PHP_EOL;
-                echo PHP_EOL;
+                return collect([
+                    'measures' => $measureNotes,
+                ]);
             });
+
+            return collect([
+                'part_id' => 0,
+                'tracks' => $tracks,
+            ]);
         });
-        return $codes;
     }
 
 }

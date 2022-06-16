@@ -76,6 +76,11 @@ class Note implements MeasureChildrenInterface
         return isset($this->xml->grace);
     }
 
+    public function type() : ?string
+    {
+        return $this->xml->type ?? null;
+    }
+
     public function tieType() : ?string
     {
         return $this->xml->notations->tied ? $this->xml->notations->tied['type'] : null;
@@ -94,6 +99,11 @@ class Note implements MeasureChildrenInterface
     public function getMeasure() : Measure
     {
         return $this->parent;
+    }
+
+    public function getXml() : ?SimpleXMLElement
+    {
+        return $this->xml;
     }
 
 }

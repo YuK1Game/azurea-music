@@ -61,8 +61,7 @@ class Note
                 $extraDuration = $this->getWholeDuration() - $duration;
 
                 if ($extraDuration > 0) {
-                    $durationManager = $this->createDuration($extraDuration);
-                    return sprintf('r%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
+                    return $this->createDuration($extraDuration);
                 }
             }
 
@@ -130,20 +129,46 @@ class Note
     public function getDurationCode() : string
     {
         if ($duration = $this->measureChildren->duration()) {
-            $durationManager = $this->createDuration($duration);
-            return sprintf('%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
+            return $this->createDuration($duration);
         }
         return '[Error]';
         throw new \Exception('Duration is null.');
     }
 
-    protected function createDuration(int $duration) : Duration
+    protected function createDuration(int $duration) : string
     {
-        return new Duration(
-            $duration,
-            (int) $this->currentTrackProperties->get('currentDivision'),
-            (int) $this->currentTrackProperties->get('currentBeatType')
-        );
+        try {
+            $durationManager = new Duration(
+                $duration,
+                (int) $this->currentTrackProperties->get('currentDivision'),
+                (int) $this->currentTrackProperties->get('currentBeat'),
+                (int) $this->currentTrackProperties->get('currentBeatType'),
+            );
+
+            return sprintf('%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
+
+        } catch (\Exception $e) {
+            $errorJson = [
+                'message' => $e->getMessage(),
+                'measure_number' => $this->getCurrentMeasureNumber(),
+                'properties' => [
+                    'type' => $this->getType(),
+                    'duration' => $duration,
+                    'result_duration' => $durationManager->duration(),
+                    'is_natural_duration' => $durationManager->isNaturalDuration(),
+                    'whole_duration' => $this->getWholeDuration(),
+                    'current_division' => (int) $this->currentTrackProperties->get('currentDivision'),
+                    'current_beat_type' => (int) $this->currentTrackProperties->get('currentBeatType'),
+                    'current_beat' => (int) $this->currentTrackProperties->get('currentBeat'),
+                    'durations' => $durationManager->createNoteDurations(),
+                ],
+                'note' => [
+                    'class' => get_class($this->measureChildren),
+                    'xml' => $this->measureChildren->getXml(),
+                ],
+            ];
+            throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+        }
     }
     
     public function isChord() : bool
@@ -174,6 +199,14 @@ class Note
     public function isTieEnd() : bool
     {
         return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieEnd();
+    }
+
+    public function getType() : ?string
+    {
+        if ($this->isMusicXMLNote()) {
+            return $this->getMusicXMLNote()->type();
+        }
+        return null;
     }
     
     protected function getWholeDuration() : int

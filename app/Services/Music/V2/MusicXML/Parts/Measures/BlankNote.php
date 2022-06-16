@@ -56,4 +56,9 @@ class BlankNote implements MeasureChildrenInterface
         return $this->parent;
     }
 
+    public function getXml() : ?SimpleXMLElement
+    {
+        return null;
+    }
+
 }

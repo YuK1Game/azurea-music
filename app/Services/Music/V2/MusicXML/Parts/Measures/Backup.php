@@ -44,4 +44,9 @@ class Backup implements MusicXMLChildrenInterface, MeasureChildrenInterface
         return $this->parent;
     }
 
+    public function getXml() : ?SimpleXMLElement
+    {
+        return $this->xml;
+    }
+
 }

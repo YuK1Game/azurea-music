@@ -46,6 +46,23 @@ class Note implements MeasureChildrenInterface
         return $pitchAlter ? (int) $pitchAlter : null;
     }
 
+    public function unpitchedStep() : ?string
+    {
+        $pitchStep = $this->xml->unpitched->{'display-step'};
+        return $pitchStep ? strtolower($pitchStep) : null;
+    }
+
+    public function unpitchedOctave() : ?int
+    {
+        $pitchOctave = $this->xml->unpitched->{'display-octave'};
+        return $pitchOctave ? (int) $pitchOctave : null;
+    }
+
+    public function hasUnpitched() : bool
+    {
+        return isset($this->xml->unpitched);
+    }
+
     public function duration() : ?int
     {
         return $this->xml->duration ? (int) $this->xml->duration : null;

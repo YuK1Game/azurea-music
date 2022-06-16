@@ -49,7 +49,7 @@ class MusicCommand extends Command
             return $this->test();
         }
 
-        $filename = resource_path('musicxml/_Yume_De_Aru_You_Ni.mxl');
+        $filename = resource_path('musicxml/Donten_Gintama_Opening_5.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

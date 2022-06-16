@@ -49,7 +49,7 @@ class Note
         $measureChildren = $this->measureChildren;
 
         if ($measureChildren instanceof MusicXMLNote) {
-            return $this->getNoteCode();
+            return $measureChildren->hasUnpitched() ? $this->getDrumNoteCode() : $this->getNoteCode();
         }
 
         if ($measureChildren instanceof BlankNote) {
@@ -73,7 +73,7 @@ class Note
 
     public function getNoteCode() : string
     {
-        $pitch =  $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $pitch =  $this->isTieEnd() || $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
         $code = sprintf('%s%s', $pitch, $this->getDurationCode());
 
         if ($this->isChord()) {
@@ -97,6 +97,27 @@ class Note
         }
 
         return $code;
+    }
+
+    public function getDrumNoteCode() : string
+    {
+        $key = sprintf('o%d%s', $this->getMusicXMLNote()->unpitchedOctave(), $this->getMusicXMLNote()->unpitchedStep());
+        $duration = $this->getDurationCode();
+
+        switch ($key) {
+            case 'o4d' : return sprintf('o4a+%s', $duration);
+            case 'o4e' : return sprintf('o4c%s', $duration);
+            case 'o4f' : return sprintf('o4e%s', $duration);
+            case 'o5c' : return sprintf('o4c+%s', $duration);
+            case 'o5d' : return sprintf('o4d+%s', $duration);
+            case 'o5e' : return sprintf('o4d%s', $duration);
+            case 'o5f' : return sprintf('o4a%s', $duration);
+            case 'o5g' : return sprintf('o4a+%s', $duration);
+            case 'o5a' : return sprintf('o5g%s', $duration);
+            case 'o5b' : return sprintf('o5g%s', $duration);
+        }
+        
+        throw new \Exception(sprintf('Drum Note Error. [%s]', $key));
     }
 
     public function getPitch() : string

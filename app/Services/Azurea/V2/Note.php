@@ -104,16 +104,17 @@ class Note
         $key = sprintf('o%d%s', $this->getMusicXMLNote()->unpitchedOctave(), $this->getMusicXMLNote()->unpitchedStep());
 
         switch ($key) {
-            case 'o4d' : return 'o4a+';
-            case 'o4e' : return 'o4c';
-            case 'o4f' : return 'o4e';
-            case 'o5c' : return 'o4c+';
-            case 'o5d' : return 'o4d+';
-            case 'o5e' : return 'o4d';
-            case 'o5f' : return 'o4a';
-            case 'o5g' : return 'o4a+';
-            case 'o5a' : return 'o5g';
-            case 'o5b' : return 'o5g';
+            case 'o4d' : /* PedalHiHat  */ return 'o4f';
+            case 'o4e' : /* Rest        */ return 'r';
+            case 'o4f' : /* BassDrum    */ return 'o4c';
+            case 'o4a' : /* FloorTam    */ return 'o4e';
+            case 'o5c' : /* SnareDrum   */ return 'o4d';
+            case 'o5d' : /* LowTam      */ return 'o4d+';
+            case 'o5e' : /* HiTam       */ return 'o4d';
+            case 'o5f' : /* RideCymbal  */ return 'o4g+';
+            case 'o5g' : /* HiHatCymbal */ return 'o4f'; 
+            case 'o5a' : /* CrashCymbal */ return 'o4f+';
+            case 'o5b' : /* Unknown     */ return 'o4f+';
         }
         
         throw new \Exception(sprintf('Drum Note Error. [%s]', $key));

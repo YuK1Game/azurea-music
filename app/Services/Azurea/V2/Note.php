@@ -49,7 +49,7 @@ class Note
         $measureChildren = $this->measureChildren;
 
         if ($measureChildren instanceof MusicXMLNote) {
-            return $measureChildren->hasUnpitched() ? $this->getDrumNoteCode() : $this->getNoteCode();
+            return $this->getNoteCode();
         }
 
         if ($measureChildren instanceof BlankNote) {
@@ -102,19 +102,18 @@ class Note
     public function getDrumNoteCode() : string
     {
         $key = sprintf('o%d%s', $this->getMusicXMLNote()->unpitchedOctave(), $this->getMusicXMLNote()->unpitchedStep());
-        $duration = $this->getDurationCode();
 
         switch ($key) {
-            case 'o4d' : return sprintf('o4a+%s', $duration);
-            case 'o4e' : return sprintf('o4c%s', $duration);
-            case 'o4f' : return sprintf('o4e%s', $duration);
-            case 'o5c' : return sprintf('o4c+%s', $duration);
-            case 'o5d' : return sprintf('o4d+%s', $duration);
-            case 'o5e' : return sprintf('o4d%s', $duration);
-            case 'o5f' : return sprintf('o4a%s', $duration);
-            case 'o5g' : return sprintf('o4a+%s', $duration);
-            case 'o5a' : return sprintf('o5g%s', $duration);
-            case 'o5b' : return sprintf('o5g%s', $duration);
+            case 'o4d' : return 'o4a+';
+            case 'o4e' : return 'o4c';
+            case 'o4f' : return 'o4e';
+            case 'o5c' : return 'o4c+';
+            case 'o5d' : return 'o4d+';
+            case 'o5e' : return 'o4d';
+            case 'o5f' : return 'o4a';
+            case 'o5g' : return 'o4a+';
+            case 'o5a' : return 'o5g';
+            case 'o5b' : return 'o5g';
         }
         
         throw new \Exception(sprintf('Drum Note Error. [%s]', $key));
@@ -127,6 +126,10 @@ class Note
 
     protected function getPhonicNotePitch() : string
     {
+        if ($this->measureChildren->hasUnpitched()) {
+            return $this->getDrumNoteCode();
+        }
+
         $key = new Key();
         $key->setPitchStep($this->measureChildren->pitchStep());
         $key->setPitchOctave($this->measureChildren->pitchOctave());

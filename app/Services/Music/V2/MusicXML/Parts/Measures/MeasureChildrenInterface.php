@@ -14,6 +14,8 @@ interface MeasureChildrenInterface
 
     public function pitchAlter() : ?int;
 
+    public function hasUnpitched() : bool;
+
     public function getMeasure() : Measure;
 
     public function getXml() : ?SimpleXMLElement;

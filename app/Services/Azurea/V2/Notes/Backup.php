@@ -18,17 +18,18 @@ class Backup
 
     public function getNoteCode() : string
     {
-        $duration = $this->duration;
+        $extraDuration = $this->extraDuration();
+
         $noteDurations = $this->createNoteDurations();
-        $noteDurations = $noteDurations->filter(function(Collection $noteDuration) use(&$duration) {
-            if ($duration >= $noteDuration->get('duration')) {
-                $duration -= $noteDuration->get('duration');
+        $noteDurations = $noteDurations->filter(function(Collection $noteDuration) use(&$extraDuration) {
+            if ($extraDuration >= $noteDuration->get('duration')) {
+                $extraDuration -= $noteDuration->get('duration');
                 return true;
             }
             return false;
         });
 
-        if ($duration === 0) {
+        if ($extraDuration === 0) {
             return $noteDurations->map(function(Collection $noteDuration) {
                 return sprintf('r%s', $noteDuration->get('type'));
             })->join('');

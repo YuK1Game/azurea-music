@@ -49,7 +49,7 @@ class MusicCommand extends Command
             return $this->test();
         }
 
-        $filename = resource_path('musicxml/One_Piece_Medley.mxl');
+        $filename = resource_path('musicxml/Pokemon_Red_and_Blue_-_Title_Theme_for_piano.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

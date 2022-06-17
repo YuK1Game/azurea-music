@@ -9,7 +9,7 @@ use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Track as AzureaTrack;
-use App\Services\Azurea\V2\Notes\{ Duration, Key };
+use App\Services\Azurea\V2\Notes\{ Duration, Key, Backup as BackupCode };
 
 class Note
 {
@@ -57,12 +57,16 @@ class Note
         }
 
         if ($measureChildren instanceof Backup) {
+            
             if($duration = $this->measureChildren->duration()) {
-                $extraDuration = $this->getWholeDuration() - $duration;
+                $backupCode = new BackupCode($this->getWholeDuration(), $duration);
+                return $backupCode->getNoteCode();
 
-                if ($extraDuration > 0) {
-                    return $this->createDuration($extraDuration);
-                }
+                // $extraDuration = $this->getWholeDuration() - $duration;
+
+                // if ($extraDuration > 0) {
+                //     return $this->createDuration($extraDuration);
+                // }
             }
 
             return '';

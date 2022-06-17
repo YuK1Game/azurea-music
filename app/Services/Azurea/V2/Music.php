@@ -64,7 +64,8 @@ class Music
             });
 
             return collect([
-                'part_id' => 0,
+                'id' => $part->id(),
+                'part_name' => $part->scorePartName(),
                 'tracks' => $tracks,
             ]);
         });

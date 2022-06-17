@@ -55,6 +55,10 @@ class MusicCommand extends Command
         $parts = $azureaMusic->getCodes();
 
         $parts->each(function($part) {
+            echo str_repeat('-', 100) . PHP_EOL;
+            echo sprintf('Part[%s] : %s' . PHP_EOL, $part->get('id'), $part->get('part_name'));
+            echo str_repeat('-', 100) . PHP_EOL;
+
             $part->get('tracks')->each(function($track) {
                 $track->get('measures')->each(function($notes, $measureIndex) {
                     echo sprintf('[%d] ', $measureIndex);

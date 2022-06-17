@@ -21,6 +21,30 @@ class Part implements MusicXMLChildrenInterface
         $this->parent = $parent;
     }
 
+    public function id() : ?string
+    {
+        return $this->xml['id'] ?? null;
+    }
+
+    public function scorePart() : ?SimpleXMLElement
+    {
+        $scorePartElement = $this->parent->scoreParts();
+
+        foreach ($scorePartElement->{'score-part'} as $scorePart) {
+            if (isset($scorePart['id'])) {
+                if ((string) $scorePart['id'] === $this->id()) {
+                    return $scorePart;
+                }
+            }
+        }
+        throw new \Exception(sprintf('Not found part. [%s]', $this->id()));
+    }
+
+    public function scorePartName() : string
+    {
+        return $this->scorePart()->{'part-name'};
+    }
+
     public function measures() : Collection
     {
         $data = collect();

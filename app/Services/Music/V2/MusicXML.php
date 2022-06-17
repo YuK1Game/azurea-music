@@ -4,6 +4,7 @@ namespace App\Services\Music\V2;
 use App\Services\Music\V2\Parser;
 use App\Services\Music\V2\MusicXML\Part;
 use Illuminate\Support\Collection;
+use SimpleXMLElement;
 
 class MusicXML
 {
@@ -24,6 +25,11 @@ class MusicXML
         }
         
         return $data;
+    }
+
+    public function scoreParts() : SimpleXMLElement
+    {
+        return $this->xml->{'part-list'};
     }
 
 }

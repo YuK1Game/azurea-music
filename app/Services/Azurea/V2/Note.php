@@ -61,12 +61,6 @@ class Note
             if($duration = $this->measureChildren->duration()) {
                 $backupCode = new BackupCode($this->getWholeDuration(), $duration);
                 return $backupCode->getNoteCode();
-
-                // $extraDuration = $this->getWholeDuration() - $duration;
-
-                // if ($extraDuration > 0) {
-                //     return $this->createDuration($extraDuration);
-                // }
             }
 
             return '';

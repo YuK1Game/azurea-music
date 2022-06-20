@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Services\Azurea\V2\Music as AzureaMusic;
 use App\Services\Azurea\V2\Notes\Duration;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
 class MusicCommand extends Command
@@ -49,7 +50,7 @@ class MusicCommand extends Command
             return $this->test();
         }
 
-        $filename = resource_path('musicxml/Pokemon_Red_and_Blue_-_Title_Theme_for_piano.mxl');
+        $filename = resource_path('musicxml/Rune_ga_Pikatto_Hikattara.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -64,6 +65,8 @@ class MusicCommand extends Command
                     echo sprintf('[%d] ', $measureIndex);
                     echo $notes->join('');
                     echo PHP_EOL;
+
+                    $this->validateNotes($notes);
                 });
                 echo PHP_EOL;
                 echo PHP_EOL;
@@ -74,27 +77,39 @@ class MusicCommand extends Command
 
         return 0;
     }
-
-    public function test()
+    
+    protected function validateNotes(Collection $notes)
     {
-        $path = resource_path('musicxml');
-        $files = File::files($path);
-
-        foreach ($files as $file) {
-
-            echo $file->getPathname();
-
-            try {
-                $azureaMusic = new AzureaMusic($file->getPathname());
-                $parts = $azureaMusic->getCodes();
-            } catch (\Exception $e) {
-                echo ' [NG]' . PHP_EOL;
-                throw $e;
+        $totalDuration = (float) $notes->sum(function(string $noteCode) {
+            if (preg_match('/^(:)?o\d{1}.*?(\d{1,2})(\.)?(\.)?(\*\d{1,})?$/', $noteCode, $matches) === 1) {
+                $isChord  = $matches[1] === ':';
+                $duration = (int) $matches[2];
+                $dot1 = ($matches[3] ?? null) === '.';
+                $dot2 = ($matches[4] ?? null) === '.';
+                
+                $base = 1 * ($dot2 ? 1.75 : ($dot1 ? 1.5 : 1));
+                
+                return $isChord ? 0 : $base / $duration;
+            }
+            if (preg_match('/^r(\d{1,2})(\.)?(\.)?$/', $noteCode, $matches) === 1) {
+                $duration = (int) $matches[1];
+                $dot1 = ($matches[2] ?? null) === '.';
+                $dot2 = ($matches[3] ?? null) === '.';
+                
+                $base = 1 * ($dot2 ? 1.75 : ($dot1 ? 1.5 : 1));
+                
+                return $base / $duration;
             }
 
-            echo ' [OK]' . PHP_EOL;
-        }
+            return 0;
+        });
 
-        return 0;
+        $totalDuration = round($totalDuration, 10);
+        
+        if (round($totalDuration, 10) !== 1.0) {
+            echo sprintf('[Warn] Total duration miss match. (%s) [%s]', $totalDuration, $notes->join('')) . PHP_EOL;
+        }
+        return true;
     }
+
 }

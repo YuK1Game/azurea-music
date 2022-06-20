@@ -10,6 +10,7 @@ use App\Services\Music\V2\MusicXML\Parts\Measures\{
     Backup,
     Attribute,
     Direction,
+    Forward,
 };
 
 use Illuminate\Support\Collection;
@@ -57,11 +58,14 @@ class Measure implements MusicXMLChildrenInterface
         $data = collect();
         $noteIndex = 1;
 
-        foreach ($this->xml->xpath('note|backup') as $node) {
+        foreach ($this->xml->xpath('note|backup|forward') as $node) {
             if ($node) {
                 switch ($node->getName()) {
                     case 'note':
                         $data->push(new Note($node, $this, $noteIndex++));
+                        break;
+                    case 'forward':
+                        $data->push(new Forward($node, $this));
                         break;
                     case 'backup':
                         $data->push(new Backup($node, $this));
@@ -83,8 +87,8 @@ class Measure implements MusicXMLChildrenInterface
 
     public function getDividedTracks()
     {
-        return $this->notes()->chunkWhile(function($anyNote, $key, $chunk) {
-            return $chunk->last() instanceof Note;
+        return $this->notes()->chunkWhile(function($anyNote) {
+            return $anyNote instanceof Note || $anyNote instanceof Forward;
         })
         ->map(function(Collection $notes) {
             return MeasureTrack::create($notes, $this);

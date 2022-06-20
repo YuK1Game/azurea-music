@@ -44,22 +44,6 @@ class Duration
         });
 
         return $currentNote->get('duration');
-
-        // $durationDenominator = $this->durationDenominator();
-
-        // if ($durationDenominator === floor($durationDenominator)) {
-        //     return $durationDenominator;
-        // }
-        
-        // $notes = [ 1, 2, 4, 8, 16, 32, 64 ];
-
-        // foreach ($notes as $noteValue) {
-        //     if ($durationDenominator <= $noteValue) {
-        //         return $noteValue;
-        //     }
-        // }
-        
-        // throw new \Exception(sprintf('Invalid value [%s]', $durationDenominator));
     }
 
     public function duration() : int

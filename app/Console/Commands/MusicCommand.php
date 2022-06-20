@@ -42,14 +42,6 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        // $duration = new Duration(2, 'eighth', 4, 4);
-        // dd($duration->duration());
-        // die;
-
-        if ($this->option('test')) {
-            return $this->test();
-        }
-
         $filename = resource_path('musicxml/Rune_ga_Pikatto_Hikattara.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
@@ -63,10 +55,10 @@ class MusicCommand extends Command
             $part->get('tracks')->each(function($track) {
                 $track->get('measures')->each(function($notes, $measureIndex) {
                     echo sprintf('[%d] ', $measureIndex);
-                    echo $notes->join('');
+                    echo $notes->flatten()->join('');
                     echo PHP_EOL;
 
-                    $this->validateNotes($notes);
+                    $this->validateNotes($notes->flatten());
                 });
                 echo PHP_EOL;
                 echo PHP_EOL;

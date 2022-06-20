@@ -5,18 +5,20 @@ use Illuminate\Support\Collection;
 
 class Backup
 {
-    protected int $wholeDuration;
+    protected ?int $wholeDuration;
 
     protected int $duration;
 
-    public function __construct(int $wholeDuration, int $duration)
+    protected ?bool $isForward;
+
+    public function __construct(int $wholeDuration, int $duration, ?bool $isForward = false)
     {
         $this->wholeDuration = $wholeDuration;
-
         $this->duration = $duration;
+        $this->isForward = $isForward;
     }
 
-    public function getNoteCode() : string
+    public function getNoteCodes() : Collection
     {
         $extraDuration = $this->extraDuration();
 
@@ -32,7 +34,7 @@ class Backup
         if ($extraDuration === 0) {
             return $noteDurations->map(function(Collection $noteDuration) {
                 return sprintf('r%s', $noteDuration->get('type'));
-            })->join('');
+            });
         }
         
         throw new \Exception(sprintf('Invalid duration. [%s] and whole duration [%s]', $this->duration, $this->wholeDuration));
@@ -40,6 +42,9 @@ class Backup
 
     protected function extraDuration() : int
     {
+        if ($this->isForward) {
+            return $this->duration;
+        }
         return $this->wholeDuration - $this->duration;
     }
 

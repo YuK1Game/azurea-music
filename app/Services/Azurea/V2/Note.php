@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Track as AzureaTrack;
 use App\Services\Azurea\V2\Notes\{ Duration, Key, Backup as BackupCode };
+use App\Services\Music\V2\MusicXML\Parts\Measures\Forward;
 
 class Note
 {
@@ -44,7 +45,7 @@ class Note
         return $this->getMusicXMLNote() && $this->getMusicXMLNote()->index();
     }
 
-    public function getCode() : string
+    public function getCode()
     {
         $measureChildren = $this->measureChildren;
 
@@ -56,11 +57,20 @@ class Note
             return sprintf('r%s', $this->getDurationCode());
         }
 
+        if ($measureChildren instanceof Forward) {
+            if($duration = $this->measureChildren->duration()) {
+                $backupCode = new BackupCode($this->getWholeDuration(), $duration, true);
+                return $backupCode->getNoteCodes();
+            }
+
+            return '';
+        }
+
         if ($measureChildren instanceof Backup) {
             
             if($duration = $this->measureChildren->duration()) {
                 $backupCode = new BackupCode($this->getWholeDuration(), $duration);
-                return $backupCode->getNoteCode();
+                return $backupCode->getNoteCodes();
             }
 
             return '';
@@ -72,6 +82,7 @@ class Note
     public function getNoteCode() : string
     {
         $pitch =  $this->isTieEnd() || $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+
         $code = sprintf('%s%s', $pitch, $this->getDurationCode());
 
         if ($this->isChord()) {
@@ -154,8 +165,7 @@ class Note
         if ($duration = $this->measureChildren->duration()) {
             return $this->createDuration($duration);
         }
-        return '[Error]';
-        throw new \Exception('Duration is null.');
+        return '0';
     }
 
     protected function createDuration(int $duration) : string

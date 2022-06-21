@@ -20,16 +20,22 @@ class IndexController extends Controller
     public function post(Request $request)
     {
         $parts = collect();
+        $errors = collect();
 
-        if ($file = collect($request->file)->first()) {
-            if (preg_match('/\.mxl$/', $file->getClientOriginalName()) === 1) {
-                $azureaMusic = new AzureaMusic($file->getPathname());
-                $parts = $azureaMusic->getCodes();
+        try {
+            if ($file = collect($request->file)->first()) {
+                if (preg_match('/\.mxl$/', $file->getClientOriginalName()) === 1) {
+                    $azureaMusic = new AzureaMusic($file->getPathname());
+                    $parts = $azureaMusic->getCodes();
+                }
             }
+        } catch (\Exception $e) {
+            $errors->push($e->getMessage());
         }
 
         return response()->view('index', [
             'parts' => $parts,
+            'errors' => $errors,
         ]); 
     }
 

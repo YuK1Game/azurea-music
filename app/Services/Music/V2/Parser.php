@@ -8,17 +8,17 @@ class Parser
 {
     protected SimpleXMLElement $xml;
 
+    protected ZipArchive $zip;
+
     public function __construct(string $filename)
     {
-        $zip = new ZipArchive;
+        $this->zip = new ZipArchive;
 
-        if ( ! $zip->open($filename)) {
+        if ( ! $this->zip->open($filename)) {
             throw new \Exception('Error');
         }
 
-        $zip->extractTo(storage_path(sprintf('musicxml/%s', basename($filename))));
-
-        $this->xml = new SimpleXMLElement($this->getXmlString($zip));
+        $this->xml = new SimpleXMLElement($this->getXmlString($this->zip));
     }
 
     public function getXml() : SimpleXMLElement

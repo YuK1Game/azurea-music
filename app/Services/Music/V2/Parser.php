@@ -18,12 +18,23 @@ class Parser
             throw new \Exception('Error');
         }
 
+        try {
+            $this->zip->extractTo(storage_path(sprintf('musicxml/%s', basename($filename))));
+        } catch (\Exception $e) {
+            // 
+        }
+
         $this->xml = new SimpleXMLElement($this->getXmlString($this->zip));
     }
 
     public function getXml() : SimpleXMLElement
     {
         return $this->xml;
+    }
+
+    public function getZip() : ZipArchive
+    {
+        return $this->zip;
     }
 
     protected function getXmlString(ZipArchive $zip) : ?string

@@ -68,9 +68,29 @@ class Note
 
         if ($measureChildren instanceof Backup) {
             
-            if($duration = $this->measureChildren->duration()) {
-                $backupCode = new BackupCode($this->getWholeDuration(), $duration);
-                return $backupCode->getNoteCodes();
+            try {
+                if($duration = $this->measureChildren->duration()) {
+                    $backupCode = new BackupCode($this->getWholeDuration(), $duration);
+                    return $backupCode->getNoteCodes();
+                }
+            } catch (\Exception $e) {
+                $errorJson = [
+                    'message' => $e->getMessage(),
+                    'measure_number' => $this->getCurrentMeasureNumber(),
+                    'properties' => [
+                        'type' => $this->getType(),
+                        'duration' => $duration,
+                        'whole_duration' => $this->getWholeDuration(),
+                        'current_division' => (int) $this->currentTrackProperties->get('currentDivision'),
+                        'current_beat_type' => (int) $this->currentTrackProperties->get('currentBeatType'),
+                        'current_beat' => (int) $this->currentTrackProperties->get('currentBeat'),
+                    ],
+                    'note' => [
+                        'class' => get_class($this->measureChildren),
+                        'xml' => $this->measureChildren->getXml(),
+                    ],
+                ];
+                throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
             }
 
             return '';
@@ -245,8 +265,9 @@ class Note
     protected function getWholeDuration() : int
     {
         $currentDivision = (int) $this->currentTrackProperties->get('currentDivision');
+        $currentBeat     = (int) $this->currentTrackProperties->get('currentBeat');
         $currentBeatType = (int) $this->currentTrackProperties->get('currentBeatType');
-        return $currentDivision * $currentBeatType;
+        return $currentDivision * 4 / $currentBeatType * $currentBeat;
     }
 
     protected function isMusicXMLNote() : bool

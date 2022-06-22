@@ -42,7 +42,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Rune_ga_Pikatto_Hikattara.mxl');
+        $filename = resource_path('musicxml/FLOW_-_Days_Eureka_Seven_OP1.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

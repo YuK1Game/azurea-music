@@ -1,15 +1,15 @@
 <?php
 namespace App\Services\Azurea\V2;
 
-use App\Services\Music\V2\MusicXML\Parts\Measure as MusicXMLMeasure;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note as MusicXMLNote;
+use App\Services\Music\V2\MusicXML\Parts\Measures\Direction as MusicXMLDirection;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Backup;
 use App\Services\Music\V2\MusicXML\Parts\Measures\BlankNote;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Track as AzureaTrack;
-use App\Services\Azurea\V2\Notes\{ Duration, Key, Backup as BackupCode };
+use App\Services\Azurea\V2\Notes\{ Duration, Key, Backup as BackupCode, Direction};
 use App\Services\Music\V2\MusicXML\Parts\Measures\Forward;
 
 class Note
@@ -53,6 +53,18 @@ class Note
             return $this->getNoteCode();
         }
 
+        // if ($measureChildren instanceof MusicXMLDirection) {
+        //     if ($dynamicKey = $measureChildren->dynamics()) {
+        //         switch ($dynamicKey) {
+        //             case 'f'  : return 'v14';
+        //             case 'mf' : return 'v13';
+        //             case 'mp' : return 'v11';
+        //             case 'p'  : return 'v10';
+        //         }
+        //     }
+        //     return '';
+        // }
+
         if ($measureChildren instanceof BlankNote) {
             return sprintf('r%s', $this->getDurationCode());
         }
@@ -74,6 +86,7 @@ class Note
                     return $backupCode->getNoteCodes();
                 }
             } catch (\Exception $e) {
+                return '[ERROR]';
                 $errorJson = [
                     'message' => $e->getMessage(),
                     'measure_number' => $this->getCurrentMeasureNumber(),
@@ -133,11 +146,14 @@ class Note
         $key = sprintf('o%d%s', $this->getMusicXMLNote()->unpitchedOctave(), $this->getMusicXMLNote()->unpitchedStep());
 
         switch ($key) {
+            case 'o4c' :                   return '[ERROR]';
             case 'o4d' : /* PedalHiHat  */ return 'o4f';
             case 'o4e' : /* Rest        */ return 'r';
             case 'o4f' : /* BassDrum    */ return 'o4c';
+            case 'o4g' :                   return '[ERROR]';
             case 'o4a' : /* FloorTam    */ return 'o4e';
-            case 'o5c' : /* SnareDrum   */ return 'o4d';
+            case 'o4b' :                   return '[ERROR]';
+            case 'o5c' : /* SnareDrum   */ return 'o4c+';
             case 'o5d' : /* LowTam      */ return 'o4d+';
             case 'o5e' : /* HiTam       */ return 'o4d';
             case 'o5f' : /* RideCymbal  */ return 'o4g+';
@@ -220,6 +236,7 @@ class Note
                     'xml' => $this->measureChildren->getXml(),
                 ],
             ];
+            return '[ERROR]';
             throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
         }
     }

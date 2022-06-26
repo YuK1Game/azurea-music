@@ -58,7 +58,7 @@ class Measure implements MusicXMLChildrenInterface
         $data = collect();
         $noteIndex = 1;
 
-        foreach ($this->xml->xpath('note|backup|forward') as $node) {
+        foreach ($this->xml->xpath('note|backup|forward|direction') as $node) {
             if ($node) {
                 switch ($node->getName()) {
                     case 'note':
@@ -69,6 +69,9 @@ class Measure implements MusicXMLChildrenInterface
                         break;
                     case 'backup':
                         $data->push(new Backup($node, $this));
+                        break;
+                    case 'direction':
+                        $data->push(new Direction($node, $this));
                         break;
                 }
             }

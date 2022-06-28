@@ -53,17 +53,17 @@ class Note
             return $this->getNoteCode();
         }
 
-        // if ($measureChildren instanceof MusicXMLDirection) {
-        //     if ($dynamicKey = $measureChildren->dynamics()) {
-        //         switch ($dynamicKey) {
-        //             case 'f'  : return 'v14';
-        //             case 'mf' : return 'v13';
-        //             case 'mp' : return 'v11';
-        //             case 'p'  : return 'v10';
-        //         }
-        //     }
-        //     return '';
-        // }
+        if ($measureChildren instanceof MusicXMLDirection) {
+            if ($dynamicKey = $measureChildren->dynamics()) {
+                switch ($dynamicKey) {
+                    case 'f'  : return 'v14';
+                    case 'mf' : return 'v13';
+                    case 'mp' : return 'v11';
+                    case 'p'  : return 'v10';
+                }
+            }
+            return '';
+        }
 
         if ($measureChildren instanceof BlankNote) {
             return sprintf('r%s', $this->getDurationCode());

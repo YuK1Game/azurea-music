@@ -91,7 +91,7 @@ class Measure implements MusicXMLChildrenInterface
     public function getDividedTracks()
     {
         return $this->notes()->chunkWhile(function($anyNote) {
-            return $anyNote instanceof Note || $anyNote instanceof Forward;
+            return ! $anyNote instanceof Backup;
         })
         ->map(function(Collection $notes) {
             return MeasureTrack::create($notes, $this);

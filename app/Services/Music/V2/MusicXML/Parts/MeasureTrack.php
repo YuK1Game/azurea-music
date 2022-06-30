@@ -24,4 +24,5 @@ class MeasureTrack extends Collection
         $measureTracks->setMeasure($parentMeasure);
         return $measureTracks;
     }
+
 }

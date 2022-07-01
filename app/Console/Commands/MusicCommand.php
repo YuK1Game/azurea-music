@@ -42,7 +42,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Mozaiku_Kakera__Code_Geass_ED_2.mxl');
+        $filename = resource_path('musicxml/Dragon_Quest_V_Overture.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -54,7 +54,7 @@ class MusicCommand extends Command
 
             $part->get('tracks')->each(function($track, $trackIndex) {
                 $track->get('measures')->each(function($notes, $measureIndex) use($trackIndex) {
-                    // echo sprintf('[%d] ', $measureIndex);
+                    echo sprintf('[%d] ', $measureIndex);
                     echo $notes->flatten()->join('');
                     echo PHP_EOL;
 
@@ -69,7 +69,7 @@ class MusicCommand extends Command
 
         return 0;
     }
-    
+
     protected function validateNotes(Collection $notes)
     {
         try {
@@ -79,26 +79,26 @@ class MusicCommand extends Command
                     $duration = (int) $matches[2];
                     $dot1 = ($matches[3] ?? null) === '.';
                     $dot2 = ($matches[4] ?? null) === '.';
-                    
+
                     $base = 1 * ($dot2 ? 1.75 : ($dot1 ? 1.5 : 1));
-                    
+
                     return $isChord ? 0 : $base / $duration;
                 }
                 if (preg_match('/^r(\d{1,2})(\.)?(\.)?$/', $noteCode, $matches) === 1) {
                     $duration = (int) $matches[1];
                     $dot1 = ($matches[2] ?? null) === '.';
                     $dot2 = ($matches[3] ?? null) === '.';
-                    
+
                     $base = 1 * ($dot2 ? 1.75 : ($dot1 ? 1.5 : 1));
-                    
+
                     return $base / $duration;
                 }
-    
+
                 return 0;
             });
-    
+
             $totalDuration = round($totalDuration, 10);
-            
+
             if (round($totalDuration, 10) !== 1.0) {
                 echo sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join('')) . PHP_EOL;
             }

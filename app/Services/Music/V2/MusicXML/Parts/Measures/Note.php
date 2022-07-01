@@ -1,14 +1,13 @@
 <?php
 namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
-use App\Services\Music\V2\MusicXMLChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
+use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildren;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
 
-use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class Note implements MeasureChildrenInterface
+class Note extends MeasureChildren implements MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -111,6 +110,27 @@ class Note implements MeasureChildrenInterface
     public function isTieEnd() : bool
     {
         return 'stop' === $this->tieType();
+    }
+
+    public function isTuplet() : bool
+    {
+        return isset($this->xml->{'time-modification'});
+    }
+
+    public function tupletActualNotes() : ?int
+    {
+        if ($this->isTuplet()) {
+            return (int) $this->xml->{'time-modification'}->{'actual-notes'};
+        }
+        return null;
+    }
+
+    public function tupletNormalNotes() : ?int
+    {
+        if ($this->isTuplet()) {
+            return (int) $this->xml->{'time-modification'}->{'normal-notes'};
+        }
+        return null;
     }
 
     public function getMeasure() : Measure

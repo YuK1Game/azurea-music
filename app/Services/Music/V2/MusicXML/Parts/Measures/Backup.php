@@ -4,10 +4,11 @@ namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 use App\Services\Music\V2\MusicXMLChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
+use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildren;
 
 use SimpleXMLElement;
 
-class Backup implements MusicXMLChildrenInterface, MeasureChildrenInterface
+class Backup extends MeasureChildren implements MusicXMLChildrenInterface, MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -22,26 +23,6 @@ class Backup implements MusicXMLChildrenInterface, MeasureChildrenInterface
     public function duration() : ?int
     {
         return $this->xml->duration ? (int) $this->xml->duration : null;
-    }
-
-    public function pitchStep() : ?string
-    {
-        return '';
-    }
-
-    public function pitchOctave() : ?int
-    {
-        return '';
-    }
-
-    public function pitchAlter() : ?int
-    {
-        return null;
-    }
-
-    public function hasUnpitched() : bool
-    {
-        return false;
     }
 
     public function getMeasure() : Measure

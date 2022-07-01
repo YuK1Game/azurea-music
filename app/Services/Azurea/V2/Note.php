@@ -81,7 +81,7 @@ class Note
         }
 
         if ($measureChildren instanceof Backup) {
-            
+
             try {
                 if($duration = $this->measureChildren->duration()) {
                     $backupCode = new BackupCode($this->getWholeDuration(), $duration);
@@ -159,11 +159,11 @@ class Note
             case 'o5d' : /* LowTam      */ return 'o4d+';
             case 'o5e' : /* HiTam       */ return 'o4d';
             case 'o5f' : /* RideCymbal  */ return 'o4g+';
-            case 'o5g' : /* HiHatCymbal */ return 'o4f'; 
+            case 'o5g' : /* HiHatCymbal */ return 'o4f';
             case 'o5a' : /* CrashCymbal */ return 'o4f+';
             case 'o5b' : /* Unknown     */ return 'o4f+';
         }
-        
+
         throw new \Exception(sprintf('Drum Note Error. [%s]', $key));
     }
 
@@ -200,6 +200,10 @@ class Note
 
     public function getDurationCode() : string
     {
+        if ($this->measureChildren->isTuplet()) {
+            return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
+        }
+
         if ($duration = $this->measureChildren->duration()) {
             return $this->createDuration($duration);
         }
@@ -238,11 +242,10 @@ class Note
                     'xml' => $this->measureChildren->getXml(),
                 ],
             ];
-            return '[ERROR]';
             throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
         }
     }
-    
+
     public function isChord() : bool
     {
         return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isChord();
@@ -280,7 +283,7 @@ class Note
         }
         return null;
     }
-    
+
     protected function getWholeDuration() : int
     {
         $currentDivision = (int) $this->currentTrackProperties->get('currentDivision');

@@ -4,11 +4,12 @@ namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
+use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildren;
 
 use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
-class BlankNote implements MeasureChildrenInterface
+class BlankNote extends MeasureChildren implements MeasureChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -34,26 +35,6 @@ class BlankNote implements MeasureChildrenInterface
             }
             return 0;
         });
-    }
-
-    public function pitchStep() : ?string
-    {
-        return '';
-    }
-
-    public function pitchOctave() : ?int
-    {
-        return '';
-    }
-
-    public function pitchAlter() : ?int
-    {
-        return null;
-    }
-
-    public function hasUnpitched() : bool
-    {
-        return false;
     }
 
     public function getMeasure() : Measure

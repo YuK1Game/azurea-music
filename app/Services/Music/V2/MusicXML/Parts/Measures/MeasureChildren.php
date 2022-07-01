@@ -1,13 +1,11 @@
 <?php
 namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 
-use App\Services\Music\V2\MusicXMLChildrenInterface;
-use App\Services\Music\V2\MusicXML\Parts\Measure;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 
 use SimpleXMLElement;
 
-abstract class MeasureChildren implements MusicXMLChildrenInterface, MeasureChildrenInterface
+abstract class MeasureChildren implements MeasureChildrenInterface
 {
     public function duration() : ?int
     {
@@ -32,6 +30,21 @@ abstract class MeasureChildren implements MusicXMLChildrenInterface, MeasureChil
     public function hasUnpitched() : bool
     {
         return false;
+    }
+
+    public function isTuplet() : bool
+    {
+        return false;
+    }
+
+    public function tupletActualNotes() : ?int
+    {
+        return null;
+    }
+
+    public function tupletNormalNotes() : ?int
+    {
+        return null;
     }
 
     public function getXml() : ?SimpleXMLElement

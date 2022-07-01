@@ -16,6 +16,12 @@ interface MeasureChildrenInterface
 
     public function hasUnpitched() : bool;
 
+    public function isTuplet() : bool;
+
+    public function tupletActualNotes() : ?int;
+
+    public function tupletNormalNotes() : ?int;
+
     public function getMeasure() : Measure;
 
     public function getXml() : ?SimpleXMLElement;

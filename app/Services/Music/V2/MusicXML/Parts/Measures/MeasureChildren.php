@@ -47,6 +47,46 @@ abstract class MeasureChildren implements MeasureChildrenInterface
         return null;
     }
 
+    public function isRest(): bool
+    {
+        return false;
+    }
+
+    public function isChord() : bool
+    {
+        return false;
+    }
+
+    public function grace() : bool
+    {
+        return false;
+    }
+
+    public function accent() : bool
+    {
+        return false;
+    }
+
+    public function staccato() : bool
+    {
+        return false;
+    }
+
+    public function isTieStart() : bool
+    {
+        return false;
+    }
+
+    public function isTieEnd() : bool
+    {
+        return false;
+    }
+
+    public function dynamics(): ?string
+    {
+        return null;
+    }
+
     public function getXml() : ?SimpleXMLElement
     {
         return $this->xml;

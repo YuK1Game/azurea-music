@@ -42,7 +42,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Dragon_Quest_V_Overture.mxl');
+        $filename = resource_path('musicxml/Rune_ga_Pikatto_Hikattara.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

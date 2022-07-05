@@ -24,7 +24,7 @@ class Note
 
     protected ?Collection $currentTrackProperties = null;
 
-    protected DurationManager $durationManager;
+    protected ?DurationManager $durationManager = null;
 
 
     public function __construct(MeasureChildrenInterface $measureChildren, AzureaTrack $azureaTrack)
@@ -52,60 +52,33 @@ class Note
     {
         $measureChildren = $this->measureChildren;
 
-        $durationManager = $this->createDurationManager();
+        switch (get_class($measureChildren)) {
+            case MusicXMLNote::class:
+                return $this->getNoteCode();
 
-        if ($measureChildren instanceof MusicXMLNote) {
-            return $this->getNoteCode();
-        }
-
-        if ($measureChildren instanceof MusicXMLDirection) {
-            if ($dynamicKey = $measureChildren->dynamics()) {
-                switch ($dynamicKey) {
-                    case 'ff' : return 'v15';
-                    case 'f'  : return 'v14';
-                    case 'mf' : return 'v13';
-                    case 'mp' : return 'v11';
-                    case 'p'  : return 'v10';
-                    case 'pp' : return 'v9';
+            case MusicXMLDirection::class:
+                if ($dynamicKey = $measureChildren->dynamics()) {
+                    switch ($dynamicKey) {
+                        case 'ff' : return 'v15';
+                        case 'f'  : return 'v14';
+                        case 'mf' : return 'v13';
+                        case 'mp' : return 'v11';
+                        case 'p'  : return 'v10';
+                        case 'pp' : return 'v9';
+                    }
                 }
-            }
-            return '';
-        }
+                return '';
 
-        if ($measureChildren instanceof BlankNote) {
-            if ($durationManager->hasDurationCode()) {
-                return sprintf('r%s', $durationManager->getDurationCode());
-            }
-            return '';
-        }
-
-        if ($measureChildren instanceof Forward) {
-            // if($duration = $this->measureChildren->duration()) {
-            //     $backupCode = new BackupCode($this->getWholeDuration(), $duration, true);
-            //     return $backupCode->getNoteCodes();
-            // }
-
-            // return '';
-            if ($durationManager->hasDurationCode()) {
-                return sprintf('r%s', $durationManager->getDurationCode());
-            }
-            return '';
-        }
-
-        if ($measureChildren instanceof Backup) {
-
-            // try {
-            //     if($duration = $this->measureChildren->duration()) {
-            //         $backupCode = new BackupCode($this->getWholeDuration(), $duration);
-            //         return $backupCode->getNoteCodes();
-            //     }
-            // } catch (\Exception $e) {
-            //     $this->throwException($e->getMessage());
-            // }
-            if ($durationManager->hasDurationCode()) {
-                return sprintf('r%s', $durationManager->getDurationCode());
-            }
-            return '';
+            case BlankNote::class:
+            case Forward::class:
+            case Backup::class:
+                if ($durationCodes = $this->durationManager()->getDurationCodes()) {
+                    return $durationCodes->map(function($row) {
+                        $duration = $row['duration'];
+                        $dot = $row['dot'];
+                        return sprintf('r%s', $duration, str_repeat('.', $dot));
+                    })->join(' ');
+                }return '';
         }
 
         throw new \Exception(sprintf('Invalid class [%s]', get_class($measureChildren)));
@@ -113,28 +86,28 @@ class Note
 
     public function getNoteCode() : string
     {
-        $pitch =  $this->isTieEnd() || $this->getMusicXMLNote()->isRest() ? 'r' : $this->getPhonicNotePitch();
+        if ($this->measureChildren->isChord() && $this->measureChildren->isTieEnd()) {
+            return '';
+        }
+
+        if ($this->measureChildren->grace()) {
+            return '';
+        }
+
+        $pitch =  $this->measureChildren->isTieEnd() || $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
 
         $code = sprintf('%s%s', $pitch, $this->getDurationCode());
 
-        if ($this->isChord()) {
+        if ($this->measureChildren->isChord()) {
             $code = sprintf(':%s', $code);
         }
 
-        if ($this->isAccent()) {
+        if ($this->measureChildren->accent()) {
             $code = sprintf('%s*14', $code);
         }
 
-        if ($this->isStaccato()) {
+        if ($this->measureChildren->staccato()) {
             $code = sprintf('%s*13', $code);
-        }
-
-        if ($this->isChord() && $this->isTieEnd()) {
-            return '';
-        }
-
-        if ($this->isGrace()) {
-            return '';
         }
 
         return $code;
@@ -185,82 +158,22 @@ class Note
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
     }
 
-    protected function getBlankCode() : string
-    {
-        return 'r';
-    }
-
-    protected function getBackupCode() : string
-    {
-        return '';
-    }
-
     public function getDurationCode() : string
     {
-        // if ($this->measureChildren->isTuplet()) {
-        //     return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
-        // }
+        $durationCodes = $this->durationManager()->getDurationCodes();
 
-        // if ($duration = $this->measureChildren->duration()) {
-        //     return $this->createDuration($duration);
-        // }
-        // return '0';
-        return $this->createDurationManager()->getDurationCode();
-    }
-
-    protected function createDuration(int $duration) : string
-    {
-        try {
-            $durationManager = new Duration(
-                $duration,
-                (int) $this->currentTrackProperties->get('currentDivision'),
-                (int) $this->currentTrackProperties->get('currentBeat'),
-                (int) $this->currentTrackProperties->get('currentBeatType'),
-            );
-
-            return sprintf('%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
-
-        } catch (\Exception $e) {
-            $this->throwException($e->getMessage());
+        if ($durationCodes->count() === 1) {
+            $durationCode = $durationCodes->first();
+            $duration = $durationCode['duration'];
+            $dot      = $durationCode['dot'];
+            return sprintf('%s%s', $duration, str_repeat('.', $dot));
         }
-    }
 
-    public function isChord() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isChord();
-    }
-
-    public function isAccent() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->accent();
-    }
-
-    public function isStaccato() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->staccato();
-    }
-
-    public function isGrace() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->grace();
-    }
-
-    public function isTieStart() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieStart();
-    }
-
-    public function isTieEnd() : bool
-    {
-        return $this->isMusicXMLNote() && $this->getMusicXMLNote()->isTieEnd();
-    }
-
-    public function getType() : ?string
-    {
-        if ($this->isMusicXMLNote()) {
-            return $this->getMusicXMLNote()->type();
+        if ($this->measureChildren->isTuplet()) {
+            return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
         }
-        return null;
+
+        return sprintf('[ERROR %d]', $this->measureChildren->duration());
     }
 
     public function getWholeDuration() : int
@@ -308,9 +221,12 @@ class Note
         return $this->measureChildren;
     }
 
-    protected function createDurationManager() : DurationManager
+    protected function durationManager() : DurationManager
     {
-        return new DurationManager($this);
+        if ( ! $this->durationManager) {
+            $this->durationManager = new DurationManager($this);
+        }
+        return $this->durationManager;
     }
 
     private function throwException(string $message) : void

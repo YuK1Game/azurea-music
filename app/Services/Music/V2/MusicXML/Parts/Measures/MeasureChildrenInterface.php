@@ -22,6 +22,22 @@ interface MeasureChildrenInterface
 
     public function tupletNormalNotes() : ?int;
 
+    public function isRest() : bool;
+
+    public function isChord() : bool;
+
+    public function grace() : bool;
+
+    public function accent() : bool;
+
+    public function staccato() : bool;
+
+    public function isTieStart() : bool;
+
+    public function isTieEnd() : bool;
+
+    public function dynamics() : ?string;
+
     public function getMeasure() : Measure;
 
     public function getXml() : ?SimpleXMLElement;

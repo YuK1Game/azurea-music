@@ -54,7 +54,7 @@ class Note
 
         switch (get_class($measureChildren)) {
             case MusicXMLNote::class:
-                return $this->getNoteCode();
+                return $this->isTieEnd() ? ' ' : $this->getNoteCode();
 
             case MusicXMLDirection::class:
                 if ($dynamicKey = $measureChildren->dynamics()) {
@@ -94,13 +94,9 @@ class Note
             return '';
         }
 
-        $pitch =  $this->measureChildren->isTieEnd() || $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $pitch =  $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
 
         $code = sprintf('%s%s', $pitch, $this->getDurationCode());
-
-        if ($this->measureChildren->isChord()) {
-            $code = sprintf(':%s', $code);
-        }
 
         if ($this->measureChildren->accent()) {
             $code = sprintf('%s*14', $code);
@@ -108,6 +104,14 @@ class Note
 
         if ($this->measureChildren->staccato()) {
             $code = sprintf('%s*13', $code);
+        }
+
+        if ($tieEndNote = $this->getRelationalTieEnd()) {
+            $code = sprintf('%s&%s', $code, $tieEndNote->getNoteCode());
+        }
+
+        if ($this->measureChildren->isChord()) {
+            $code = sprintf(':%s', $code);
         }
 
         return $code;
@@ -189,6 +193,16 @@ class Note
         return $this->currentTrackProperties->get($key);
     }
 
+    public function isTieStart() : bool
+    {
+        return $this->measureChildren->isTieStart();
+    }
+
+    public function isTieEnd() : bool
+    {
+        return $this->measureChildren->isTieEnd();
+    }
+
     protected function isMusicXMLNote() : bool
     {
         return $this->measureChildren instanceof MusicXMLNote;
@@ -198,6 +212,21 @@ class Note
     {
         if ($this->isMusicXMLNote()) {
             return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
+        }
+        return null;
+    }
+
+    protected function getRelationalTieEnd() : ?Note
+    {
+        if ($this->measureChildren->isTieStart()) {
+            return $this->azureaTrack->measures()->filter(function(Collection $notes, int $measureNumber) {
+                return $measureNumber >= $this->getCurrentMeasureNumber();
+            })
+            ->flatten(1)
+            ->filter(function(Note $note) {
+                return $note->isTieEnd() && $this->defaultPitch() === $note->defaultPitch();
+            })
+            ->first();
         }
         return null;
     }

@@ -12,6 +12,8 @@ use App\Services\Azurea\V2\Track as AzureaTrack;
 use App\Services\Azurea\V2\Notes\{ Duration, Key, Backup as BackupCode, Direction};
 use App\Services\Music\V2\MusicXML\Parts\Measures\Forward;
 
+use App\Services\Azurea\V2\Managers\DurationManager;
+
 class Note
 {
     protected MeasureChildrenInterface $measureChildren;
@@ -22,11 +24,12 @@ class Note
 
     protected ?Collection $currentTrackProperties = null;
 
+    protected DurationManager $durationManager;
+
 
     public function __construct(MeasureChildrenInterface $measureChildren, AzureaTrack $azureaTrack)
     {
         $this->measureChildren = $measureChildren;
-
         $this->azureaTrack = $azureaTrack;
     }
 
@@ -49,6 +52,8 @@ class Note
     {
         $measureChildren = $this->measureChildren;
 
+        $durationManager = $this->createDurationManager();
+
         if ($measureChildren instanceof MusicXMLNote) {
             return $this->getNoteCode();
         }
@@ -68,46 +73,38 @@ class Note
         }
 
         if ($measureChildren instanceof BlankNote) {
-            return sprintf('r%s', $this->getDurationCode());
+            if ($durationManager->hasDurationCode()) {
+                return sprintf('r%s', $durationManager->getDurationCode());
+            }
+            return '';
         }
 
         if ($measureChildren instanceof Forward) {
-            if($duration = $this->measureChildren->duration()) {
-                $backupCode = new BackupCode($this->getWholeDuration(), $duration, true);
-                return $backupCode->getNoteCodes();
-            }
+            // if($duration = $this->measureChildren->duration()) {
+            //     $backupCode = new BackupCode($this->getWholeDuration(), $duration, true);
+            //     return $backupCode->getNoteCodes();
+            // }
 
+            // return '';
+            if ($durationManager->hasDurationCode()) {
+                return sprintf('r%s', $durationManager->getDurationCode());
+            }
             return '';
         }
 
         if ($measureChildren instanceof Backup) {
 
-            try {
-                if($duration = $this->measureChildren->duration()) {
-                    $backupCode = new BackupCode($this->getWholeDuration(), $duration);
-                    return $backupCode->getNoteCodes();
-                }
-            } catch (\Exception $e) {
-                return '[ERROR]';
-                $errorJson = [
-                    'message' => $e->getMessage(),
-                    'measure_number' => $this->getCurrentMeasureNumber(),
-                    'properties' => [
-                        'type' => $this->getType(),
-                        'duration' => $duration,
-                        'whole_duration' => $this->getWholeDuration(),
-                        'current_division' => (int) $this->currentTrackProperties->get('currentDivision'),
-                        'current_beat_type' => (int) $this->currentTrackProperties->get('currentBeatType'),
-                        'current_beat' => (int) $this->currentTrackProperties->get('currentBeat'),
-                    ],
-                    'note' => [
-                        'class' => get_class($this->measureChildren),
-                        'xml' => $this->measureChildren->getXml(),
-                    ],
-                ];
-                throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+            // try {
+            //     if($duration = $this->measureChildren->duration()) {
+            //         $backupCode = new BackupCode($this->getWholeDuration(), $duration);
+            //         return $backupCode->getNoteCodes();
+            //     }
+            // } catch (\Exception $e) {
+            //     $this->throwException($e->getMessage());
+            // }
+            if ($durationManager->hasDurationCode()) {
+                return sprintf('r%s', $durationManager->getDurationCode());
             }
-
             return '';
         }
 
@@ -200,14 +197,15 @@ class Note
 
     public function getDurationCode() : string
     {
-        if ($this->measureChildren->isTuplet()) {
-            return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
-        }
+        // if ($this->measureChildren->isTuplet()) {
+        //     return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
+        // }
 
-        if ($duration = $this->measureChildren->duration()) {
-            return $this->createDuration($duration);
-        }
-        return '0';
+        // if ($duration = $this->measureChildren->duration()) {
+        //     return $this->createDuration($duration);
+        // }
+        // return '0';
+        return $this->createDurationManager()->getDurationCode();
     }
 
     protected function createDuration(int $duration) : string
@@ -223,26 +221,7 @@ class Note
             return sprintf('%s%s', $durationManager->duration(), str_repeat('.', $durationManager->dotCount()));
 
         } catch (\Exception $e) {
-            $errorJson = [
-                'message' => $e->getMessage(),
-                'measure_number' => $this->getCurrentMeasureNumber(),
-                'properties' => [
-                    'type' => $this->getType(),
-                    'duration' => $duration,
-                    'result_duration' => $durationManager->duration(),
-                    'is_natural_duration' => $durationManager->isNaturalDuration(),
-                    'whole_duration' => $this->getWholeDuration(),
-                    'current_division' => (int) $this->currentTrackProperties->get('currentDivision'),
-                    'current_beat_type' => (int) $this->currentTrackProperties->get('currentBeatType'),
-                    'current_beat' => (int) $this->currentTrackProperties->get('currentBeat'),
-                    'durations' => $durationManager->createNoteDurations(),
-                ],
-                'note' => [
-                    'class' => get_class($this->measureChildren),
-                    'xml' => $this->measureChildren->getXml(),
-                ],
-            ];
-            throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+            $this->throwException($e->getMessage());
         }
     }
 
@@ -284,12 +263,17 @@ class Note
         return null;
     }
 
-    protected function getWholeDuration() : int
+    public function getWholeDuration() : int
     {
-        $currentDivision = (int) $this->currentTrackProperties->get('currentDivision');
-        $currentBeat     = (int) $this->currentTrackProperties->get('currentBeat');
-        $currentBeatType = (int) $this->currentTrackProperties->get('currentBeatType');
+        $currentDivision = (int) $this->getCurrentTrackProperty('currentDivision');
+        $currentBeat     = (int) $this->getCurrentTrackProperty('currentBeat');
+        $currentBeatType = (int) $this->getCurrentTrackProperty('currentBeatType');
         return $currentDivision * 4 / $currentBeatType * $currentBeat;
+    }
+
+    public function getCurrentTrackProperty(string $key)
+    {
+        return $this->currentTrackProperties->get($key);
     }
 
     protected function isMusicXMLNote() : bool
@@ -310,13 +294,36 @@ class Note
         if ($this->isMusicXMLNote()) {
             return $this->measureChildren;
         }
-        throw new \Exception('Not a MusicXMLNote Object.');
+        $this->throwException('Not a MusicXMLNote Object.');
     }
 
     public function getCurrentMeasureNumber() : int
     {
         $currentMeasure = $this->measureChildren->getMeasure();
         return $currentMeasure->number();
+    }
+
+    public function getMeasureChildren() : MeasureChildrenInterface
+    {
+        return $this->measureChildren;
+    }
+
+    protected function createDurationManager() : DurationManager
+    {
+        return new DurationManager($this);
+    }
+
+    private function throwException(string $message) : void
+    {
+        $errorJson = [
+            'message' => $message,
+            'measure_number' => $this->getCurrentMeasureNumber(),
+            'note' => [
+                'class' => get_class($this->measureChildren),
+                'xml' => $this->measureChildren->getXml(),
+            ],
+        ];
+        throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
     }
 
 }

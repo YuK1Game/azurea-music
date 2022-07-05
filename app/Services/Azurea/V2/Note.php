@@ -77,7 +77,7 @@ class Note
                         $duration = $row['duration'];
                         $dot = $row['dot'];
                         return sprintf('r%s', $duration, str_repeat('.', $dot));
-                    })->join(' ');
+                    })->join('');
                 }return '';
         }
 

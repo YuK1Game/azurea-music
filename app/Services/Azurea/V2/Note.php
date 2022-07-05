@@ -54,7 +54,7 @@ class Note
 
         switch (get_class($measureChildren)) {
             case MusicXMLNote::class:
-                return $this->isTieEnd() ? ' ' : $this->getNoteCode();
+                return $this->isTieEnd() ? '' : $this->getNoteCode();
 
             case MusicXMLDirection::class:
                 if ($dynamicKey = $measureChildren->dynamics()) {

@@ -16,7 +16,7 @@ class MusicCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'music:run {--test}';
+    protected $signature = 'music:run {--no-debug}';
 
     /**
      * The console command description.
@@ -42,23 +42,30 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Dragon_Quest_V_Overture.mxl');
+        $filename = resource_path('musicxml/Officialdism__Mixed_Nuts___SPY__FAMILY_OP___OP__Piano_Cover__Sheet.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
 
         $parts->each(function($part) {
-            echo str_repeat('-', 100) . PHP_EOL;
+            echo str_repeat('=', 100) . PHP_EOL;
             echo sprintf('Part[%s] : %s' . PHP_EOL, $part->get('id'), $part->get('part_name'));
-            echo str_repeat('-', 100) . PHP_EOL;
+            echo str_repeat('=', 100) . PHP_EOL;
 
             $part->get('tracks')->each(function($track, $trackIndex) {
-                $track->get('measures')->each(function($notes, $measureIndex) use($trackIndex) {
-                    echo sprintf('[%d] ', $measureIndex);
+
+                echo str_repeat('-', 100) . PHP_EOL;
+                echo sprintf('Track[%d]' . PHP_EOL, $trackIndex);
+                echo str_repeat('-', 100) . PHP_EOL;
+
+                $track->get('measures')->each(function($notes, $measureIndex) {
+                    ! $this->option('no-debug') && printf('【%d】 ', $measureIndex);
+
                     echo $notes->flatten()->join('');
                     echo PHP_EOL;
 
-                    $this->validateNotes($notes->flatten());
+                    ! $this->option('no-debug') && $this->validateNotes($notes->flatten());
+
                 });
                 echo PHP_EOL;
                 echo PHP_EOL;
@@ -72,13 +79,24 @@ class MusicCommand extends Command
 
     protected function validateNotes(Collection $notes)
     {
-        $notes->transform(function($note) {
-            $note = preg_replace('/\*\d{1,2}/', '', $note);
-            $note = preg_replace('/\:.*?$/', '', $note);
-            $note = preg_replace('/\&.*?$/', '', $note);
-            $note = preg_replace('/^o\d{1}[a-gr](.*?)$/', '$1', $note);
-            return $note;
-        });
+        $notes = $notes
+            ->map(function($note) {
+                $note = preg_replace('/\:.*?$/', '', $note);
+                $_notes = preg_split('/\&/', $note);
+                return collect($_notes);
+            })
+            ->map(function($_notes) {
+                return $_notes->map(function($note) {
+                    $note = preg_replace('/\*\d{1,2}/', '', $note);
+                    $note = preg_replace('/^o\d{1}[a-g]\+?(.*?)$/', '$1', $note);
+                    $note = preg_replace('/^r(.*?)$/', '$1', $note);
+                    return $note;
+                });
+            })
+            ->flatten(1)
+            ->filter(function($note) {
+                return $note !== '';
+            });
 
         try {
             $totalDuration = (float) $notes->sum(function(string $duration) {
@@ -98,7 +116,8 @@ class MusicCommand extends Command
             $totalDuration = round($totalDuration, 10);
 
             if (round($totalDuration, 10) !== 1.0) {
-                // echo sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join('')) . PHP_EOL;
+                echo sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join('')) . PHP_EOL;
+                // dump($notes);
             }
             return true;
 

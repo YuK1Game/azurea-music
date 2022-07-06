@@ -7,6 +7,11 @@ use SimpleXMLElement;
 
 abstract class MeasureChildren implements MeasureChildrenInterface
 {
+    public function index() : ?int
+    {
+        return null;
+    }
+
     public function duration() : ?int
     {
         return null;

@@ -4,7 +4,7 @@ namespace App\Services\Music\V2\MusicXML\Parts\Measures;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildren;
 use App\Services\Music\V2\MusicXML\Parts\Measure;
-
+use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
 class Note extends MeasureChildren implements MeasureChildrenInterface
@@ -97,19 +97,27 @@ class Note extends MeasureChildren implements MeasureChildrenInterface
         return $this->xml->type ?? null;
     }
 
-    public function tieType() : ?string
+    public function tieTypes() : Collection
     {
-        return $this->xml->notations->tied ? $this->xml->notations->tied['type'] : null;
+        $types = collect([]);
+
+        if (isset($this->xml->tie)) {
+            foreach ($this->xml->tie as $tie) {
+                $types->push($tie['type']);
+            }
+        }
+
+        return $types;
     }
 
     public function isTieStart() : bool
     {
-        return 'start' === $this->tieType();
+        return $this->tieTypes()->contains('start');
     }
 
     public function isTieEnd() : bool
     {
-        return 'stop' === $this->tieType();
+        return $this->tieTypes()->contains('stop');
     }
 
     public function isTuplet() : bool

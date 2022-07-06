@@ -6,6 +6,8 @@ use SimpleXMLElement;
 
 interface MeasureChildrenInterface
 {
+    public function index() : ?int;
+
     public function duration() : ?int;
 
     public function pitchStep() : ?string;

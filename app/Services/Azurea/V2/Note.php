@@ -109,21 +109,13 @@ class Note
 
             } else {
 
-                $data = $this->azureaTrack->measures()->filter(function(Collection $notes, int $measureNumber) {
-                    return $measureNumber >= $this->getCurrentMeasureNumber();
-                })
-                ->flatten(1)
-                ->filter(function(Note $note) {
-                    return $note->isTieEnd()
-                        && $this->defaultPitch() === $note->defaultPitch();
-                });
+                // dd([
+                //     'index' => $this->index(),
+                //     'measure_index' => $this->getCurrentMeasureNumber(),
+                //     'pitch' => $this->defaultPitch(),
+                // ]);
 
-                dd([
-                    'index' => $this->index(),
-                    'measure_index' => $this->getCurrentMeasureNumber(),
-                    'pitch' => $this->defaultPitch(),
-                    'data' => $data,
-                ]);
+                $code = sprintf('%s&%s', $code, '[Not found tie end]');
             }
         }
 

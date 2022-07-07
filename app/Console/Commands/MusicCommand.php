@@ -42,7 +42,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Officialdism__Mixed_Nuts___SPY__FAMILY_OP___OP__Piano_Cover__Sheet.mxl');
+        $filename = resource_path('musicxml/Pride_Kakumei.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

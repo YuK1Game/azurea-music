@@ -77,6 +77,11 @@ abstract class MeasureChildren implements MeasureChildrenInterface
         return false;
     }
 
+    public function arpeggiate(): bool
+    {
+        return false;
+    }
+
     public function isTieStart() : bool
     {
         return false;

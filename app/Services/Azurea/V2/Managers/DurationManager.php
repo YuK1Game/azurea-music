@@ -35,7 +35,7 @@ class DurationManager
         if ($this->isBackup()) {
             return $this->getWholeDuration() - $this->measureChildren->duration();
         }
-        return $this->measureChildren->duration();
+        return $this->azureaNote->getCustomDuration() ?? $this->measureChildren->duration();
     }
 
     public function isNote() : bool

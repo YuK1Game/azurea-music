@@ -87,6 +87,11 @@ class Note extends MeasureChildren implements MeasureChildrenInterface
         return isset($this->xml->notations->articulations->staccato);
     }
 
+    public function arpeggiate() : bool
+    {
+        return isset($this->xml->notations->arpeggiate);
+    }
+
     public function grace() : bool
     {
         return isset($this->xml->grace);

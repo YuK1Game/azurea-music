@@ -34,6 +34,8 @@ interface MeasureChildrenInterface
 
     public function staccato() : bool;
 
+    public function arpeggiate() : bool;
+
     public function isTieStart() : bool;
 
     public function isTieEnd() : bool;

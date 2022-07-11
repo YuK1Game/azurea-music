@@ -26,6 +26,8 @@ class Note
 
     protected ?DurationManager $durationManager = null;
 
+    protected ?int $customDuration = null;
+
 
     public function __construct(MeasureChildrenInterface $measureChildren, AzureaTrack $azureaTrack)
     {
@@ -43,14 +45,19 @@ class Note
         $this->currentTrackProperties = $currentTrackProperties;
     }
 
+    public function setCustomDuration(int $customDuration) : void
+    {
+        $this->customDuration = $customDuration;
+    }
+
+    public function getCustomDuration() : ?int
+    {
+        return $this->customDuration;
+    }
+
     public function index() : ?int
     {
         return $this->measureChildren->index();
-    }
-
-    public function isChord() : bool
-    {
-        return $this->measureChildren->isChord();
     }
 
     public function getCode()
@@ -125,7 +132,9 @@ class Note
         }
 
 
-        if ($this->measureChildren->isChord() && ! $this->measureChildren->isTieEnd()) {
+        if ($this->isChord() &&
+            // ! $this->arpeggiate() &&
+            ! $this->isTieEnd()) {
             $code = sprintf(':%s', $code);
         }
 
@@ -208,16 +217,6 @@ class Note
         return $this->currentTrackProperties->get($key);
     }
 
-    public function isTieStart() : bool
-    {
-        return $this->measureChildren->isTieStart();
-    }
-
-    public function isTieEnd() : bool
-    {
-        return $this->measureChildren->isTieEnd();
-    }
-
     protected function isMusicXMLNote() : bool
     {
         return $this->measureChildren instanceof MusicXMLNote;
@@ -286,6 +285,17 @@ class Note
             ],
         ];
         throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this, $name)) {
+            return $this->{ $name }(...$arguments);
+        }
+        if (method_exists($this->measureChildren, $name)) {
+            return $this->measureChildren->{ $name }(...$arguments);
+        }
+        $this->throwException(sprintf('Method "%s" is undefined.', $name));
     }
 
 }

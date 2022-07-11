@@ -187,7 +187,7 @@ class Note
             return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
         }
 
-        return sprintf('[ERROR %d]', $this->measureChildren->duration());
+        return sprintf('[ERROR %d/%d]', $this->measureChildren->duration(), $this->getWholeDuration());
     }
 
     public function getWholeDuration() : int

@@ -48,6 +48,11 @@ class Note
         return $this->measureChildren->index();
     }
 
+    public function isChord() : bool
+    {
+        return $this->measureChildren->isChord();
+    }
+
     public function getCode()
     {
         $measureChildren = $this->measureChildren;
@@ -232,7 +237,7 @@ class Note
             return $this->azureaTrack->measures()->filter(function(Collection $notes, int $measureNumber) {
                 return $measureNumber >= $this->getCurrentMeasureNumber();
             })
-            ->flatten(1)
+            ->flatten()
             ->filter(function(Note $note) {
                 return $note->isTieEnd()
                     && ($this->index() < $note->index() || $this->getCurrentMeasureNumber() < $note->getCurrentMeasureNumber())

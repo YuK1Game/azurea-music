@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 
 use App\Services\Azurea\V2\Track as AzureaTrack;
 use App\Services\Azurea\V2\Note as AzureaNote;
+use App\Services\Azurea\V2\NoteGroup as AzureaNoteGroup;
 use App\Services\Music\V2\MusicXML\Part as MusicXMLPart;
 use App\Services\Music\V2\MusicXML\Parts\Track as MusicXMLTrack;
 
@@ -27,7 +28,7 @@ class Music
         $measure = $measures->filter(function(Measure $measure) use($measureId) {
             return $measure->number() === $measureId;
         })->first();
-        
+
         if ($direction = $measure->direction()) {
             return $direction->tempo();
         }
@@ -40,19 +41,19 @@ class Music
         return $this->musicXml->parts()->map(function(MusicXMLPart $part) {
 
             $tracks = $part->tracks()->map(function(MusicXMLTrack $track, int $trackIndex) {
-                
+
                 $azureaTrack = new AzureaTrack($track);
-                
+
                 $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) use($trackIndex) {
-                    
+
                     $noteCode = collect();
 
                     if ($tempo = $this->getTempoByMeasureId($measureId)) {
                         $noteCode->push(sprintf('t%d', $tempo));
                     }
 
-                    $notes->each(function(AzureaNote $azureaNote) use($noteCode) {
-                        $noteCode->push($azureaNote->getCode());
+                    $notes->each(function(AzureaNoteGroup $azureaNoteGroup) use($noteCode) {
+                        $noteCode->push($azureaNoteGroup->getCode());
                     });
 
                     return [ $measureId => $noteCode ];

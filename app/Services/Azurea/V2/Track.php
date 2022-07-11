@@ -8,6 +8,8 @@ use App\Services\Music\V2\MusicXML\Parts\MeasureTrack as MusicXMLMeasureTrack;
 use App\Services\Music\V2\MusicXML\Parts\Measures\Note as MusicXMLNote;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface as MeasureChildren;
 use App\Services\Azurea\V2\Note as AzureaNote;
+use App\Services\Azurea\V2\NoteGroup as AzureaNoteGroup;
+
 
 use Illuminate\Support\Collection;
 
@@ -36,24 +38,32 @@ class Track
         $prevNote = null;
 
         $this->musicXmlTrack->measureTracks()->each(function(MusicXMLMeasureTrack $measureTrack) use(&$notes, &$prevNote) {
-                        
+
             $measureTrack->each(function(MeasureChildren $note) use(&$notes, &$prevNote) {
                 $currentMeasure = $note->getMeasure();
 
                 $this->modifyMeasureAttribute($currentMeasure);
                 $this->modifyMeasureDirection($currentMeasure);
-    
+
                 $azureaNote = new AzureaNote($note, $this);
                 $azureaNote->setPrevAzureaNote($prevNote);
                 $azureaNote->setCurrentTrackProperties($this->getCurrentTrackProperties());
-    
+
                 $notes->push($azureaNote);
                 $prevNote = $azureaNote;
             });
+
         });
 
-        return $notes->groupBy(function(AzureaNote $azureaNote) {
-            return $azureaNote->getCurrentMeasureNumber();
+        $notes = $notes->chunkWhile(function(AzureaNote $azureaNote) {
+            return $azureaNote->isChord();
+        })
+        ->map(function(Collection $notes) {
+            return new AzureaNoteGroup($notes);
+        });
+
+        return $notes->groupBy(function(AzureaNoteGroup $azureaNoteGroup) {
+            return $azureaNoteGroup->getCurrentMeasureNumber();
         });
     }
 
@@ -66,7 +76,7 @@ class Track
             'currentKey'      => $this->currentKey,
         ]);
     }
-    
+
     protected function modifyMeasureAttribute(Measure $measure) : ?Collection
     {
         if ($attribute = $measure->attribute()) {

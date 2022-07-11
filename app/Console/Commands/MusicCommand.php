@@ -25,6 +25,8 @@ class MusicCommand extends Command
      */
     protected $description = 'Command description';
 
+    protected $text = '';
+
     /**
      * Create a new command instance.
      *
@@ -42,42 +44,52 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Pride_Kakumei.mxl');
+        $filename = resource_path('musicxml/A_Town_with_an_Ocean_View.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
 
         $parts->each(function($part) {
-            echo str_repeat('=', 100) . PHP_EOL;
-            echo sprintf('Part[%s] : %s' . PHP_EOL, $part->get('id'), $part->get('part_name'));
-            echo str_repeat('=', 100) . PHP_EOL;
+            $this->addText(str_repeat('=', 100));
+            $this->addText(sprintf('Part[%s] : %s', $part->get('id'), $part->get('part_name')));
+            $this->addText(str_repeat('=', 100));
 
             $part->get('tracks')->each(function($track, $trackIndex) {
 
-                echo str_repeat('-', 100) . PHP_EOL;
-                echo sprintf('Track[%d]' . PHP_EOL, $trackIndex);
-                echo str_repeat('-', 100) . PHP_EOL;
+                $this->addText(str_repeat('-', 100));
+                $this->addText(sprintf('Track[%d]', $trackIndex));
+                $this->addText(str_repeat('-', 100));
 
                 $track->get('measures')->each(function($notes, $measureIndex) {
-                    ! $this->option('no-debug') && printf('【%d】 ', $measureIndex);
+                    ! $this->option('no-debug') && $this->addText(sprintf('【%d】 ', $measureIndex), false);
 
-                    echo $notes->flatten()->join('');
-                    echo PHP_EOL;
+                    $this->addText($notes->flatten()->join(''));
 
-                    ! $this->option('no-debug') && $this->validateNotes($notes->flatten());
+                    ! $this->option('no-debug') && $this->addText($this->validateNotes($notes->flatten()));
 
                 });
-                echo PHP_EOL;
-                echo PHP_EOL;
+                $this->addText('');
+                $this->addText('');
             });
-            echo PHP_EOL;
-            echo PHP_EOL;
+            $this->addText('');
+            $this->addText('');
         });
+
+        echo $this->text;
+        die;
+        $storagePath = app_path('../music.txt');
 
         return 0;
     }
 
-    protected function validateNotes(Collection $notes)
+    protected function addText(?string $text = null, ?bool $useBr = true) : void
+    {
+        if ( ! is_null($text)) {
+            $this->text .= sprintf('%s%s', $text, $useBr ? PHP_EOL : '');
+        }
+    }
+
+    protected function validateNotes(Collection $notes) : ?string
     {
         $notes = $notes
             ->map(function($note) {
@@ -116,14 +128,15 @@ class MusicCommand extends Command
             $totalDuration = round($totalDuration, 10);
 
             if (round($totalDuration, 10) !== 1.0) {
-                echo sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join('')) . PHP_EOL;
+                return sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join(''));
                 // dump($notes);
             }
-            return true;
 
         } catch (\Exception $e) {
-            echo $e->getMessage() . PHP_EOL;
+            return $e->getMessage();
         }
+
+        return null;
 
     }
 

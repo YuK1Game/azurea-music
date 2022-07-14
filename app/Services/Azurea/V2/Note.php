@@ -26,7 +26,7 @@ class Note
 
     protected ?DurationManager $durationManager = null;
 
-    protected ?int $customDuration = null;
+    protected ?float $customDuration = null;
 
 
     public function __construct(MeasureChildrenInterface $measureChildren, AzureaTrack $azureaTrack)
@@ -45,12 +45,12 @@ class Note
         $this->currentTrackProperties = $currentTrackProperties;
     }
 
-    public function setCustomDuration(int $customDuration) : void
+    public function setCustomDuration(float $customDuration) : void
     {
         $this->customDuration = $customDuration;
     }
 
-    public function getCustomDuration() : ?int
+    public function getCustomDuration() : ?float
     {
         return $this->customDuration;
     }
@@ -71,12 +71,16 @@ class Note
             case MusicXMLDirection::class:
                 if ($dynamicKey = $measureChildren->dynamics()) {
                     switch ($dynamicKey) {
-                        case 'ff' : return 'v15';
-                        case 'f'  : return 'v14';
-                        case 'mf' : return 'v13';
-                        case 'mp' : return 'v11';
-                        case 'p'  : return 'v10';
-                        case 'pp' : return 'v9';
+                        case 'ffff' :
+                        case 'fff'  :
+                        case 'ff'   : return 'v15';
+                        case 'f'    : return 'v14';
+                        case 'mf'   : return 'v13';
+                        case 'mp'   : return 'v11';
+                        case 'p'    : return 'v10';
+                        case 'pp'   : return 'v9';
+                        case 'ppp'  : return 'v8';
+                        case 'pppp' : return 'v7';
                     }
                 }
                 return '';
@@ -104,39 +108,62 @@ class Note
 
         $pitch =  $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
 
-        $code = sprintf('%s%s', $pitch, $this->getDurationCode());
+        $durationCodes = $this->getDurationCodes();
 
-        if ($this->measureChildren->accent()) {
-            $code = sprintf('%s*14', $code);
-        }
+        return $durationCodes->map(function($durationCode) use($pitch) {
+            $code = sprintf('%s%s', $pitch, $durationCode);
 
-        if ($this->measureChildren->staccato()) {
-            $code = sprintf('%s*13', $code);
-        }
-
-        if ($this->isTieStart()) {
-            if ($tieEndNote = $this->getRelationalTieEnd()) {
-                $tieEndNoteCode = $tieEndNote->getNoteCode();
-                $code = sprintf('%s&%s', $code, $tieEndNoteCode);
-
-            } else {
-
-                // dd([
-                //     'index' => $this->index(),
-                //     'measure_index' => $this->getCurrentMeasureNumber(),
-                //     'pitch' => $this->defaultPitch(),
-                // ]);
-
-                $code = sprintf('%s&%s', $code, '[Not found tie end]');
+            if ($this->measureChildren->accent()) {
+                $code = sprintf('%s*14', $code);
             }
-        }
+
+            if ($this->measureChildren->staccato()) {
+                $code = sprintf('%s*13', $code);
+            }
+
+            if ($this->isTieStart()) {
+                if ($tieEndNote = $this->getRelationalTieEnd()) {
+                    $tieEndNoteCode = $tieEndNote->getNoteCode();
+                    $code = sprintf('%s&%s', $code, $tieEndNoteCode);
+                } else {
+                    $code = sprintf('%s&%s', $code, '[Not found tie end]');
+                }
+            }
+
+            if ($this->isChord() &&
+                ! $this->arpeggiate() &&
+                ! $this->isTieEnd()) {
+                $code = sprintf(':%s', $code);
+            }
+
+            return $code;
+        })->join('&');
+
+        // $code = sprintf('%s%s', $pitch, $this->getDurationCode());
+
+        // if ($this->measureChildren->accent()) {
+        //     $code = sprintf('%s*14', $code);
+        // }
+
+        // if ($this->measureChildren->staccato()) {
+        //     $code = sprintf('%s*13', $code);
+        // }
+
+        // if ($this->isTieStart()) {
+        //     if ($tieEndNote = $this->getRelationalTieEnd()) {
+        //         $tieEndNoteCode = $tieEndNote->getNoteCode();
+        //         $code = sprintf('%s&%s', $code, $tieEndNoteCode);
+        //     } else {
+        //         $code = sprintf('%s&%s', $code, '[Not found tie end]');
+        //     }
+        // }
 
 
-        if ($this->isChord() &&
-            // ! $this->arpeggiate() &&
-            ! $this->isTieEnd()) {
-            $code = sprintf(':%s', $code);
-        }
+        // if ($this->isChord() &&
+        //     ! $this->arpeggiate() &&
+        //     ! $this->isTieEnd()) {
+        //     $code = sprintf(':%s', $code);
+        // }
 
         return $code;
     }
@@ -186,22 +213,30 @@ class Note
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
     }
 
-    public function getDurationCode() : string
+    public function getDurationCodes() : Collection
     {
         $durationCodes = $this->durationManager()->getDurationCodes();
 
-        if ($durationCodes->count() === 1) {
-            $durationCode = $durationCodes->first();
+        return $durationCodes->map(function($durationCode) {
             $duration = $durationCode['duration'];
-            $dot      = $durationCode['dot'];
-            return sprintf('%s%s', $duration, str_repeat('.', $dot));
-        }
+            $dot = str_repeat('.', $durationCode['dot']);
+            return sprintf('%s%s', $duration, $dot);
+        });
 
-        if ($this->measureChildren->isTuplet()) {
-            return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
-        }
+        // if ($durationCodes->count() === 1) {
+        //     $durationCode = $durationCodes->first();
+        //     $duration = $durationCode['duration'];
+        //     $dot = str_repeat('.', $durationCode['dot']);
+        //     return sprintf('%s%s', $duration, $dot);
+        // }
 
-        return sprintf('[ERROR %d/%d]', $this->measureChildren->duration(), $this->getWholeDuration());
+        // if ($this->measureChildren->isTuplet()) {
+        //     return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
+        // }
+
+        // dd($durationCodes);
+
+        // return sprintf('[ERROR %s/%s]', $this->getCustomDuration() ?? $this->duration(), $this->getWholeDuration());
     }
 
     public function getWholeDuration() : int

@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
 use SimpleXMLElement;
 
 
-class Measure implements MusicXMLChildrenInterface 
+class Measure implements MusicXMLChildrenInterface
 {
     protected SimpleXMLElement $xml;
 
@@ -76,7 +76,7 @@ class Measure implements MusicXMLChildrenInterface
                 }
             }
         }
-        
+
         return $data;
     }
 
@@ -90,12 +90,14 @@ class Measure implements MusicXMLChildrenInterface
 
     public function getDividedTracks()
     {
-        return $this->notes()->chunkWhile(function($anyNote) {
+        $dividedTracks = $this->notes()->chunkWhile(function($anyNote) {
             return ! $anyNote instanceof Backup;
         })
         ->map(function(Collection $notes) {
             return MeasureTrack::create($notes, $this);
         });
+
+        return $dividedTracks;
     }
 
     public function getPart() : Part

@@ -44,7 +44,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/A_Town_with_an_Ocean_View.mxl');
+        $filename = resource_path('musicxml/Minecraft_Title.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -75,9 +75,7 @@ class MusicCommand extends Command
             $this->addText('');
         });
 
-        echo $this->text;
-        die;
-        $storagePath = app_path('../music.txt');
+        File::put(base_path('music.txt'), $this->text);
 
         return 0;
     }

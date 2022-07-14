@@ -44,7 +44,7 @@ class Music
 
                 $azureaTrack = new AzureaTrack($track);
 
-                $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) use($trackIndex) {
+                $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) {
 
                     $noteCode = collect();
 

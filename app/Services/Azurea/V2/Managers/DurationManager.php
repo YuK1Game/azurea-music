@@ -30,7 +30,7 @@ class DurationManager
         return $this->azureaNote->getWholeDuration();
     }
 
-    public function getDuration() : ?int
+    public function getDuration() : ?float
     {
         if ($this->isBackup()) {
             return $this->getWholeDuration() - $this->measureChildren->duration();
@@ -72,7 +72,7 @@ class DurationManager
 
     }
 
-    protected function getBaseDurationAndDotCount() : Collection
+    public function getBaseDurationAndDotCount() : Collection
     {
         $baseDuration = $this->getDuration();
         $durations = collect();
@@ -101,11 +101,13 @@ class DurationManager
     public function createDurationTable() : Collection
     {
         $list = collect();
-        $value = $this->getWholeDuration();
+        $whole = $this->getWholeDuration() > 64 ? $this->getWholeDuration() : 64;
 
-        for ($value = 1 ; $value <= $this->getWholeDuration() ; $value++) {
-            $duration = $this->getWholeDuration() / $value;
-            $this->isIntegerValue($duration) && $list->push($duration);
+        for ($value = 1 ; $value <= $whole ; $value++) {
+            if ($this->isDivisible($this->getWholeDuration(), $value)) {
+                $duration = $this->getWholeDuration() / $value;
+                $list->push($duration);
+            }
         }
 
         $list = $list->map(function($value) {
@@ -119,10 +121,12 @@ class DurationManager
         })
         ->flatten(1)
         ->filter(function(Collection $durationTableRow) {
-            return $this->isIntegerValue($durationTableRow->get('value'))
-                && $durationTableRow->get('value') <= $this->getWholeDuration();
+            // return $this->isIntegerValue($durationTableRow->get('value'))
+            //     && $durationTableRow->get('value') <= $this->getWholeDuration();
+            return $durationTableRow->get('value') <= $this->getWholeDuration();
         })
-        ->sortByDesc('value');
+        ->sortByDesc('value')
+        ->values();
 
         return $list;
     }
@@ -159,6 +163,11 @@ class DurationManager
     protected function isIntegerValue(float $value) : bool
     {
         return $value === floor($value);
+    }
+
+    protected function isDivisible(float $from, float $value) : bool
+    {
+        return ($from * 1000000000) % $value === 0;
     }
 
 }

@@ -18,6 +18,11 @@ class NoteGroup extends Collection
     public function getCode() : string
     {
         $code = $this->isArpeggiate() ? $this->getArpeggiateCodes() : $this->getCodes();
+
+        // if ($this->isArpeggiate()) {
+        //     $code->dd();
+        // }
+
         return $code->join('');
     }
 
@@ -30,13 +35,19 @@ class NoteGroup extends Collection
 
     public function getArpeggiateCodes() : Collection
     {
-        $mainDuration = $this->duration() / 2;
-        $childDuration = ($this->duration() - $mainDuration) / ($this->noteCount() - 1);
+        $wholeDuration = $this->firstNote()->getWholeDuration();
+        $baseDuration  = $this->firstNote()->duration();
+        $subDuration   = $wholeDuration / 32;
+        $mainDuration  = $baseDuration - ($subDuration * ($this->noteCount() - 1));
 
-        return $this->values()->map(function(AzureaNote $azureaNote, int $index) use($mainDuration, $childDuration) {
-            $azureaNote->setCustomDuration($index === 0 ? $mainDuration : $childDuration);
+        $codes = $this->reverse()->values()->map(function(AzureaNote $azureaNote, int $index) use($mainDuration, $subDuration) {
+            $azureaNote->setCustomDuration($index === 0 ? $mainDuration : $subDuration);
             return $azureaNote->getCode();
-        });
+        })
+        ->reverse()
+        ->values();
+
+        return $codes;
     }
 
     public function noteCount() : int
@@ -51,7 +62,6 @@ class NoteGroup extends Collection
 
     public function isArpeggiate() : bool
     {
-        return false;
         return $this->firstNote()->arpeggiate() && $this->noteCount() > 1;
     }
 

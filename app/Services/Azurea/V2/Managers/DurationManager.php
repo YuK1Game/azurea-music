@@ -38,6 +38,11 @@ class DurationManager
         return $this->azureaNote->getCustomDuration() ?? $this->measureChildren->duration();
     }
 
+    public function isCustomDuration() : bool
+    {
+        return !! $this->azureaNote->getCustomDuration();
+    }
+
     public function isNote() : bool
     {
         return $this->measureChildren instanceof MusicXMLNote;
@@ -64,10 +69,10 @@ class DurationManager
             return $this->getBaseDurationAndDotCount();
 
         } catch (Exception $e) {
-            $this->throwDurationManagerException($e);
+            $this->throwDurationManagerException($e->getMessage());
 
         } catch (DivisionByZeroError $e) {
-            $this->throwDurationManagerException($e);
+            $this->throwDurationManagerException($e->getMessage());
         }
 
     }
@@ -105,7 +110,7 @@ class DurationManager
 
         for ($value = 1 ; $value <= $whole ; $value++) {
             if ($this->isDivisible($this->getWholeDuration(), $value)) {
-                $duration = $this->getWholeDuration() / $value;
+                $duration = round($this->getWholeDuration() / $value, 10);
                 $list->push($duration);
             }
         }
@@ -115,7 +120,7 @@ class DurationManager
                 return collect([
                     'dot'      => $dotTableRow->get('dot'),
                     'duration' => $this->getWholeDuration() / $value,
-                    'value'    => $value * $dotTableRow->get('ratio'),
+                    'value'    => round($value * $dotTableRow->get('ratio'), 10),
                 ]);
             });
         })
@@ -144,11 +149,11 @@ class DurationManager
     protected function throwDurationManagerException(string $message) : void
     {
         $errorJson = [
-            'message' => $message,
             'measure_number' => $this->azureaNote->getCurrentMeasureNumber(),
             'durations' => [
                 'whole_duration' => $this->getWholeDuration(),
                 'duration' => $this->getDuration(),
+                'is_custom_duration' => $this->isCustomDuration(),
                 'duration_table' => $this->createDurationTable(),
             ],
             'note' => [
@@ -157,7 +162,7 @@ class DurationManager
             ],
         ];
 
-        throw new Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+        throw new Exception(sprintf('%s%s%s', $message, PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
     }
 
     protected function isIntegerValue(float $value) : bool

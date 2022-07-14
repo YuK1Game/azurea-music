@@ -165,7 +165,7 @@ class Note
         //     $code = sprintf(':%s', $code);
         // }
 
-        return $code;
+        // return $code;
     }
 
     public function getDrumNoteCode() : string

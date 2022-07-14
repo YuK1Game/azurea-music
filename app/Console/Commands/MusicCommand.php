@@ -16,7 +16,7 @@ class MusicCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'music:run {--no-debug}';
+    protected $signature = 'music:run {--no-debug} {--no-warning}';
 
     /**
      * The console command description.
@@ -65,7 +65,7 @@ class MusicCommand extends Command
 
                     $this->addText($notes->flatten()->join(''));
 
-                    ! $this->option('no-debug') && $this->addText($this->validateNotes($notes->flatten()));
+                    ! $this->option('no-debug') && ! $this->option('no-warning') && $this->addText($this->validateNotes($notes->flatten()));
 
                 });
                 $this->addText('');

@@ -44,7 +44,7 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Blue_Bird_Easy_Piano_Naruto_OP3_Free_download.mxl');
+        $filename = resource_path('musicxml/Radio_Taiso.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

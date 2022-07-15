@@ -17,13 +17,17 @@ class NoteGroup extends Collection
 
     public function getCode() : string
     {
-        $code = $this->isArpeggiate() ? $this->getArpeggiateCodes() : $this->getCodes();
+        $defaultCodes = $this->getCodes();
 
-        // if ($this->isArpeggiate()) {
-        //     $code->dd();
-        // }
+        try {
+            $arpeggiateCodes = $this->getArpeggiateCodes();
 
-        return $code->join('');
+        } catch (\Exception $e) {
+            logger()->warning($e->getMessage());
+            return $defaultCodes->join('');
+        }
+
+        return $this->isArpeggiate() ? $arpeggiateCodes->join('') : $defaultCodes->join('');
     }
 
     public function getCodes() : Collection

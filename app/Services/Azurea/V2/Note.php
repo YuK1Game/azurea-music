@@ -222,21 +222,6 @@ class Note
             $dot = str_repeat('.', $durationCode['dot']);
             return sprintf('%s%s', $duration, $dot);
         });
-
-        // if ($durationCodes->count() === 1) {
-        //     $durationCode = $durationCodes->first();
-        //     $duration = $durationCode['duration'];
-        //     $dot = str_repeat('.', $durationCode['dot']);
-        //     return sprintf('%s%s', $duration, $dot);
-        // }
-
-        // if ($this->measureChildren->isTuplet()) {
-        //     return $this->measureChildren->tupletActualNotes() * $this->measureChildren->tupletNormalNotes();
-        // }
-
-        // dd($durationCodes);
-
-        // return sprintf('[ERROR %s/%s]', $this->getCustomDuration() ?? $this->duration(), $this->getWholeDuration());
     }
 
     public function getWholeDuration() : int

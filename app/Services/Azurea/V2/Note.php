@@ -259,6 +259,7 @@ class Note
     {
         $currentMeasure = $this->measureChildren->getMeasure();
         return $currentMeasure->number();
+        // return $currentMeasure->index();
     }
 
     public function getMeasureChildren() : MeasureChildrenInterface

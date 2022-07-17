@@ -48,9 +48,14 @@ class Part implements MusicXMLChildrenInterface
     public function measures() : Collection
     {
         $data = collect();
+        $index = 0;
 
-        foreach ($this->xml->measure as $measure) {
-            $measure && $data->push(new Measure($measure, $this));
+        foreach ($this->xml->measure as $measureXml) {
+            if ($measureXml) {
+                $measure = new Measure($measureXml, $this);
+                $measure->setIndex($index++);
+                $data->push($measure);
+            }
         }
         
         return $data;

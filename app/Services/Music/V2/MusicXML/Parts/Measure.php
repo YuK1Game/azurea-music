@@ -23,6 +23,8 @@ class Measure implements MusicXMLChildrenInterface
 
     protected Part $parent;
 
+    protected int $index;
+
     public function __construct(SimpleXMLElement $xml, $parent)
     {
         $this->xml = $xml;
@@ -35,6 +37,16 @@ class Measure implements MusicXMLChildrenInterface
             return (int) $this->xml['number'];
         }
         return null;
+    }
+
+    public function index() : int
+    {
+        return $this->index;
+    }
+
+    public function setIndex(int $index) : void
+    {
+        $this->index = $index;
     }
 
     public function attribute() : ?Attribute

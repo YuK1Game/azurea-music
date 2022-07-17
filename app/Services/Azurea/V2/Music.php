@@ -29,7 +29,7 @@ class Music
             return $measure->number() === $measureId;
         })->first();
 
-        if ($direction = $measure->direction()) {
+        if ($measure && $direction = $measure->direction()) {
             return $direction->tempo();
         }
 

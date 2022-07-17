@@ -94,7 +94,8 @@ class Note
                         $dot = $row['dot'];
                         return sprintf('r%s', $duration, str_repeat('.', $dot));
                     })->join('');
-                }return '';
+                }
+                return '';
         }
 
         throw new \Exception(sprintf('Invalid class [%s]', get_class($measureChildren)));
@@ -108,7 +109,12 @@ class Note
 
         $pitch =  $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
 
-        $durationCodes = $this->getDurationCodes();
+        try {
+            $durationCodes = $this->getDurationCodes();
+        } catch (\Exception $e) {
+            return sprintf('[ERROR %s]', $this->getCustomDuration() ?? $this->duration());
+        }
+        
 
         return $durationCodes->map(function($durationCode) use($pitch) {
             $code = sprintf('%s%s', $pitch, $durationCode);
@@ -138,34 +144,6 @@ class Note
 
             return $code;
         })->join('&');
-
-        // $code = sprintf('%s%s', $pitch, $this->getDurationCode());
-
-        // if ($this->measureChildren->accent()) {
-        //     $code = sprintf('%s*14', $code);
-        // }
-
-        // if ($this->measureChildren->staccato()) {
-        //     $code = sprintf('%s*13', $code);
-        // }
-
-        // if ($this->isTieStart()) {
-        //     if ($tieEndNote = $this->getRelationalTieEnd()) {
-        //         $tieEndNoteCode = $tieEndNote->getNoteCode();
-        //         $code = sprintf('%s&%s', $code, $tieEndNoteCode);
-        //     } else {
-        //         $code = sprintf('%s&%s', $code, '[Not found tie end]');
-        //     }
-        // }
-
-
-        // if ($this->isChord() &&
-        //     ! $this->arpeggiate() &&
-        //     ! $this->isTieEnd()) {
-        //     $code = sprintf(':%s', $code);
-        // }
-
-        // return $code;
     }
 
     public function getDrumNoteCode() : string
@@ -215,7 +193,9 @@ class Note
 
     public function getDurationCodes() : Collection
     {
-        $durationCodes = $this->durationManager()->getDurationCodes();
+        if ( ! $durationCodes = $this->durationManager()->getDurationCodes()) {
+            $this->throwException('Duration codes not match.');
+        }
 
         return $durationCodes->map(function($durationCode) {
             $duration = $durationCode['duration'];

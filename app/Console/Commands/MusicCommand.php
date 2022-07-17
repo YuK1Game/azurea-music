@@ -9,6 +9,8 @@ use App\Services\Azurea\V2\Notes\Duration;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
+use App\Services\Azurea\V2\Managers\DurationManagers\DurationTable;
+
 class MusicCommand extends Command
 {
     /**
@@ -35,6 +37,7 @@ class MusicCommand extends Command
     public function __construct()
     {
         parent::__construct();
+        ini_set('memory_limit', '8G');
     }
 
     /**
@@ -44,7 +47,8 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-        $filename = resource_path('musicxml/Radio_Taiso.mxl');
+
+        $filename = resource_path('musicxml/Blue_Bird_Easy_Piano_Naruto_OP3_Free_download.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -127,7 +131,6 @@ class MusicCommand extends Command
 
             if (round($totalDuration, 10) !== 1.0) {
                 return sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join(''));
-                // dump($notes);
             }
 
         } catch (\Exception $e) {

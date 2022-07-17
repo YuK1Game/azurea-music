@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Azurea\V2\Managers;
 
+use App\Services\Azurea\V2\Managers\DurationManagers\DurationTable;
 use App\Services\Azurea\V2\Note;
 use App\Services\Music\V2\MusicXML\Parts\Measures\MeasureChildrenInterface;
 
@@ -77,73 +78,13 @@ class DurationManager
 
     }
 
-    public function getBaseDurationAndDotCount() : Collection
+    public function getBaseDurationAndDotCount() : ?Collection
     {
-        $baseDuration = $this->getDuration();
-        $durations = collect();
-
-        foreach ($this->createDurationTable() as $durationTableRow) {
-            $dot      = $durationTableRow['dot'];
-            $duration = $durationTableRow['duration'];
-            $value    = $durationTableRow['value'];
-
-            if ($baseDuration >= $value) {
-                $baseDuration -= $value;
-                $durations->push([
-                    'duration' => $duration,
-                    'dot' => $dot,
-                ]);
-            }
-        }
-
-        if ($baseDuration <= 0) {
+        $durationTable = new DurationTable($this->getWholeDuration());
+        if ($durations = $durationTable->getDurationListByDuration($this->getDuration())) {
             return $durations;
         }
-
-        $this->throwDurationManagerException('Duration is not acceptable for the table.');
-    }
-
-    public function createDurationTable() : Collection
-    {
-        $list = collect();
-        $whole = $this->getWholeDuration() > 64 ? $this->getWholeDuration() : 64;
-
-        for ($value = 1 ; $value <= $whole ; $value++) {
-            if ($this->isDivisible($this->getWholeDuration(), $value)) {
-                $duration = round($this->getWholeDuration() / $value, 10);
-                $list->push($duration);
-            }
-        }
-
-        $list = $list->map(function($value) {
-            return $this->createDotTable()->map(function(Collection $dotTableRow) use($value) {
-                return collect([
-                    'dot'      => $dotTableRow->get('dot'),
-                    'duration' => $this->getWholeDuration() / $value,
-                    'value'    => round($value * $dotTableRow->get('ratio'), 10),
-                ]);
-            });
-        })
-        ->flatten(1)
-        ->filter(function(Collection $durationTableRow) {
-            // return $this->isIntegerValue($durationTableRow->get('value'))
-            //     && $durationTableRow->get('value') <= $this->getWholeDuration();
-            return $durationTableRow->get('value') <= $this->getWholeDuration();
-        })
-        ->sortByDesc('value')
-        ->values();
-
-        return $list;
-    }
-
-    protected function createDotTable() : Collection
-    {
-        return collect([
-            collect(['dot' => 0, 'ratio' => 1.000 ]),
-            collect(['dot' => 1, 'ratio' => 1.500 ]),
-            collect(['dot' => 2, 'ratio' => 1.750 ]),
-            // collect(['dot' => 3, 'ratio' => 1.875 ]),
-        ]);
+        return null;
     }
 
     protected function throwDurationManagerException(string $message) : void
@@ -154,7 +95,6 @@ class DurationManager
                 'whole_duration' => $this->getWholeDuration(),
                 'duration' => $this->getDuration(),
                 'is_custom_duration' => $this->isCustomDuration(),
-                'duration_table' => $this->createDurationTable(),
             ],
             'note' => [
                 'class' => get_class($this->measureChildren),
@@ -163,11 +103,6 @@ class DurationManager
         ];
 
         throw new Exception(sprintf('%s%s%s', $message, PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
-    }
-
-    protected function isIntegerValue(float $value) : bool
-    {
-        return $value === floor($value);
     }
 
     protected function isDivisible(float $from, float $value) : bool

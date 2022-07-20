@@ -15,7 +15,7 @@ class NoteGroup extends Collection
         return $firstNote->getCurrentMeasureNumber();
     }
 
-    public function getCode() : string
+    public function getCode() : Collection
     {
         $defaultCodes = $this->getCodes();
 
@@ -27,7 +27,7 @@ class NoteGroup extends Collection
             return $defaultCodes->join('');
         }
 
-        return $this->isArpeggiate() ? $arpeggiateCodes->join('') : $defaultCodes->join('');
+        return $this->isArpeggiate() ? $arpeggiateCodes->values() : $defaultCodes->values();
     }
 
     public function getCodes() : Collection

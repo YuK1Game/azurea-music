@@ -48,7 +48,7 @@ class MusicCommand extends Command
     public function handle()
     {
 
-        $filename = resource_path('musicxml/Minecraft_Vol._Alpha_Full_Piano_Collection_wCustom_Audio.mxl');
+        $filename = resource_path('musicxml/Song_of_the_Ancients.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -65,6 +65,7 @@ class MusicCommand extends Command
                 $this->addText(str_repeat('-', 100));
 
                 $track->get('measures')->each(function($notes, $measureIndex) {
+
                     ! $this->option('no-debug') && $this->addText(sprintf('【%d】 ', $measureIndex), false);
 
                     $this->addText($notes->flatten()->join(''));
@@ -93,7 +94,7 @@ class MusicCommand extends Command
 
     protected function validateNotes(Collection $notes) : ?string
     {
-        $notes = $notes
+        $notesValues = $notes
             ->map(function($note) {
                 $note = preg_replace('/\:.*?$/', '', $note);
                 $_notes = preg_split('/\&/', $note);
@@ -113,7 +114,7 @@ class MusicCommand extends Command
             });
 
         try {
-            $totalDuration = (float) $notes->sum(function(string $duration) {
+            $totalDuration = (float) $notesValues->sum(function(string $duration) {
                 if (preg_match('/^(\d{1,})(\.)?(\.)?$/', $duration, $matches) === 1) {
                     $duration = (int) $matches[1];
                     $dot1 = ($matches[2] ?? null) === '.';
@@ -127,9 +128,7 @@ class MusicCommand extends Command
                 return 0;
             });
 
-            $totalDuration = round($totalDuration, 10);
-
-            if (round($totalDuration, 10) !== 1.0) {
+            if (round($totalDuration, 10) !== 0.75) {
                 return sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join(''));
             }
 

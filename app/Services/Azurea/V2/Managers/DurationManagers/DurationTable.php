@@ -13,10 +13,10 @@ class DurationTable
     {
         $this->wholeDuration = $wholeDuration;
 
-        $this->intializeBaseDurationTable();
+        $this->initializeBaseDurationTable();
     }
 
-    public function intializeBaseDurationTable() : void
+    public function initializeBaseDurationTable() : void
     {
         $this->baseDurationTable = $this->getDurationBaseTable();
     }
@@ -31,7 +31,7 @@ class DurationTable
                 foreach ($keyList as $keys) {
                     $duratons = $this->getBaseDurationsByKeys($keys);
                     $sumDuration = $duratons->sum('value');
-                    
+
                     if ($sumDuration === $duration) {
                         return $duratons;
                     }
@@ -109,18 +109,18 @@ class DurationTable
     protected function combination(array $arr, int $r): ?array
     {
         $arr = array_values(array_unique($arr));
-    
+
         $n = count($arr);
         $result = [];
-    
+
         if($r < 0 || $n < $r){ return null; }
-    
+
         if($r === 1){
             foreach($arr as $item){
                 $result[] = [$item];
             }
         }
-    
+
         if($r > 1){
             for($i = 0; $i < $n-$r+1; $i++){
                 $sliced = array_slice($arr, $i + 1);
@@ -131,7 +131,7 @@ class DurationTable
                 }
             }
         }
-    
+
         return $result;
     }
 

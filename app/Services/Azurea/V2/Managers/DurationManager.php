@@ -34,7 +34,8 @@ class DurationManager
     public function getDuration() : ?float
     {
         if ($this->isBackup()) {
-            return $this->getWholeDuration() - $this->measureChildren->duration();
+            $duration = $this->measureChildren->duration() / $this->azureaNote->getCurrentBeat() * $this->azureaNote->getCurrentBeatType();
+            return $this->getWholeDuration() - $duration;
         }
         return $this->azureaNote->getCustomDuration() ?? $this->measureChildren->duration();
     }
@@ -81,6 +82,7 @@ class DurationManager
     public function getBaseDurationAndDotCount() : ?Collection
     {
         $durationTable = new DurationTable($this->getWholeDuration());
+
         if ($durations = $durationTable->getDurationListByDuration($this->getDuration())) {
             return $durations;
         }

@@ -92,9 +92,10 @@ class Note
                     return $durationCodes->map(function($row) {
                         $duration = $row['duration'];
                         $dot = $row['dot'];
-                        return sprintf('r%s', $duration, str_repeat('.', $dot));
+                        return sprintf('r%s%s', $duration, str_repeat('.', $dot));
                     })->join('');
                 }
+
                 return '';
         }
 
@@ -114,7 +115,7 @@ class Note
         } catch (\Exception $e) {
             return sprintf('[ERROR %s]', $this->getCustomDuration() ?? $this->duration());
         }
-        
+
 
         return $durationCodes->map(function($durationCode) use($pitch) {
             $code = sprintf('%s%s', $pitch, $durationCode);
@@ -127,7 +128,7 @@ class Note
                 $code = sprintf('%s*13', $code);
             }
 
-            if ($this->isTieStart()) {
+            if ($this->isTieStart() && ! ($this->arpeggiate() && $this->isChord())) {
                 if ($tieEndNote = $this->getRelationalTieEnd()) {
                     $tieEndNoteCode = $tieEndNote->getNoteCode();
                     $code = sprintf('%s&%s', $code, $tieEndNoteCode);
@@ -204,12 +205,24 @@ class Note
         });
     }
 
+    public function getCurrentDivision() : int
+    {
+        return (int) $this->getCurrentTrackProperty('currentDivision');
+    }
+
+    public function getCurrentBeat() : int
+    {
+        return (int) $this->getCurrentTrackProperty('currentBeat');
+    }
+
+    public function getCurrentBeatType() : int
+    {
+        return (int) $this->getCurrentTrackProperty('currentBeatType');
+    }
+
     public function getWholeDuration() : int
     {
-        $currentDivision = (int) $this->getCurrentTrackProperty('currentDivision');
-        $currentBeat     = (int) $this->getCurrentTrackProperty('currentBeat');
-        $currentBeatType = (int) $this->getCurrentTrackProperty('currentBeatType');
-        return $currentDivision * 4 / $currentBeatType * $currentBeat;
+        return 4 * $this->getCurrentDivision();
     }
 
     public function getCurrentTrackProperty(string $key)

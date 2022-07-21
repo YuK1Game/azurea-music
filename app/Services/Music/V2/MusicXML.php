@@ -10,7 +10,7 @@ class MusicXML
 {
     protected $xml;
 
-    public function __construct(string $filename)
+    public function __construct(?string $filename)
     {
         $parser = new Parser($filename);
         $this->xml = $parser->getXml();
@@ -23,7 +23,7 @@ class MusicXML
         foreach ($this->xml->part as $part) {
             $part && $data->push(new Part($part, $this));
         }
-        
+
         return $data;
     }
 

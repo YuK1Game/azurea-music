@@ -1,14 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
- 
-const App = () => {
-    const title : string = 'TypeScript React !!'
-    return (
-        <h1>{title}</h1>
-    )
-}
- 
+import Index from './Containers/Pages/Index';
+
 ReactDOM.render(
-    <App />,
+    <Index />,
     document.getElementById('app')
 )

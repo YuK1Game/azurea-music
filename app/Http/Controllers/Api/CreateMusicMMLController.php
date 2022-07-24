@@ -18,32 +18,7 @@ class CreateMusicMMLController extends Controller
 
         $azureaMusic = new AzureaMusic($filename);
 
-        $parts = $azureaMusic->getCodes();
-
-        // $parts->each(function($part) {
-        //     $this->addText(str_repeat('=', 100));
-        //     $this->addText(sprintf('Part[%s] : %s', $part->get('id'), $part->get('part_name')));
-        //     $this->addText(str_repeat('=', 100));
-
-        //     $part->get('tracks')->each(function($track, $trackIndex) {
-
-        //         $this->addText(str_repeat('-', 100));
-        //         $this->addText(sprintf('Track[%d]', $trackIndex));
-        //         $this->addText(str_repeat('-', 100));
-
-        //         $track->get('measures')->each(function($notes, $measureIndex) {
-
-        //             $this->addText(sprintf('【%d】 ', $measureIndex), false);
-
-        //             $this->addText($notes->flatten()->join(''));
-
-        //         });
-        //         $this->addText('');
-        //         $this->addText('');
-        //     });
-        //     $this->addText('');
-        //     $this->addText('');
-        // });
+        $parts = $azureaMusic->json();
 
         return response()->json($parts);
 

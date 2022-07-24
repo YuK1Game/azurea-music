@@ -104,14 +104,15 @@ class Note
 
     public function getNoteCode() : string
     {
-        if ($this->measureChildren->grace()) {
+        if ($this->grace()) {
             return '';
         }
 
-        $pitch =  $this->measureChildren->isRest() ? 'r' : $this->getPhonicNotePitch();
+        $pitch = $this->isRest() ? 'r' : $this->getPhonicNotePitch();
 
         try {
             $durationCodes = $this->getDurationCodes();
+
         } catch (\Exception $e) {
             return sprintf('[ERROR %s]', $this->getCustomDuration() ?? $this->duration());
         }
@@ -176,25 +177,33 @@ class Note
         return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
     }
 
+    public function getPhonicNotePitches() : array
+    {
+        $key = new Key();
+        $key->setPitchStep($this->pitchStep());
+        $key->setPitchOctave($this->pitchOctave());
+        $key->setPitchAlter($this->pitchAlter());
+
+        return $key->newPitch();
+    }
+
     protected function getPhonicNotePitch() : string
     {
         if ($this->measureChildren->hasUnpitched()) {
             return $this->getDrumNoteCode();
         }
-
-        $key = new Key();
-        $key->setPitchStep($this->measureChildren->pitchStep());
-        $key->setPitchOctave($this->measureChildren->pitchOctave());
-        $key->setPitchAlter($this->measureChildren->pitchAlter());
-
-        list($newPitchStep, $newPitchOctave) = $key->newPitch();
-
+        list($newPitchStep, $newPitchOctave) = $this->getPhonicNotePitches();
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
+    }
+
+    public function getDurations() : Collection
+    {
+        return $this->durationManager()->getDurationCodes();
     }
 
     public function getDurationCodes() : Collection
     {
-        if ( ! $durationCodes = $this->durationManager()->getDurationCodes()) {
+        if ( ! $durationCodes = $this->getDurations()) {
             $this->throwException('Duration codes not match.');
         }
 
@@ -299,6 +308,19 @@ class Note
             ],
         ];
         throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
+    }
+
+    public function json() : Collection
+    {
+        try {
+            return collect([
+                'pitches' => ! $this->isRest() ? $this->getPhonicNotePitches() : null,
+                'durations' => $this->getDurations(),
+                'is_grace' => $this->grace(),
+            ]); 
+        } catch (\Exception $e) {
+            $this->throwException($e->getMessage());
+        }
     }
 
     public function __call($name, $arguments)

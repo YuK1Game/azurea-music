@@ -74,4 +74,11 @@ class NoteGroup extends Collection
         return $this->first();
     }
 
+    public function json() : Collection
+    {
+        return $this->map(function(AzureaNote $azureaNote) {
+            return $azureaNote->json();
+        });
+    }
+
 }

@@ -24,7 +24,7 @@ abstract class MeasureChildren implements MeasureChildrenInterface
 
     public function pitchOctave() : ?int
     {
-        return '';
+        return null;
     }
 
     public function pitchAlter() : ?int

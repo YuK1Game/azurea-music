@@ -72,4 +72,40 @@ class Music
         });
     }
 
+    public function json() : Collection
+    {
+        return $this->musicXml->parts()->map(function(MusicXMLPart $part) {
+
+            $tracks = $part->tracks()->map(function(MusicXMLTrack $track, int $trackIndex) {
+
+                $azureaTrack = new AzureaTrack($track);
+
+                $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) {
+
+                    $noteCode = collect();
+
+                    if ($tempo = $this->getTempoByMeasureId($measureId)) {
+                        $noteCode->push(sprintf('t%d', $tempo));
+                    }
+
+                    $notes->each(function(AzureaNoteGroup $azureaNoteGroup) use($noteCode) {
+                        $noteCode->push($azureaNoteGroup->json());
+                    });
+
+                    return [ $measureId => $noteCode ];
+                });
+
+                return collect([
+                    'measures' => $measureNotes,
+                ]);
+            });
+
+            return collect([
+                'id' => $part->id(),
+                'part_name' => $part->scorePartName(),
+                'tracks' => $tracks,
+            ]);
+        });
+    }
+
 }

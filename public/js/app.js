@@ -37,6 +37,331 @@ exports["default"] = function (file, acceptedFiles) {
 
 /***/ }),
 
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Music.tsx":
+/*!******************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Music.tsx ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Part_1 = __importDefault(__webpack_require__(/*! ./Part */ "./resources/js/Containers/Organisms/Pages/Musics/Part.tsx"));
+
+var Music = function Music(_a) {
+  var json = _a.json;
+  return react_1["default"].createElement("div", null, json.parts.map(function (_a) {
+    var id = _a.id,
+        tracks = _a.tracks;
+    return react_1["default"].createElement(Part_1["default"], {
+      key: id,
+      tracks: tracks
+    });
+  }));
+};
+
+exports["default"] = Music;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Part.tsx":
+/*!*****************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Part.tsx ***!
+  \*****************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Track_1 = __importDefault(__webpack_require__(/*! ./Parts/Track */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Track.tsx"));
+
+var Part = function Part(_a) {
+  var tracks = _a.tracks,
+      props = __rest(_a, ["tracks"]);
+
+  return react_1["default"].createElement("div", __assign({}, props), tracks.map(function (_a, index) {
+    var measures = _a.measures;
+    return react_1["default"].createElement(Track_1["default"], {
+      key: index,
+      measures: measures
+    });
+  }));
+};
+
+exports["default"] = Part;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Track.tsx":
+/*!************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Track.tsx ***!
+  \************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Measure_1 = __importDefault(__webpack_require__(/*! ./Tracks/Measure */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure.tsx"));
+
+var Track = function Track(_a) {
+  var measures = _a.measures,
+      props = __rest(_a, ["measures"]);
+
+  return react_1["default"].createElement("div", __assign({}, props), measures.map(function (_a) {
+    var measure_id = _a.measure_id,
+        notes = _a.notes;
+    return react_1["default"].createElement(Measure_1["default"], {
+      key: measure_id,
+      notes: notes
+    });
+  }));
+};
+
+exports["default"] = Track;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure.tsx":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure.tsx ***!
+  \*********************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Note_1 = __importDefault(__webpack_require__(/*! ./Measure/Note */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Note.tsx"));
+
+var Measure = function Measure(_a) {
+  var notes = _a.notes,
+      props = __rest(_a, ["notes"]);
+
+  return react_1["default"].createElement("div", __assign({}, props), notes.map(function (note, index) {
+    return react_1["default"].createElement(Note_1["default"], {
+      key: index,
+      note: note
+    });
+  }));
+};
+
+exports["default"] = Measure;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Note.tsx":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Note.tsx ***!
+  \**************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var Note = function Note(_a) {
+  var note = _a.note,
+      props = __rest(_a, ["note"]);
+
+  return react_1["default"].createElement(react_1.Fragment, null, JSON.stringify(note));
+};
+
+exports["default"] = Note;
+
+/***/ }),
+
 /***/ "./resources/js/Containers/Organisms/Pages/Uploads/DropArea.tsx":
 /*!**********************************************************************!*\
   !*** ./resources/js/Containers/Organisms/Pages/Uploads/DropArea.tsx ***!
@@ -167,6 +492,22 @@ exports["default"] = DropArea;
 "use strict";
 
 
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
 var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
   if (k2 === undefined) k2 = k;
   var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -234,8 +575,14 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 
 var DropArea_1 = __importDefault(__webpack_require__(/*! ../Organisms/Pages/Uploads/DropArea */ "./resources/js/Containers/Organisms/Pages/Uploads/DropArea.tsx"));
 
+var Music_1 = __importDefault(__webpack_require__(/*! ../Organisms/Pages/Musics/Music */ "./resources/js/Containers/Organisms/Pages/Musics/Music.tsx"));
+
 var Index = function Index(_a) {
   var props = __rest(_a, []);
+
+  var _b = (0, react_1.useState)(null),
+      musicJson = _b[0],
+      setMusicJson = _b[1];
 
   var handleDrop = (0, react_1.useCallback)(function (file) {
     var formData = new FormData();
@@ -244,16 +591,19 @@ var Index = function Index(_a) {
       method: 'POST',
       body: formData
     };
-    fetch('/api/create_music_mml', param).then(function (res) {
-      return res.json();
-    }).then(function (json) {// 通信が成功した際の処理
+    fetch('/api/create_music_mml', param).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      setMusicJson(json);
     })["catch"](function (error) {// エラー処理
     });
   }, []);
-  return react_1["default"].createElement("div", {
+  return react_1["default"].createElement("div", __assign({}, props, {
     className: 'container mx-auto px-12'
-  }, react_1["default"].createElement(DropArea_1["default"], {
+  }), react_1["default"].createElement(DropArea_1["default"], {
     onDrop: handleDrop
+  }), musicJson && react_1["default"].createElement(Music_1["default"], {
+    json: musicJson
   }));
 };
 

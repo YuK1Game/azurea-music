@@ -18,16 +18,9 @@ class CreateMusicMMLController extends Controller
 
         $azureaMusic = new AzureaMusic($filename);
 
-        $parts = $azureaMusic->json();
+        $json = $azureaMusic->json();
 
-        return response()->json($parts);
+        return response()->json($json);
 
-    }
-
-    protected function addText(?string $text = null, ?bool $useBr = true) : void
-    {
-        if ( ! is_null($text)) {
-            $this->text .= sprintf('%s%s', $text, $useBr ? PHP_EOL : '');
-        }
     }
 }

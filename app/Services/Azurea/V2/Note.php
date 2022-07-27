@@ -310,22 +310,52 @@ class Note
     public function json() : Collection
     {
         try {
-            return collect([
-                'pitches'       => $this->hasPitch() ? $this->getPhonicNotePitches() : null,
-                'durations'     => $this->getDurations(),
-                'is_chord'      => $this->isChord(),
-                'is_grace'      => $this->grace(),
-                'is_accent'     => $this->accent(),
-                'is_staccato'   => $this->staccato(),
-                'is_tie_start'  => $this->isTieStart(),
-                'is_tie_end'    => $this->isTieEnd(),
-                'relational_tie_end' => ($r = $this->getRelationalTieEnd()) ? $r->json() : null,
-            ]);
+            if ($this->isDirection()) {
+                return $this->getDirectionJson();
+            }
+            if ($this->isRest()) {
+                return $this->getRestJson();
+            }
+            return $this->getNoteJson();
+
         } catch (\Exception $e) {
             $this->throwException($e->getMessage());
 
         }
     }
+
+    protected function getNoteJson() : Collection
+    {
+        return collect([
+            'type'          => 'note',
+            'pitches'       => $this->hasPitch() ? $this->getPhonicNotePitches() : null,
+            'durations'     => $this->getDurations(),
+            'is_chord'      => $this->isChord(),
+            'is_grace'      => $this->grace(),
+            'is_accent'     => $this->accent(),
+            'is_staccato'   => $this->staccato(),
+            'is_tie_start'  => $this->isTieStart(),
+            'is_tie_end'    => $this->isTieEnd(),
+            'relational_tie_end' => ($r = $this->getRelationalTieEnd()) ? $r->json() : null,
+        ]);
+    }
+
+    protected function getDirectionJson() : Collection
+    {
+        return collect([
+            'type' => 'direction',
+            'dynamics' => $this->dynamics(),
+        ]);
+    }
+
+    protected function getRestJson() : Collection
+    {
+        return collect([
+            'type' => 'rest',
+            'durations' => $this->getDurations(),
+        ]);
+    }
+
 
     public function __call($name, $arguments)
     {

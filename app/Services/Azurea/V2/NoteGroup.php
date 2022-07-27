@@ -72,7 +72,8 @@ class NoteGroup extends Collection
 
         return $notes->map(function(AzureaNote $azureaNote) {
             return $azureaNote->json();
-        });
+        })
+        ->values();
     }
 
 }

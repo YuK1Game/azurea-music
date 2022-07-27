@@ -74,7 +74,7 @@ class Music
 
     public function json() : Collection
     {
-        return $this->musicXml->parts()->map(function(MusicXMLPart $part) {
+        $parts = $this->musicXml->parts()->map(function(MusicXMLPart $part) {
 
             $tracks = $part->tracks()->map(function(MusicXMLTrack $track) {
 
@@ -92,8 +92,11 @@ class Music
                         $noteCode->push($azureaNoteGroup->json());
                     });
 
-                    return $noteCode;
-                });
+                    return collect([
+                        'measure_id' => $measureId,
+                        'notes' => $noteCode,
+                    ]);
+                })->values();
 
                 return collect([
                     'measures' => $measureNotes,
@@ -106,6 +109,10 @@ class Music
                 'tracks' => $tracks,
             ]);
         });
+
+        return collect([
+            'parts' => $parts,
+        ]);
     }
 
 }

@@ -44,5 +44,15 @@ interface MeasureChildrenInterface
 
     public function getMeasure() : Measure;
 
+    public function isNote() : bool;
+
+    public function isDirection() : bool;
+
+    public function isBackup() : bool;
+
+    public function isBlankNote() : bool;
+
+    public function isForward() : bool;
+
     public function getXml() : ?SimpleXMLElement;
 }

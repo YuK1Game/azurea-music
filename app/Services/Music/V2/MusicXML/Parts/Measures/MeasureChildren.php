@@ -19,7 +19,7 @@ abstract class MeasureChildren implements MeasureChildrenInterface
 
     public function pitchStep() : ?string
     {
-        return '';
+        return null;
     }
 
     public function pitchOctave() : ?int
@@ -30,11 +30,6 @@ abstract class MeasureChildren implements MeasureChildrenInterface
     public function pitchAlter() : ?int
     {
         return null;
-    }
-
-    public function hasUnpitched() : bool
-    {
-        return false;
     }
 
     public function isTuplet() : bool
@@ -95,6 +90,42 @@ abstract class MeasureChildren implements MeasureChildrenInterface
     public function dynamics(): ?string
     {
         return null;
+    }
+
+    public function isNote() : bool
+    {
+        return $this instanceof Note;
+    }
+
+    public function isDirection() : bool
+    {
+        return $this instanceof Direction;
+    }
+
+    public function isBackup() : bool
+    {
+        return $this instanceof Backup;
+    }
+
+    public function isBlankNote() : bool
+    {
+        return $this instanceof BlankNote;
+    }
+
+    public function isForward() : bool
+    {
+        return $this instanceof Forward;
+    }
+
+    public function hasPitch() : bool
+    {
+        return $this->isNote()
+            && ! $this->isRest();
+    }
+
+    public function hasUnpitched() : bool
+    {
+        return false;
     }
 
     public function getXml() : ?SimpleXMLElement

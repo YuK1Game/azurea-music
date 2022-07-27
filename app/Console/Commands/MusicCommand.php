@@ -48,7 +48,7 @@ class MusicCommand extends Command
     public function handle()
     {
 
-        $filename = resource_path('musicxml/Yuri_on_Ice_OST_-_Yuri_on_Ice__TheIsther_Sheet_Music__Full_Sheet_Mastered.mxl');
+        $filename = resource_path('musicxml/brave_heart.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();

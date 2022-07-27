@@ -76,11 +76,11 @@ class Music
     {
         return $this->musicXml->parts()->map(function(MusicXMLPart $part) {
 
-            $tracks = $part->tracks()->map(function(MusicXMLTrack $track, int $trackIndex) {
+            $tracks = $part->tracks()->map(function(MusicXMLTrack $track) {
 
                 $azureaTrack = new AzureaTrack($track);
 
-                $measureNotes = $azureaTrack->measures()->mapWithKeys(function(Collection $notes, int $measureId) {
+                $measureNotes = $azureaTrack->measures()->map(function(Collection $notes, int $measureId) {
 
                     $noteCode = collect();
 
@@ -92,7 +92,7 @@ class Music
                         $noteCode->push($azureaNoteGroup->json());
                     });
 
-                    return [ $measureId => $noteCode ];
+                    return $noteCode;
                 });
 
                 return collect([

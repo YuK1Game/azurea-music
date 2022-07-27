@@ -7,8 +7,6 @@ use App\Services\Azurea\V2\Note as AzureaNote;
 
 class NoteGroup extends Collection
 {
-    protected $noteGroup;
-
     public function getCurrentMeasureNumber() : int
     {
         $firstNote = $this->first();
@@ -17,27 +15,21 @@ class NoteGroup extends Collection
 
     public function getCode() : Collection
     {
-        $defaultCodes = $this->getCodes();
+        $notes = $this->isArpeggiate() ? $this->getArpeggiateNotes() : $this;
 
-        try {
-            $arpeggiateCodes = $this->getArpeggiateCodes();
-
-        } catch (\Exception $e) {
-            logger()->warning($e->getMessage());
-            return $defaultCodes->join('');
-        }
-
-        return $this->isArpeggiate() ? $arpeggiateCodes->values() : $defaultCodes->values();
+        return $notes->map(function(AzureaNote $azureaNote) {
+            return $azureaNote->getCode();
+        })->values();
     }
 
-    public function getCodes() : Collection
+    public function getNotes() : Collection
     {
         return $this->map(function(AzureaNote $azureaNote) {
             return $azureaNote->getCode();
         });
     }
 
-    public function getArpeggiateCodes() : Collection
+    public function getArpeggiateNotes() : Collection
     {
         $wholeDuration = $this->firstNote()->getWholeDuration();
         $baseDuration  = $this->firstNote()->duration();
@@ -46,7 +38,7 @@ class NoteGroup extends Collection
 
         $codes = $this->reverse()->values()->map(function(AzureaNote $azureaNote, int $index) use($mainDuration, $subDuration) {
             $azureaNote->setCustomDuration($index === 0 ? $mainDuration : $subDuration);
-            return $azureaNote->getCode();
+            return $azureaNote;
         })
         ->reverse()
         ->values();
@@ -76,7 +68,9 @@ class NoteGroup extends Collection
 
     public function json() : Collection
     {
-        return $this->map(function(AzureaNote $azureaNote) {
+        $notes = $this->isArpeggiate() ? $this->getArpeggiateNotes() : $this;
+
+        return $notes->map(function(AzureaNote $azureaNote) {
             return $azureaNote->json();
         });
     }

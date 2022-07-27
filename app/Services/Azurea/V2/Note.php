@@ -172,18 +172,12 @@ class Note
         throw new \Exception(sprintf('Drum Note Error. [%s]', $key));
     }
 
-    public function getPitch() : string
-    {
-        return sprintf('o%d%s', $this->getMusicXMLNote()->pitchOctave(), $this->getMusicXMLNote()->pitchStep());
-    }
-
-    public function getPhonicNotePitches() : array
+    public function getPhonicNotePitches() : ?array
     {
         $key = new Key();
         $key->setPitchStep($this->pitchStep());
         $key->setPitchOctave($this->pitchOctave());
         $key->setPitchAlter($this->pitchAlter());
-
         return $key->newPitch();
     }
 
@@ -196,9 +190,12 @@ class Note
         return sprintf('o%d%s', $newPitchOctave, $newPitchStep);
     }
 
-    public function getDurations() : Collection
+    public function getDurations() : ?Collection
     {
-        return $this->durationManager()->getDurationCodes();
+        if ($this->duration()) {
+            return $this->durationManager()->getDurationCodes();
+        }
+        return null;
     }
 
     public function getDurationCodes() : Collection
@@ -314,12 +311,19 @@ class Note
     {
         try {
             return collect([
-                'pitches' => ! $this->isRest() ? $this->getPhonicNotePitches() : null,
-                'durations' => $this->getDurations(),
-                'is_grace' => $this->grace(),
-            ]); 
+                'pitches'       => $this->hasPitch() ? $this->getPhonicNotePitches() : null,
+                'durations'     => $this->getDurations(),
+                'is_chord'      => $this->isChord(),
+                'is_grace'      => $this->grace(),
+                'is_accent'     => $this->accent(),
+                'is_staccato'   => $this->staccato(),
+                'is_tie_start'  => $this->isTieStart(),
+                'is_tie_end'    => $this->isTieEnd(),
+                'relational_tie_end' => ($r = $this->getRelationalTieEnd()) ? $r->json() : null,
+            ]);
         } catch (\Exception $e) {
             $this->throwException($e->getMessage());
+
         }
     }
 

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 const MusicNote = ({ note, ...props } : any) => {
-    return null;
+
+    const { pitches : [ step, octave ]} = note;
+
     return (
-        <div {...props}>
-        </div>
+        <Fragment {...props}>
+            o{ octave }{ step }
+        </Fragment>
     )
 }
 

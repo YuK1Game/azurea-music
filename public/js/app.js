@@ -345,20 +345,242 @@ var __rest = this && this.__rest || function (s, e) {
   return t;
 };
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
+var MusicNote_1 = __importDefault(__webpack_require__(/*! ./Notes/MusicNote */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/MusicNote.tsx"));
+
+var RestNote_1 = __importDefault(__webpack_require__(/*! ./Notes/RestNote */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/RestNote.tsx"));
+
+var DirectionNote_1 = __importDefault(__webpack_require__(/*! ./Notes/DirectionNote */ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/DirectionNote.tsx"));
+
 var Note = function Note(_a) {
-  var note = _a.note,
+  var noteGroup = _a.note,
       props = __rest(_a, ["note"]);
 
-  return react_1["default"].createElement(react_1.Fragment, null, JSON.stringify(note));
+  return react_1["default"].createElement(react_1.Fragment, null, noteGroup && (noteGroup === null || noteGroup === void 0 ? void 0 : noteGroup.map) && noteGroup.map(function (note, index) {
+    switch (note === null || note === void 0 ? void 0 : note.type) {
+      case 'note':
+        return react_1["default"].createElement(MusicNote_1["default"], {
+          key: index,
+          note: note
+        });
+
+      case 'rest':
+        return react_1["default"].createElement(RestNote_1["default"], {
+          key: index,
+          note: note
+        });
+
+      case 'direction':
+        return react_1["default"].createElement(DirectionNote_1["default"], {
+          key: index,
+          note: note
+        });
+
+      default:
+        return "Type error [".concat(note === null || note === void 0 ? void 0 : note.type, "]");
+    }
+  }));
 };
 
 exports["default"] = Note;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/DirectionNote.tsx":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/DirectionNote.tsx ***!
+  \*****************************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var DirectionNote = function DirectionNote(_a) {
+  var note = _a.note,
+      props = __rest(_a, ["note"]);
+
+  return null;
+  return react_1["default"].createElement("div", __assign({}, props));
+};
+
+exports["default"] = DirectionNote;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/MusicNote.tsx":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/MusicNote.tsx ***!
+  \*************************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var MusicNote = function MusicNote(_a) {
+  var note = _a.note,
+      props = __rest(_a, ["note"]);
+
+  return null;
+  return react_1["default"].createElement("div", __assign({}, props));
+};
+
+exports["default"] = MusicNote;
+
+/***/ }),
+
+/***/ "./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/RestNote.tsx":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/Containers/Organisms/Pages/Musics/Parts/Tracks/Measure/Notes/RestNote.tsx ***!
+  \************************************************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __assign = this && this.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __rest = this && this.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var RestNote = function RestNote(_a) {
+  var note = _a.note,
+      props = __rest(_a, ["note"]);
+
+  return react_1["default"].createElement("div", __assign({}, props), JSON.stringify({
+    note: note
+  }));
+};
+
+exports["default"] = RestNote;
 
 /***/ }),
 

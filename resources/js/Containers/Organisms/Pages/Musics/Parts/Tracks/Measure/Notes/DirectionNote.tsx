@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const DirectionNote = ({ json, ...props } : any) => {
+const DirectionNote = ({ note, ...props } : any) => {
     return null;
     return (
         <div {...props}>

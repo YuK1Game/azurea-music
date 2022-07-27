@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const RestNote = ({ json, ...props } : any) => {
+const RestNote = ({ note, ...props } : any) => {
     return (
         <div {...props}>
-            {JSON.stringify({ json })}
+            {JSON.stringify({ note })}
         </div>
     )
 }

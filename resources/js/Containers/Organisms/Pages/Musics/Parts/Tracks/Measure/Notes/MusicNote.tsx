@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const MusicNote = ({ json, ...props } : any) => {
+const MusicNote = ({ note, ...props } : any) => {
     return null;
     return (
         <div {...props}>

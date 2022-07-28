@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import MusicNote from './Notes/MusicNote';
@@ -12,9 +12,9 @@ const Note = ({ note : noteGroup, ...props } : any) => {
     return (
         <NoteComponent {...props} onClick={() => setShowJson(_showJson => ! _showJson)}>
             {showJson ? (
-                <Fragment>
-                    {JSON.stringify({ noteGroup })}
-                </Fragment>
+                <ShopJsonComponent>
+                    {JSON.stringify(noteGroup, null, 2)}
+                </ShopJsonComponent>
             ) : (
                 <Fragment>
                     {noteGroup && noteGroup?.map && noteGroup.map((note : any, index : number) => {
@@ -36,6 +36,8 @@ const NoteComponent = styled.span`
         background-color : rgba(255, 0, 0, .1);
     }
 `;
+
+const ShopJsonComponent = styled.pre``;
 
 
 export default Note;

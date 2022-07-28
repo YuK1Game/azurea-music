@@ -85,7 +85,12 @@ class Music
                     $noteCode = collect();
 
                     if ($tempo = $this->getTempoByMeasureId($measureId)) {
-                        $noteCode->push(sprintf('t%d', $tempo));
+                        $noteCode->push(collect([
+                            [
+                                'type' => 'direction',
+                                'tempo' => $tempo,
+                            ],
+                        ]));
                     }
 
                     $notes->each(function(AzureaNoteGroup $azureaNoteGroup) use($noteCode) {

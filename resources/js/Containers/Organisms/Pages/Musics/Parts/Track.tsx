@@ -7,7 +7,11 @@ const Track = ({ measures, ...props } : any) => {
     return (
         <TrackComponent {...props}>
             {measures.map(({ measure_id, notes } : any) => (
-                <Measure key={ measure_id } id={ measure_id } notes={ notes } />
+                <Measure
+                    key={ measure_id }
+                    id={ measure_id }
+                    notes={ notes }
+                    />
             ))}
         </TrackComponent>
     )
@@ -15,7 +19,7 @@ const Track = ({ measures, ...props } : any) => {
 
 const TrackComponent = styled.div`
     & > *:not(:first-child) {
-        margin-top : 10px;
+        margin-top : 4px;
     }
 `;
 

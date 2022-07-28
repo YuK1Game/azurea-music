@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useMemo, useCallback } from 'react';
 
-const MusicNote = ({ note, ...props } : any) => {
+const MusicNote = ({ note, enableTieEnd, ...props } : any) => {
 
     const { pitches, durations, is_chord, is_tie_start, is_tie_end, relational_tie_end } = note;
 
@@ -10,7 +10,7 @@ const MusicNote = ({ note, ...props } : any) => {
             return null;
         }
 
-        if (is_tie_end) {
+        if (is_tie_end && ! enableTieEnd) {
             return null;
         }
 
@@ -22,7 +22,7 @@ const MusicNote = ({ note, ...props } : any) => {
         }).join('&');
 
         return code;
-    }, [ pitches, durations, is_tie_end ]);
+    }, [ pitches, durations, is_tie_end, enableTieEnd ]);
 
     const chord = useMemo(() => {
         return (is_chord && ! is_tie_end) ? ':' : null;
@@ -30,7 +30,11 @@ const MusicNote = ({ note, ...props } : any) => {
 
     const TieEndComponent = useCallback(({ ...props }) => {
         if (is_tie_start && relational_tie_end) {
-            return <MusicNote {...props} note={ relational_tie_end } />;
+            return (
+                <Fragment>
+                    &amp;<MusicNote note={ relational_tie_end } enableTieEnd={ true } />
+                </Fragment>
+            );
         }
         return null;
 

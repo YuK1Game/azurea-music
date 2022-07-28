@@ -330,7 +330,7 @@ class Note
             'type'          => 'note',
             'pitches'       => $this->hasPitch() ? $this->getPhonicNotePitches() : null,
             'durations'     => $this->getDurations(),
-            'is_chord'      => $this->isChord(),
+            'is_chord'      => $this->isChord() && ! $this->arpeggiate(),
             'is_grace'      => $this->grace(),
             'is_accent'     => $this->accent(),
             'is_staccato'   => $this->staccato(),

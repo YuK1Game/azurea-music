@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from 'react';
+import styled from 'styled-components';
 
 import DropArea from '../Organisms/Pages/Uploads/DropArea';
 import Music from '../Organisms/Pages/Musics/Music';
 
+import dummyJson from './music.json';
+
 const Index = ({ ...props }) => {
 
-    const [ musicJson, setMusicJson ] = useState(null);
+    const [ musicJson, setMusicJson ] = useState(dummyJson);
 
     const handleDrop = useCallback((file : File) => {
 
@@ -28,14 +31,32 @@ const Index = ({ ...props }) => {
     }, []);
 
     return (
-        <div {...props} className='container mx-auto px-12'>
-            <DropArea onDrop={ handleDrop } />
+        <IndexComponent {...props} className='container mx-auto px-12'>
+            <DropAreaComponent>
+                <DropArea onDrop={ handleDrop } />
+            </DropAreaComponent>
 
-            {musicJson && (
-                <Music json={ musicJson } />
-            )}
-        </div>
+            <div>
+                ここにテキストを<span>書きます！</span>よろしく
+            </div>
+
+            <MusicComponent>
+                {musicJson && (
+                    <Music json={ musicJson } />
+                )}
+            </MusicComponent>
+        </IndexComponent>
     )
 }
+
+const IndexComponent = styled.div`
+    & > :not(:first-child) {
+        margin-top : 32px;
+    }
+`;
+
+const DropAreaComponent = styled.div``;
+
+const MusicComponent = styled.div``;
 
 export default Index;

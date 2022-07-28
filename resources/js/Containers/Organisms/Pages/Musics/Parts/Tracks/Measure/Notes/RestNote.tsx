@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 const RestNote = ({ note, ...props } : any) => {
+    const { durations } = note;
+
+    const code = useMemo(() => {
+        const code = durations?.map(({ dot, duration, value } : any) => {
+            return `r${ duration }${ '.'.repeat(dot) }`;
+        }).join('&');
+
+        return code;
+    }, [ durations ]);
+
     return (
-        <div {...props}>
-            {JSON.stringify({ note })}
-        </div>
+        <Fragment {...props}>
+            { code }
+        </Fragment>
     )
 }
 

@@ -120,7 +120,8 @@ abstract class MeasureChildren implements MeasureChildrenInterface
     public function hasPitch() : bool
     {
         return $this->isNote()
-            && ! $this->isRest();
+            && ! $this->isRest()
+            && ! $this->hasUnpitched();
     }
 
     public function hasUnpitched() : bool

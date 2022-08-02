@@ -179,6 +179,7 @@ class Note
         $key->setPitchOctave($this->pitchOctave());
         $key->setPitchAlter($this->pitchAlter());
         return $key->newPitch();
+
     }
 
     protected function getPhonicNotePitch() : string
@@ -303,6 +304,7 @@ class Note
                 'class' => get_class($this->measureChildren),
                 'xml' => $this->measureChildren->getXml(),
             ],
+            'has_pitch' => $this->hasPitch(),
         ];
         throw new \Exception(sprintf('%s%s%s', 'Error', PHP_EOL, json_encode($errorJson, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)));
     }
@@ -313,14 +315,19 @@ class Note
             if ($this->isDirection()) {
                 return $this->getDirectionJson();
             }
-            if ($this->isRest()) {
+            if ($this->isRest()
+                || $this->isBlankNote()
+                || $this->isBackup()
+                || $this->isForward()) {
                 return $this->getRestJson();
             }
             return $this->getNoteJson();
 
         } catch (\Exception $e) {
-            $this->throwException($e->getMessage());
+            $this->throwException('Exception: ' . $e->getMessage());
 
+        } catch (\Throwable $e) {
+            $this->throwException('Throwable: ' . $e->getMessage());
         }
     }
 

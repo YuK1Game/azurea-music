@@ -1,14 +1,22 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
 import DropArea from '../Organisms/Pages/Uploads/DropArea';
 import Music from '../Organisms/Pages/Musics/Music';
 
-import dummyJson from './music.json';
+import useMusicRecoil from '../../Recoils/useMusicRecoil';
+
+
+const IndexWithContext = () => (
+    <RecoilRoot>
+        <Index />
+    </RecoilRoot>
+);
 
 const Index = ({ ...props }) => {
 
-    const [ musicJson, setMusicJson ] = useState(dummyJson);
+    const { musicJson, setMusicJson } = useMusicRecoil();
 
     const handleDrop = useCallback((file : File) => {
 
@@ -22,9 +30,7 @@ const Index = ({ ...props }) => {
 
         fetch('/api/create_music_mml', param)
             .then(response => response.json())
-            .then(json => {
-                setMusicJson(json);
-            })
+            .then(json => setMusicJson(json))
             .catch(error =>{
                 // エラー処理
             });
@@ -36,14 +42,8 @@ const Index = ({ ...props }) => {
                 <DropArea onDrop={ handleDrop } />
             </DropAreaComponent>
 
-            <div>
-                ここにテキストを<span>書きます！</span>よろしく
-            </div>
-
             <MusicComponent>
-                {musicJson && (
-                    <Music json={ musicJson } />
-                )}
+                {musicJson && <Music json={ musicJson } /> }
             </MusicComponent>
         </IndexComponent>
     )
@@ -59,4 +59,4 @@ const DropAreaComponent = styled.div``;
 
 const MusicComponent = styled.div``;
 
-export default Index;
+export default IndexWithContext;

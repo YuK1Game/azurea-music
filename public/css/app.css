@@ -587,9 +587,6 @@ video {
 .box-border {
   box-sizing: border-box;
 }
-.inline {
-  display: inline;
-}
 .flex {
   display: flex;
 }

@@ -48,7 +48,7 @@ class MusicCommand extends Command
     public function handle()
     {
 
-        $filename = resource_path('musicxml/brave_heart.mxl');
+        $filename = resource_path('musicxml/Exterminate.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -128,7 +128,7 @@ class MusicCommand extends Command
                 return 0;
             });
 
-            if (round($totalDuration, 10) !== 0.75) {
+            if (round($totalDuration, 10) !== 1.0) {
                 return sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join(''));
             }
 

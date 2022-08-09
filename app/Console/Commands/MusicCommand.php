@@ -48,7 +48,7 @@ class MusicCommand extends Command
     public function handle()
     {
 
-        $filename = resource_path('musicxml/Exterminate.mxl');
+        $filename = resource_path('musicxml/One_more_time_One_more_chance_transposed_from_A_to_D.mxl');
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
@@ -68,7 +68,16 @@ class MusicCommand extends Command
 
                     ! $this->option('no-debug') && $this->addText(sprintf('【%d】 ', $measureIndex), false);
 
-                    $this->addText($notes->flatten()->join(''));
+                    $noteString = $notes
+                        ->map(function($noteGroup) {
+                            return $noteGroup->join('');
+                        })
+                        ->filter(function($noteString) {
+                            return strlen($noteString) > 0;
+                        })
+                        ->join('|');
+
+                    $this->addText($noteString);
 
                     ! $this->option('no-debug') && ! $this->option('no-warning') && $this->addText($this->validateNotes($notes->flatten()));
 

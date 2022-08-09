@@ -114,7 +114,7 @@ class Note
             $durationCodes = $this->getDurationCodes();
 
         } catch (\Exception $e) {
-            return sprintf('[ERROR %s]', $this->getCustomDuration() ?? $this->duration());
+            return sprintf('[ERROR "%s" %s]', $pitch, $this->getCustomDuration() ?? $this->duration());
         }
 
 

@@ -18,7 +18,7 @@ class MusicCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'music:run {--no-debug} {--no-warning}';
+    protected $signature = 'music:run {--name=} {--no-debug} {--no-warning}';
 
     /**
      * The console command description.
@@ -47,31 +47,30 @@ class MusicCommand extends Command
      */
     public function handle()
     {
-
-        $filename = resource_path('musicxml/Yuri_on_Ice_OST_-_Yuri_on_Ice__TheIsther_Sheet_Music__Full_Sheet_Mastered.mxl');
+        $name = $this->option('name');
+        $filename = resource_path(sprintf('musicxml/%s', $name));
 
         $azureaMusic = new AzureaMusic($filename);
         $parts = $azureaMusic->getCodes();
 
-        $parts->each(function($part) {
+        $parts->each(function ($part) {
             $this->addText(str_repeat('=', 100));
             $this->addText(sprintf('Part[%s] : %s', $part->get('id'), $part->get('part_name')));
             $this->addText(str_repeat('=', 100));
 
-            $part->get('tracks')->each(function($track, $trackIndex) {
+            $part->get('tracks')->each(function ($track, $trackIndex) {
 
                 $this->addText(str_repeat('-', 100));
                 $this->addText(sprintf('Track[%d]', $trackIndex));
                 $this->addText(str_repeat('-', 100));
 
-                $track->get('measures')->each(function($notes, $measureIndex) {
+                $track->get('measures')->each(function ($notes, $measureIndex) {
 
-                    ! $this->option('no-debug') && $this->addText(sprintf('【%d】 ', $measureIndex), false);
+                    !$this->option('no-debug') && $this->addText(sprintf('【%d】 ', $measureIndex), false);
 
                     $this->addText($notes->flatten()->join(''));
 
-                    ! $this->option('no-debug') && ! $this->option('no-warning') && $this->addText($this->validateNotes($notes->flatten()));
-
+                    !$this->option('no-debug') && !$this->option('no-warning') && $this->addText($this->validateNotes($notes->flatten()));
                 });
                 $this->addText('');
                 $this->addText('');
@@ -85,23 +84,23 @@ class MusicCommand extends Command
         return 0;
     }
 
-    protected function addText(?string $text = null, ?bool $useBr = true) : void
+    protected function addText(?string $text = null, ?bool $useBr = true): void
     {
-        if ( ! is_null($text)) {
+        if (!is_null($text)) {
             $this->text .= sprintf('%s%s', $text, $useBr ? PHP_EOL : '');
         }
     }
 
-    protected function validateNotes(Collection $notes) : ?string
+    protected function validateNotes(Collection $notes): ?string
     {
         $notesValues = $notes
-            ->map(function($note) {
+            ->map(function ($note) {
                 $note = preg_replace('/\:.*?$/', '', $note);
                 $_notes = preg_split('/\&/', $note);
                 return collect($_notes);
             })
-            ->map(function($_notes) {
-                return $_notes->map(function($note) {
+            ->map(function ($_notes) {
+                return $_notes->map(function ($note) {
                     $note = preg_replace('/\*\d{1,2}/', '', $note);
                     $note = preg_replace('/^o\d{1}[a-g]\+?(.*?)$/', '$1', $note);
                     $note = preg_replace('/^r(.*?)$/', '$1', $note);
@@ -109,12 +108,12 @@ class MusicCommand extends Command
                 });
             })
             ->flatten(1)
-            ->filter(function($note) {
+            ->filter(function ($note) {
                 return $note !== '';
             });
 
         try {
-            $totalDuration = (float) $notesValues->sum(function(string $duration) {
+            $totalDuration = (float) $notesValues->sum(function (string $duration) {
                 if (preg_match('/^(\d{1,})(\.)?(\.)?$/', $duration, $matches) === 1) {
                     $duration = (int) $matches[1];
                     $dot1 = ($matches[2] ?? null) === '.';
@@ -131,13 +130,10 @@ class MusicCommand extends Command
             if (round($totalDuration, 10) !== 0.75) {
                 return sprintf('[Warn] Total duration miss match. (%s)', $totalDuration, $notes->join(''));
             }
-
         } catch (\Exception $e) {
             return $e->getMessage();
         }
 
         return null;
-
     }
-
 }
